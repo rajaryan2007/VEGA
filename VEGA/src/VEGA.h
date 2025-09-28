@@ -2,7 +2,7 @@
 //for use by vega application 
 
 #include "VEGA\Application.h"
-
+#include "VEGA\Log.h"
 
 // Entry point ---
 
