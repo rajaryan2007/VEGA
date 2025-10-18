@@ -153,6 +153,10 @@
     <ClInclude Include="src\VEGA\Application.h" />
     <ClInclude Include="src\VEGA\Core.h" />
     <ClInclude Include="src\VEGA\EntryPoint.h" />
+    <ClInclude Include="src\VEGA\Events\ApplicationEvent.h" />
+    <ClInclude Include="src\VEGA\Events\Event.h" />
+    <ClInclude Include="src\VEGA\Events\KeyEvent.h" />
+    <ClInclude Include="src\VEGA\Events\MouseEvent.h" />
     <ClInclude Include="src\VEGA\Log.h" />
   </ItemGroup>
   <ItemGroup>

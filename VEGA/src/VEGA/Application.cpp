@@ -1,4 +1,6 @@
 #include "Application.h"
+#include "VEGA/Log.h"
+#include "VEGA/Events/ApplicationEvent.h"
 
 namespace VEGA{
 	Application::Application()
@@ -11,7 +13,17 @@ namespace VEGA{
 
 	}
 
+
+	
+	
+	
 	void Application::Run() {
-		while (true);
+		
+			
+			
+    WindowResizeEvent e(1200, 720);
+	VG_TRACE(e.ToString());
+	while (true);
+
 	};
 }

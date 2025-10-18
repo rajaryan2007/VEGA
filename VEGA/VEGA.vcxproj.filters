@@ -4,6 +4,9 @@
     <Filter Include="VEGA">
       <UniqueIdentifier>{08678D7C-F49D-8E0D-9D8A-741089A00A0F}</UniqueIdentifier>
     </Filter>
+    <Filter Include="VEGA\Events">
+      <UniqueIdentifier>{ECD917E6-588F-90DB-E183-8AB24D3887DF}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\VEGA.h" />
@@ -15,6 +18,18 @@
     </ClInclude>
     <ClInclude Include="src\VEGA\EntryPoint.h">
       <Filter>VEGA</Filter>
+    </ClInclude>
+    <ClInclude Include="src\VEGA\Events\ApplicationEvent.h">
+      <Filter>VEGA\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\VEGA\Events\Event.h">
+      <Filter>VEGA\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\VEGA\Events\KeyEvent.h">
+      <Filter>VEGA\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\VEGA\Events\MouseEvent.h">
+      <Filter>VEGA\Events</Filter>
     </ClInclude>
     <ClInclude Include="src\VEGA\Log.h">
       <Filter>VEGA</Filter>

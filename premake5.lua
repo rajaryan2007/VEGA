@@ -4,7 +4,7 @@ workspace "VEGA"
 
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
--- VEGA Engine Library Project
+
 project "VEGA"
     location "VEGA"
     kind "SharedLib"
@@ -29,7 +29,7 @@ project "VEGA"
 
     filter "system:windows"
         systemversion "latest"
-        buildoptions { "/utf-8" } -- Added for Unicode support in spdlog
+        buildoptions { "/utf-8" } 
 
         defines
         {
@@ -40,7 +40,7 @@ project "VEGA"
 
         postbuildcommands
         {
-            -- Copy the DLL to the Sandbox's output directory for easy execution
+           
             ("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/Sandbox")
         }
 
@@ -56,7 +56,7 @@ project "VEGA"
         defines "VG_DIST"
         optimize "On"
 
--- Sandbox Application Project
+
 project "Sandbox"
     location "Sandbox"
     kind "ConsoleApp"
@@ -84,12 +84,12 @@ project "Sandbox"
         "VEGA"
     }
 
-    -- Added to ensure VEGA is built before Sandbox
+  
     dependson { "VEGA" }
 
     filter "system:windows"
         systemversion "latest"
-        buildoptions { "/utf-8" } -- For Unicode support in spdlog
+        buildoptions { "/utf-8" } 
 
         defines
         {

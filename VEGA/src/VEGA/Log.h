@@ -1,10 +1,11 @@
 #pragma once
-#include "Core.h"
 #include "spdlog/spdlog.h"
+#include "spdlog/sinks/stdout_color_sinks.h"
+#include "Core.h"
 #include <memory>
 namespace VEGA {
 
-   class VEGA_API Log
+   class  Log
    {
     public:
 		static void Init();
@@ -20,17 +21,17 @@ namespace VEGA {
 
 }
 
+ 
 
-//core log macros
-#define VG_CORE_ERROR(...) ::VEGA::Log::GetCoreLogger()->error(__VA_ARGS__);
-#define VG_CORE_WARN(...)  ::VEGA::Log::GetCoreLogger()->warn(__VA_ARGS__);
-#define VG_CORE_INFO(...)  ::VEGA::Log::GetCoreLogger()->info(__VA_ARGS__);
-#define VG_CORE_TRACE(...) ::VEGA::Log::GetCoreLogger()->trace(__VA_ARGS__);
-#define VG_CORE_FATAL(...) ::VEGA::Log::GetCoreLogger()->fatal(__VA_ARGS__);
+#define VG_CORE_ERROR(...)  ::VEGA::Log::GetCoreLogger()->error(__VA_ARGS__)
+#define VG_CORE_WARN(...)   ::VEGA::Log::GetCoreLogger()->warn(__VA_ARGS__)
+#define VG_CORE_INFO(...)   ::VEGA::Log::GetCoreLogger()->info(__VA_ARGS__)
+#define VG_CORE_TRACE(...)  ::VEGA::Log::GetCoreLogger()->trace(__VA_ARGS__)
+#define VG_CORE_CRITICAL(...) ::VEGA::Log::GetCoreLogger()->critical(__VA_ARGS__)
 
-//client log macros
-#define VG_TRACE(...)  ::VEGA::Log::GetClientLogger()->trace(__VA_ARGS__);
-#define VG_WARN(...)   ::VEGA::Log::GetClientLogger()->warn(__VA_ARGS__);
-#define VG_INFO(...)   ::VEGA::Log::GetClientLogger()->info(__VA_ARGS__);
-#define VG_FATAL(...)  ::VEGA::Log::GetClientLogger()->fatal(__VA_ARGS__);
-#define VG_ERROR(...)  ::VEGA::Log::GetClientLogger()->error(__VA_ARGS__);
+
+#define VG_TRACE(...)   ::VEGA::Log::GetClientLogger()->trace(__VA_ARGS__)
+#define VG_WARN(...)    ::VEGA::Log::GetClientLogger()->warn(__VA_ARGS__)
+#define VG_INFO(...)    ::VEGA::Log::GetClientLogger()->info(__VA_ARGS__)
+#define VG_CRITICAL(...) ::VEGA::Log::GetClientLogger()->critical(__VA_ARGS__)
+#define VG_ERROR(...)   ::VEGA::Log::GetClientLogger()->error(__VA_ARGS__)
