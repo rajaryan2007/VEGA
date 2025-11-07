@@ -1,6 +1,7 @@
 #pragma once
+#include <vgpch.h>
 #include "Event.h"
-#include "sstream"
+
 
 namespace VEGA
 {

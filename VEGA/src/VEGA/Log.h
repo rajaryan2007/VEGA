@@ -1,27 +1,27 @@
 #pragma once
+
 #include "spdlog/spdlog.h"
-#include "spdlog/sinks/stdout_color_sinks.h"
 #include "Core.h"
-#include <memory>
+
 namespace VEGA {
 
-   class  Log
-   {
-    public:
+	class VEGA_API  Log
+	{
+	public:
 		static void Init();
 		inline static std::shared_ptr<spdlog::logger>& GetCoreLogger() { return s_CoreLogger; }
 		inline static std::shared_ptr<spdlog::logger>& GetClientLogger() { return s_ClientLogger; }
 
-   private:
-	   static std::shared_ptr<spdlog::logger> s_CoreLogger;
-	   static std::shared_ptr <spdlog::logger> s_ClientLogger;
+	private:
+		static std::shared_ptr<spdlog::logger> s_CoreLogger;
+		static std::shared_ptr <spdlog::logger> s_ClientLogger;
 
-	  
-    };
+
+	};
 
 }
 
- 
+
 
 #define VG_CORE_ERROR(...)  ::VEGA::Log::GetCoreLogger()->error(__VA_ARGS__)
 #define VG_CORE_WARN(...)   ::VEGA::Log::GetCoreLogger()->warn(__VA_ARGS__)

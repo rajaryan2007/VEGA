@@ -1,8 +1,8 @@
 #pragma once
-
+#include <vgpch.h>
 #include "Event.h"
 
-#include <sstream>
+
 
 namespace VEGA {
 	class VEGA_API MouseMovedEvent : public Event {

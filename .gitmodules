@@ -3,3 +3,6 @@
 	url = https://github.com/gabime/spdlog
 [submodule "VEGA/vendor/spdlog"]
 	path = VEGA/VEGA/vendor/spdlog
+[submodule "VEGA/vendor/GLFW"]
+	path = VEGA/vendor/GLFW
+	url = https://github.com/TheCherno/glfw

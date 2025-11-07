@@ -4,6 +4,11 @@ workspace "VEGA"
 
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
+-- include directories
+IncludeDir = {}
+IncludeDir["GLFW"] = "VEGA/vendor/GLFW/include"
+
+include "VEGA/vendor/GLFW"
 
 project "VEGA"
     location "VEGA"
@@ -15,6 +20,8 @@ project "VEGA"
     targetdir ("bin/" .. outputdir .. "/%{prj.name}")
     objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
 
+    pchheader "vgpch.h"
+    pchsource "VEGA/src/vgpch.cpp"
     files
     {
         "%{prj.name}/src/**.h",
@@ -24,12 +31,20 @@ project "VEGA"
     includedirs
     {
         "%{prj.name}/src",
-        "%{prj.name}/vendor/spdlog/include"
+        "%{prj.name}/vendor/spdlog/include",
+        "%{IncludeDir.GLFW}"
+
     }
+    links
+    {
+         "GLFW",
+         "opengl32.lib"
+    }
+
 
     filter "system:windows"
         systemversion "latest"
-        buildoptions { "/utf-8" } 
+        buildoptions { "/utf-8" }
 
         defines
         {
@@ -40,7 +55,7 @@ project "VEGA"
 
         postbuildcommands
         {
-           
+
             ("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/Sandbox")
         }
 
@@ -84,12 +99,12 @@ project "Sandbox"
         "VEGA"
     }
 
-  
+
     dependson { "VEGA" }
 
     filter "system:windows"
         systemversion "latest"
-        buildoptions { "/utf-8" } 
+        buildoptions { "/utf-8" }
 
         defines
         {
