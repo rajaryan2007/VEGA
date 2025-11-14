@@ -86,18 +86,23 @@ namespace VEGA {
 	{
 	public:
 		MouseButtonReleasedEvent(int button)
-			:MouseButtonEvent(button) {}
-
-		std::string ToString() const override
-		{
-			std::stringstream ss;
-			ss << "MouseButtonRelesedEvent: " << m_Button;
-
+			: MouseButtonEvent(button) {
 		}
 
+		EventType GetEventType() const override {
+			return EventType::MouseButtonReleased;
+		}
 
+		const char* GetName() const override {
+			return "MouseButtonReleased";
+		}
+
+		std::string ToString() const override {
+			std::stringstream ss;
+			ss << "MouseButtonReleasedEvent: " << m_Button;
+			return ss.str();
+		}
 	};
-
 
 
 
