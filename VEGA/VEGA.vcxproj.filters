@@ -40,6 +40,12 @@
     <ClInclude Include="src\VEGA\Events\MouseEvent.h">
       <Filter>VEGA\Events</Filter>
     </ClInclude>
+    <ClInclude Include="src\VEGA\Layer.h">
+      <Filter>VEGA</Filter>
+    </ClInclude>
+    <ClInclude Include="src\VEGA\LayerStack.h">
+      <Filter>VEGA</Filter>
+    </ClInclude>
     <ClInclude Include="src\VEGA\Log.h">
       <Filter>VEGA</Filter>
     </ClInclude>
@@ -53,6 +59,12 @@
       <Filter>Platform\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\VEGA\Application.cpp">
+      <Filter>VEGA</Filter>
+    </ClCompile>
+    <ClCompile Include="src\VEGA\Layer.cpp">
+      <Filter>VEGA</Filter>
+    </ClCompile>
+    <ClCompile Include="src\VEGA\LayerStack.cpp">
       <Filter>VEGA</Filter>
     </ClCompile>
     <ClCompile Include="src\VEGA\Log.cpp">

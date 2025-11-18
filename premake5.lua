@@ -61,14 +61,17 @@ project "VEGA"
 
     filter "configurations:Debug"
         defines "VG_DEBUG"
+        buildoptions"/MDd"
         symbols "On"
 
     filter "configurations:Release"
         defines "VG_RELEASE"
+        buildoptions"/MD"
         optimize "On"
 
     filter "configurations:Dist"
         defines "VG_DIST"
+        buildoptions"/MD"
         optimize "On"
 
 

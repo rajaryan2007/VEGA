@@ -1,2 +1,6 @@
+C:\Users\rion\source\repos\VEGA\VEGA\src\Platform\Windows\WindowsWindow.cpp;C:\Users\rion\source\repos\VEGA\bin-int\Release-windows-x86_64\VEGA\WindowsWindow.obj
 C:\Users\rion\source\repos\VEGA\VEGA\src\VEGA\Application.cpp;C:\Users\rion\source\repos\VEGA\bin-int\Release-windows-x86_64\VEGA\Application.obj
+C:\Users\rion\source\repos\VEGA\VEGA\src\VEGA\Layer.cpp;C:\Users\rion\source\repos\VEGA\bin-int\Release-windows-x86_64\VEGA\Layer.obj
+C:\Users\rion\source\repos\VEGA\VEGA\src\VEGA\LayerStack.cpp;C:\Users\rion\source\repos\VEGA\bin-int\Release-windows-x86_64\VEGA\LayerStack.obj
 C:\Users\rion\source\repos\VEGA\VEGA\src\VEGA\Log.cpp;C:\Users\rion\source\repos\VEGA\bin-int\Release-windows-x86_64\VEGA\Log.obj
+C:\Users\rion\source\repos\VEGA\VEGA\src\vgpch.cpp;C:\Users\rion\source\repos\VEGA\bin-int\Release-windows-x86_64\VEGA\vgpch.obj
