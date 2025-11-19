@@ -1,6 +1,8 @@
 #include <vgpch.h>
 #include "Log.h"
 
+
+
 #include <spdlog/sinks/stdout_color_sinks.h>
 
 
@@ -8,9 +10,10 @@
 namespace VEGA {
 	std::shared_ptr<spdlog::logger> Log::s_CoreLogger;
 	std::shared_ptr <spdlog::logger> Log::s_ClientLogger;
-
-	void VEGA_API Log::Init()
+	
+	void  Log::Init()
 	{
+
 		spdlog::set_pattern("%^[%T] %n: %v%$");
 		s_CoreLogger = spdlog::stdout_color_mt("VEGA");
 		s_CoreLogger->set_level(spdlog::level::trace);
@@ -18,4 +21,5 @@ namespace VEGA {
 		s_ClientLogger = spdlog::stdout_color_mt("APP");
 		s_ClientLogger->set_level(spdlog::level::trace);
 	}
+	
 }
