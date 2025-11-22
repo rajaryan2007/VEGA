@@ -7,9 +7,9 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 -- include directories
 IncludeDir = {}
 IncludeDir["GLFW"] = "VEGA/vendor/GLFW/include"
-
+IncludeDir["Glad"] = "VEGA/vendor/Glad/include"
 include "VEGA/vendor/GLFW"
-
+include "VEGA/vendor/Glad"
 project "VEGA"
     location "VEGA"
     kind "SharedLib"
@@ -32,12 +32,14 @@ project "VEGA"
     {
         "%{prj.name}/src",
         "%{prj.name}/vendor/spdlog/include",
-        "%{IncludeDir.GLFW}"
+        "%{IncludeDir.GLFW}",
+        "%{IncludeDir.Glad}"
 
     }
     links
     {
          "GLFW",
+         "Glad",
          "opengl32.lib"
     }
 
@@ -50,7 +52,8 @@ project "VEGA"
         {
             "VG_PLATFORM_WINDOWS",
             "VG_BUILD_DLL",
-            "WINDLL"
+            "WINDLL",
+            "GLFW_INCLUDE_NONE"
         }
 
         postbuildcommands

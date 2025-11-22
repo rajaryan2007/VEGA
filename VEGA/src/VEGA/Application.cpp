@@ -3,7 +3,7 @@
 #include "Application.h"
 #include "VEGA/Log.h"
 
-#include <GLFW/glfw3.h>
+#include <glad/glad.h>
 
 
 namespace VEGA{
@@ -35,7 +35,7 @@ namespace VEGA{
 	{
 		EventDispatcher dispatcher(e);
 		dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(OnWindowClose));
-		VG_CORE_TRACE("{0}", e.ToString());
+		//VG_CORE_TRACE("{0}", e.ToString());
 
 
 		for (auto it = m_LayerStack.end(); it != m_LayerStack.begin();)
@@ -74,3 +74,4 @@ namespace VEGA{
 		return true;
 	}
 }
+////////////
