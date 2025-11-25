@@ -10,8 +10,13 @@ namespace VEGA{
 
 #define BIND_EVENT_FN(x) std::bind(&Application::x,this,std::placeholders::_1)
 
+	Application* Application::s_instance = nullptr;
+
+
 	Application::Application()
-	{
+	{   
+		VG_CORE_ASSERT(!s_instance, "Application already exists!");
+		s_instance = this;
 		m_Window = std::unique_ptr<Window>(Window::Create());
 		m_Window->SetEventCallback(BIND_EVENT_FN(OnEvent));
 	}
@@ -24,11 +29,13 @@ namespace VEGA{
 	void Application::PushLayer(Layer* layer)
 	{
 		m_LayerStack.PushLayer(layer);
+		layer->OnAttach();
 	}
 
 	void Application::PushOverlay(Layer* layer)
 	{
 		m_LayerStack.PushOverlay(layer);
+		layer->OnAttach();
 	}
 
 	void Application::OnEvent(Event& e)

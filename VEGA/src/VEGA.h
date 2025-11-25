@@ -5,6 +5,7 @@
 #include "VEGA\Layer.h"
 
 #include "VEGA\Log.h"
+#include "VEGA\ImGui\ImGuiLayer.h"
 
 // Entry point ---
 

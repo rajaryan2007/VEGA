@@ -6,3 +6,6 @@
 [submodule "VEGA/vendor/GLFW"]
 	path = VEGA/vendor/GLFW
 	url = https://github.com/TheCherno/glfw
+[submodule "VEGA/vendor/imgui"]
+	path = VEGA/vendor/imgui
+	url = https://github.com/TheCherno/imgui.git
