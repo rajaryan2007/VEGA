@@ -82,5 +82,28 @@ namespace VEGA
 	}
 	void ImGuiLayer::OnEvent(Event& event)
 	{
+
+
+	}
+	bool ImGuiLayer::OnMouseButtonPressedEvent(MouseButtonPressedEvent& event)
+	{
+	}
+	bool ImGuiLayer::OnMouseButtonRelasedEvent(MouseButtonReleasedEvent& event)
+	{
+	}
+	bool ImGuiLayer::OnMouseMovedEvent(MouseMovedEvent& event)
+	{
+	}
+	bool ImGuiLayer::OnMouseScrolledEvent(MouseScrolledEvent& event)
+	{
+	}
+	bool ImGuiLayer::OnKeyPressedEvent(KeyPressedEvent& event)
+	{
+	}
+	bool ImGuiLayer::OnKeyReleasedEvent(KeyReleasedEvent& event)
+	{
+	}
+	bool ImGuiLayer::OnWindowResizeEvent(WindowResizeEvent& event)
+	{
 	}
 }

@@ -1,6 +1,8 @@
 #pragma once
 
 #include "VEGA/Layer.h"
+#include "VEGA/Events/KeyEvent.h"
+#include "VEGA/Events/MouseEvent.h"
 
 namespace VEGA
 {
@@ -13,7 +15,15 @@ public:
 	void OnDetach();
 	void OnUpdate();
 	void OnEvent(Event& event) ;
-
+	private:
+		bool OnMouseButtonPressedEvent(MouseButtonPressedEvent& event);
+		bool OnMouseButtonRelasedEvent(MouseButtonReleasedEvent& event);
+		bool OnMouseMovedEvent(MouseMovedEvent& event);
+		bool OnMouseScrolledEvent(MouseScrolledEvent& event);
+		bool OnKeyPressedEvent(KeyPressedEvent& event);
+		bool OnKeyReleasedEvent(KeyReleasedEvent& event);
+		//void OnKeyTypedEvent(KeyTypedEvent& event);
+		bool OnWindowResizeEvent(WindowResizeEvent& event);
 	private:
 		float m_Time = 0.0f;
 	};
