@@ -34,7 +34,7 @@ namespace VEGA {
 
 	
 		inline float GetXOffset() const { return m_XOffset; }
-		inline float GetYoffset() const { return m_YOffset; }
+		inline float GetYOffset() const { return m_YOffset; }
 	  std::string ToString() const override 
 	  {
 		  std::stringstream ss;
@@ -89,21 +89,16 @@ namespace VEGA {
 			: MouseButtonEvent(button) {
 		}
 
-		EventType GetEventType() const override {
-			return EventType::MouseButtonReleased;
-		}
-
-		const char* GetName() const override {
-			return "MouseButtonReleased";
-		}
-
 		std::string ToString() const override {
 			std::stringstream ss;
 			ss << "MouseButtonReleasedEvent: " << m_Button;
 			return ss.str();
 		}
+
+		EVENT_CLASS_TYPE(MouseButtonReleased)
 	};
 
 
 
 }
+//////////////////

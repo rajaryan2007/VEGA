@@ -19,6 +19,7 @@ namespace VEGA{
 		s_instance = this;
 		m_Window = std::unique_ptr<Window>(Window::Create());
 		m_Window->SetEventCallback(BIND_EVENT_FN(OnEvent));
+
 	}
 
 	Application::~Application()
@@ -48,7 +49,7 @@ namespace VEGA{
 		for (auto it = m_LayerStack.end(); it != m_LayerStack.begin();)
 		{
 			(*--it)->OnEvent(e);
-			if (e.m_handled)
+			if (e.Handled)
 				break;
 		}
 	}

@@ -3,14 +3,12 @@
 
 #include "imgui.h"
 
-//#include <imgui_internal.h>
-//
-//#include <Backends/imgui_impl_glfw.h>
-//#include <Backends/imgui_impl_opengl3.h>
+#include <imgui_internal.h>
 #include "Platform/OpenGL/ImGuiOpenGLRenderer.h"
-#include "GLFW/glfw3.h"
 #include "VEGA/Application.h"
 
+#include "GLFW/glfw3.h"
+#include <glad/glad.h>
 
 namespace VEGA
 {
@@ -24,12 +22,13 @@ namespace VEGA
 	}
 	void ImGuiLayer::OnAttach()
 	{
-		ImGui::CreateContext();
-		ImGui::StyleColorsDark();
-
+		ImGui::CreateContext(); ImGui::StyleColorsDark();
 		ImGuiIO& io = ImGui::GetIO();
+		
 		io.BackendFlags |= ImGuiBackendFlags_HasMouseCursors; 
-		io.BackendFlags != ImGuiBackendFlags_HasSetMousePos;
+		io.BackendFlags |= ImGuiBackendFlags_HasSetMousePos;
+	
+
 
 		io.KeyMap[ImGuiKey_Tab] = GLFW_KEY_TAB;
 		io.KeyMap[ImGuiKey_LeftArrow] = GLFW_KEY_LEFT;
@@ -52,10 +51,8 @@ namespace VEGA
 		io.KeyMap[ImGuiKey_X] = GLFW_KEY_X;
 		io.KeyMap[ImGuiKey_Y] = GLFW_KEY_Y;
 		io.KeyMap[ImGuiKey_Z] = GLFW_KEY_Z;
-
-		ImGui_ImplOpenGL3_Init();
-
-
+		
+		ImGui_ImplOpenGL3_Init("#version 410");
 	}
 	void ImGuiLayer::OnDetach()
 	{
@@ -66,12 +63,14 @@ namespace VEGA
 		ImGuiIO& io = ImGui::GetIO();
 		Application& app = Application::Get();
 		io.DisplaySize = ImVec2(app.GetWindow().GetWidth(),app.GetWindow().GetHeight());
+		
 
 		float time = (float)glfwGetTime();
 		io.DeltaTime = m_Time > 0.0 ? (time - m_Time) : (1.0f / 60.0f);
 		m_Time = time;
 
 		ImGui_ImplOpenGL3_NewFrame();
+		
 		ImGui::NewFrame();
 
 		static bool show = true;
@@ -82,28 +81,76 @@ namespace VEGA
 	}
 	void ImGuiLayer::OnEvent(Event& event)
 	{
+		m_BlockEvents = true;
+		if (m_BlockEvents)
+		{
+			ImGuiIO& io = ImGui::GetIO();
+			if (event.IsInCategory(EventCategoryMouse) && io.WantCaptureMouse)
+				event.Handled = true;
+			if (event.IsInCategory(EventCategoryKeyboard) && io.WantCaptureKeyboard)
+				event.Handled = true;
+		}
+		std::cout << "ImGuiLayer::OnEvent: " << event.GetName() << " handled=" << event.Handled << std::endl;
+
+		EventDispatcher dispatcher(event);
+		
+		dispatcher.Dispatch<MouseButtonPressedEvent>(VG_BIND_EVENT_FN(ImGuiLayer::OnMouseButtonPressedEvent));
+		dispatcher.Dispatch<MouseButtonReleasedEvent>(VG_BIND_EVENT_FN(ImGuiLayer::OnMouseButtonRelasedEvent));
+		dispatcher.Dispatch<MouseMovedEvent>(VG_BIND_EVENT_FN(ImGuiLayer::OnMouseMovedEvent));
+		dispatcher.Dispatch<MouseScrolledEvent>(VG_BIND_EVENT_FN(ImGuiLayer::OnMouseScrolledEvent));
+		dispatcher.Dispatch<KeyPressedEvent>(VG_BIND_EVENT_FN(ImGuiLayer::OnKeyPressedEvent));
+		dispatcher.Dispatch<KeyReleasedEvent>(VG_BIND_EVENT_FN(ImGuiLayer::OnKeyReleasedEvent));
+		dispatcher.Dispatch<WindowResizeEvent>(VG_BIND_EVENT_FN(ImGuiLayer::OnWindowResizeEvent));
+	}
+
+	bool ImGuiLayer::OnMouseButtonPressedEvent(MouseButtonPressedEvent& e)
+	{
+		ImGuiIO& io = ImGui::GetIO();
+		std::cout << "FRAME IO before: mouse0=" << io.MouseDown[0] << " mouse1=" << io.MouseDown[1] << " mouse2=" << io.MouseDown[2] << std::endl;
+		io.MouseDown[e.GetMouseButton()] = true;
+		return false;
+	}
+
+	bool ImGuiLayer::OnMouseButtonRelasedEvent(MouseButtonReleasedEvent& e)
+	{
+		ImGuiIO& io = ImGui::GetIO();
+		std::cout << "OnEvent end: io.MouseDown: " << io.MouseDown[0] << ", " << io.MouseDown[1] << ", " << io.MouseDown[2] << std::endl;
+		io.MouseDown[e.GetMouseButton()] = false;
+		return false; 
+	}
 
 
-	}
-	bool ImGuiLayer::OnMouseButtonPressedEvent(MouseButtonPressedEvent& event)
-	{
-	}
-	bool ImGuiLayer::OnMouseButtonRelasedEvent(MouseButtonReleasedEvent& event)
-	{
-	}
 	bool ImGuiLayer::OnMouseMovedEvent(MouseMovedEvent& event)
 	{
+		ImGuiIO& io = ImGui::GetIO();;
+		io.MousePos = ImVec2(event.GetX(), event.GetY());
+
+
+		return false;
 	}
 	bool ImGuiLayer::OnMouseScrolledEvent(MouseScrolledEvent& event)
-	{
+	{ 
+		ImGuiIO& io = ImGui::GetIO();;
+		io.MouseWheelH += event.GetXOffset();
+		io.MouseWheel += event.GetYOffset();
+
+		return false;
 	}
 	bool ImGuiLayer::OnKeyPressedEvent(KeyPressedEvent& event)
-	{
+	{ 
+		return false;
 	}
 	bool ImGuiLayer::OnKeyReleasedEvent(KeyReleasedEvent& event)
-	{
+	{ 
+		return false;
 	}
 	bool ImGuiLayer::OnWindowResizeEvent(WindowResizeEvent& event)
 	{
+		ImGuiIO& io = ImGui::GetIO();
+		io.DisplaySize = ImVec2(event.GetWidth(), event.GetHeight());
+		io.DisplayFramebufferScale = ImVec2(1.0f, 1.0f);
+		glViewport(0, 0, event.GetWidth(), event.GetHeight());
+
+		return false;
 	}
 }

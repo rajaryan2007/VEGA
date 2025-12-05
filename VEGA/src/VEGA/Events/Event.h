@@ -52,7 +52,7 @@ namespace VEGA
             return (GetCategoryFlags() & static_cast<int>(category)) != 0;
         }
 
-        bool m_handled = false;
+        bool Handled = false;
     };
 
     class EventDispatcher
@@ -70,7 +70,7 @@ namespace VEGA
         {
             if (m_Event.GetEventType() == T::GetStaticType())
             {
-                m_Event.m_handled = func(*(T*)&m_Event);
+                m_Event.Handled = func(*(T*)&m_Event);
                 return true;
             }
             return false;

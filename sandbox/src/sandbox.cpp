@@ -15,7 +15,7 @@ public:
 	}
 	void OnEvent(VEGA::Event& event) override
 	{
-		VG_TRACE("{0}", event.ToString());
+		//VG_TRACE("{0}", event.ToString());
 	}
 	
 };
