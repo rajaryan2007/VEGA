@@ -24,10 +24,10 @@ namespace VEGA
 	{
 		ImGui::CreateContext(); ImGui::StyleColorsDark();
 		ImGuiIO& io = ImGui::GetIO();
-		
-		io.BackendFlags |= ImGuiBackendFlags_HasMouseCursors; 
+
+		io.BackendFlags |= ImGuiBackendFlags_HasMouseCursors;
 		io.BackendFlags |= ImGuiBackendFlags_HasSetMousePos;
-	
+
 
 
 		io.KeyMap[ImGuiKey_Tab] = GLFW_KEY_TAB;
@@ -51,7 +51,7 @@ namespace VEGA
 		io.KeyMap[ImGuiKey_X] = GLFW_KEY_X;
 		io.KeyMap[ImGuiKey_Y] = GLFW_KEY_Y;
 		io.KeyMap[ImGuiKey_Z] = GLFW_KEY_Z;
-		
+
 		ImGui_ImplOpenGL3_Init("#version 410");
 	}
 	void ImGuiLayer::OnDetach()
@@ -62,15 +62,15 @@ namespace VEGA
 
 		ImGuiIO& io = ImGui::GetIO();
 		Application& app = Application::Get();
-		io.DisplaySize = ImVec2(app.GetWindow().GetWidth(),app.GetWindow().GetHeight());
-		
+		io.DisplaySize = ImVec2(app.GetWindow().GetWidth(), app.GetWindow().GetHeight());
+
 
 		float time = (float)glfwGetTime();
 		io.DeltaTime = m_Time > 0.0 ? (time - m_Time) : (1.0f / 60.0f);
 		m_Time = time;
 
 		ImGui_ImplOpenGL3_NewFrame();
-		
+
 		ImGui::NewFrame();
 
 		static bool show = true;
@@ -93,30 +93,31 @@ namespace VEGA
 		std::cout << "ImGuiLayer::OnEvent: " << event.GetName() << " handled=" << event.Handled << std::endl;
 
 		EventDispatcher dispatcher(event);
-		
+
 		dispatcher.Dispatch<MouseButtonPressedEvent>(VG_BIND_EVENT_FN(ImGuiLayer::OnMouseButtonPressedEvent));
 		dispatcher.Dispatch<MouseButtonReleasedEvent>(VG_BIND_EVENT_FN(ImGuiLayer::OnMouseButtonRelasedEvent));
 		dispatcher.Dispatch<MouseMovedEvent>(VG_BIND_EVENT_FN(ImGuiLayer::OnMouseMovedEvent));
 		dispatcher.Dispatch<MouseScrolledEvent>(VG_BIND_EVENT_FN(ImGuiLayer::OnMouseScrolledEvent));
 		dispatcher.Dispatch<KeyPressedEvent>(VG_BIND_EVENT_FN(ImGuiLayer::OnKeyPressedEvent));
 		dispatcher.Dispatch<KeyReleasedEvent>(VG_BIND_EVENT_FN(ImGuiLayer::OnKeyReleasedEvent));
+		dispatcher.Dispatch<KeyTypedEvent>(VG_BIND_EVENT_FN(ImGuiLayer::OnKeyTypedEvent));
 		dispatcher.Dispatch<WindowResizeEvent>(VG_BIND_EVENT_FN(ImGuiLayer::OnWindowResizeEvent));
 	}
 
-	bool ImGuiLayer::OnMouseButtonPressedEvent(MouseButtonPressedEvent& e)
+	bool ImGuiLayer::OnMouseButtonPressedEvent(MouseButtonPressedEvent& event)
 	{
 		ImGuiIO& io = ImGui::GetIO();
 		std::cout << "FRAME IO before: mouse0=" << io.MouseDown[0] << " mouse1=" << io.MouseDown[1] << " mouse2=" << io.MouseDown[2] << std::endl;
-		io.MouseDown[e.GetMouseButton()] = true;
+		io.MouseDown[event.GetMouseButton()] = true;
 		return false;
 	}
 
-	bool ImGuiLayer::OnMouseButtonRelasedEvent(MouseButtonReleasedEvent& e)
+	bool ImGuiLayer::OnMouseButtonRelasedEvent(MouseButtonReleasedEvent& event)
 	{
 		ImGuiIO& io = ImGui::GetIO();
 		std::cout << "OnEvent end: io.MouseDown: " << io.MouseDown[0] << ", " << io.MouseDown[1] << ", " << io.MouseDown[2] << std::endl;
-		io.MouseDown[e.GetMouseButton()] = false;
-		return false; 
+		io.MouseDown[event.GetMouseButton()] = false;
+		return false;
 	}
 
 
@@ -129,7 +130,7 @@ namespace VEGA
 		return false;
 	}
 	bool ImGuiLayer::OnMouseScrolledEvent(MouseScrolledEvent& event)
-	{ 
+	{
 		ImGuiIO& io = ImGui::GetIO();;
 		io.MouseWheelH += event.GetXOffset();
 		io.MouseWheel += event.GetYOffset();
@@ -137,11 +138,30 @@ namespace VEGA
 		return false;
 	}
 	bool ImGuiLayer::OnKeyPressedEvent(KeyPressedEvent& event)
-	{ 
+	{   
+		ImGuiIO& io = ImGui::GetIO();
+		io.KeysDown[event.GetKeyCode()] = true;
+		io.KeyCtrl = io.KeysDown[GLFW_KEY_LEFT_CONTROL] || io.KeysDown[GLFW_KEY_RIGHT_CONTROL];
+		io.KeyShift = io.KeysDown[GLFW_KEY_LEFT_SHIFT] || io.KeysDown[GLFW_KEY_RIGHT_SHIFT];
+		io.KeyAlt = io.KeysDown[GLFW_KEY_LEFT_ALT] || io.KeysDown[GLFW_KEY_RIGHT_ALT];
+		io.KeySuper = io.KeysDown[GLFW_KEY_LEFT_SUPER] || io.KeysDown[GLFW_KEY_RIGHT_SUPER];
 		return false;
 	}
 	bool ImGuiLayer::OnKeyReleasedEvent(KeyReleasedEvent& event)
-	{ 
+	{
+		ImGuiIO& io = ImGui::GetIO();
+		
+		io.KeysDown[event.GetKeyCode()] = false;
+		return false;
+	}
+	bool ImGuiLayer::OnKeyTypedEvent(KeyTypedEvent& event)
+	{   
+		ImGuiIO& io = ImGui::GetIO();
+		int keycode = event.GetKeyCode();
+		if (keycode > 0 && keycode < 0x10000) {
+			io.AddInputCharacter((unsigned short)keycode);
+		}
+
 		return false;
 	}
 	bool ImGuiLayer::OnWindowResizeEvent(WindowResizeEvent& event)
