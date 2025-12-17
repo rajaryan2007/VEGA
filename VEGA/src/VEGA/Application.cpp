@@ -2,7 +2,7 @@
 
 #include "Application.h"
 #include "VEGA/Log.h"
-
+#include "input.h"
 #include <glad/glad.h>
 
 
@@ -72,6 +72,8 @@ namespace VEGA{
 
 		for (Layer* layer : m_LayerStack)
 			layer->OnUpdate();
+		auto [x, y] = Input::GetMousePosition();
+		VG_CORE_TRACE("{0},{1}", x, y);
 		m_Window->OnUpdate();
 	}
 
@@ -82,4 +84,3 @@ namespace VEGA{
 		return true;
 	}
 }
-////////////

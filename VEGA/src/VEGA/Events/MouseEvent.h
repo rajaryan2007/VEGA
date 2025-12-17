@@ -89,7 +89,8 @@ namespace VEGA {
 			: MouseButtonEvent(button) {
 		}
 
-		std::string ToString() const override {
+		std::string ToString() const override
+		{
 			std::stringstream ss;
 			ss << "MouseButtonReleasedEvent: " << m_Button;
 			return ss.str();

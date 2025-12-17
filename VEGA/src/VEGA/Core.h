@@ -10,6 +10,10 @@
 #endif
 
 
+#ifdef HZ_DEBUG
+   #define HZ_ENABLE_ASSERTS
+#endif
+
 
 #ifdef VG_ENABLE_ASSERTS
    #define VG_ASSERT(x,...) {if(!x) {HZ_ERROR("assertion Failed :{0} ",__VA_ARGS__);__debugbreak();}}

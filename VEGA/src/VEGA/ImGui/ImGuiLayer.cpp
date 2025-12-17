@@ -22,14 +22,17 @@ namespace VEGA
 	}
 	void ImGuiLayer::OnAttach()
 	{
-		ImGui::CreateContext(); ImGui::StyleColorsDark();
-		ImGuiIO& io = ImGui::GetIO();
+		ImGui::CreateContext();
+		ImGui::StyleColorsDark();
 
+		ImGuiIO& io = ImGui::GetIO();
 		io.BackendFlags |= ImGuiBackendFlags_HasMouseCursors;
 		io.BackendFlags |= ImGuiBackendFlags_HasSetMousePos;
 
+		io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
+		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 
-
+		// TEMPORARY: should eventually use Hazel key codes
 		io.KeyMap[ImGuiKey_Tab] = GLFW_KEY_TAB;
 		io.KeyMap[ImGuiKey_LeftArrow] = GLFW_KEY_LEFT;
 		io.KeyMap[ImGuiKey_RightArrow] = GLFW_KEY_RIGHT;
@@ -59,86 +62,77 @@ namespace VEGA
 	}
 	void ImGuiLayer::OnUpdate()
 	{
-
 		ImGuiIO& io = ImGui::GetIO();
 		Application& app = Application::Get();
 		io.DisplaySize = ImVec2(app.GetWindow().GetWidth(), app.GetWindow().GetHeight());
 
-
 		float time = (float)glfwGetTime();
-		io.DeltaTime = m_Time > 0.0 ? (time - m_Time) : (1.0f / 60.0f);
+		io.DeltaTime = m_Time > 0.0f ? (time - m_Time) : (1.0f / 60.0f);
 		m_Time = time;
 
 		ImGui_ImplOpenGL3_NewFrame();
-
 		ImGui::NewFrame();
+        
 
+		// Manual mouse pos update to fix "stuck" clicks
+	
+		
+		// Ensure ImGui has focus
+		
 		static bool show = true;
 		ImGui::ShowDemoWindow(&show);
 
 		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 	}
+
 	void ImGuiLayer::OnEvent(Event& event)
 	{
-		m_BlockEvents = true;
-		if (m_BlockEvents)
-		{
-			ImGuiIO& io = ImGui::GetIO();
-			if (event.IsInCategory(EventCategoryMouse) && io.WantCaptureMouse)
-				event.Handled = true;
-			if (event.IsInCategory(EventCategoryKeyboard) && io.WantCaptureKeyboard)
-				event.Handled = true;
-		}
-		std::cout << "ImGuiLayer::OnEvent: " << event.GetName() << " handled=" << event.Handled << std::endl;
-
 		EventDispatcher dispatcher(event);
 
 		dispatcher.Dispatch<MouseButtonPressedEvent>(VG_BIND_EVENT_FN(ImGuiLayer::OnMouseButtonPressedEvent));
-		dispatcher.Dispatch<MouseButtonReleasedEvent>(VG_BIND_EVENT_FN(ImGuiLayer::OnMouseButtonRelasedEvent));
+		dispatcher.Dispatch<MouseButtonReleasedEvent>(VG_BIND_EVENT_FN(ImGuiLayer::OnMouseButtonReleasedEvent));
 		dispatcher.Dispatch<MouseMovedEvent>(VG_BIND_EVENT_FN(ImGuiLayer::OnMouseMovedEvent));
 		dispatcher.Dispatch<MouseScrolledEvent>(VG_BIND_EVENT_FN(ImGuiLayer::OnMouseScrolledEvent));
 		dispatcher.Dispatch<KeyPressedEvent>(VG_BIND_EVENT_FN(ImGuiLayer::OnKeyPressedEvent));
-		dispatcher.Dispatch<KeyReleasedEvent>(VG_BIND_EVENT_FN(ImGuiLayer::OnKeyReleasedEvent));
 		dispatcher.Dispatch<KeyTypedEvent>(VG_BIND_EVENT_FN(ImGuiLayer::OnKeyTypedEvent));
+		dispatcher.Dispatch<KeyReleasedEvent>(VG_BIND_EVENT_FN(ImGuiLayer::OnKeyReleasedEvent));
 		dispatcher.Dispatch<WindowResizeEvent>(VG_BIND_EVENT_FN(ImGuiLayer::OnWindowResizeEvent));
 	}
 
-	bool ImGuiLayer::OnMouseButtonPressedEvent(MouseButtonPressedEvent& event)
+
+	bool ImGuiLayer::OnMouseButtonPressedEvent(MouseButtonPressedEvent& e)
 	{
 		ImGuiIO& io = ImGui::GetIO();
-		std::cout << "FRAME IO before: mouse0=" << io.MouseDown[0] << " mouse1=" << io.MouseDown[1] << " mouse2=" << io.MouseDown[2] << std::endl;
-		io.MouseDown[event.GetMouseButton()] = true;
+		io.AddMouseButtonEvent(e.GetMouseButton(), true);
+
 		return false;
 	}
 
-	bool ImGuiLayer::OnMouseButtonRelasedEvent(MouseButtonReleasedEvent& event)
+	bool ImGuiLayer::OnMouseButtonReleasedEvent(MouseButtonReleasedEvent& e)
 	{
 		ImGuiIO& io = ImGui::GetIO();
-		std::cout << "OnEvent end: io.MouseDown: " << io.MouseDown[0] << ", " << io.MouseDown[1] << ", " << io.MouseDown[2] << std::endl;
-		io.MouseDown[event.GetMouseButton()] = false;
+		io.AddMouseButtonEvent(e.GetMouseButton(), false);
+
 		return false;
 	}
-
 
 	bool ImGuiLayer::OnMouseMovedEvent(MouseMovedEvent& event)
 	{
-		ImGuiIO& io = ImGui::GetIO();;
-		io.MousePos = ImVec2(event.GetX(), event.GetY());
-
+		ImGuiIO& io = ImGui::GetIO();
+		io.AddMousePosEvent(event.GetX(), event.GetY());
 
 		return false;
 	}
 	bool ImGuiLayer::OnMouseScrolledEvent(MouseScrolledEvent& event)
 	{
-		ImGuiIO& io = ImGui::GetIO();;
-		io.MouseWheelH += event.GetXOffset();
-		io.MouseWheel += event.GetYOffset();
+		ImGuiIO& io = ImGui::GetIO();
+		io.AddMouseWheelEvent(event.GetXOffset(), event.GetYOffset());
 
 		return false;
 	}
 	bool ImGuiLayer::OnKeyPressedEvent(KeyPressedEvent& event)
-	{   
+	{
 		ImGuiIO& io = ImGui::GetIO();
 		io.KeysDown[event.GetKeyCode()] = true;
 		io.KeyCtrl = io.KeysDown[GLFW_KEY_LEFT_CONTROL] || io.KeysDown[GLFW_KEY_RIGHT_CONTROL];
@@ -150,12 +144,12 @@ namespace VEGA
 	bool ImGuiLayer::OnKeyReleasedEvent(KeyReleasedEvent& event)
 	{
 		ImGuiIO& io = ImGui::GetIO();
-		
+
 		io.KeysDown[event.GetKeyCode()] = false;
 		return false;
 	}
 	bool ImGuiLayer::OnKeyTypedEvent(KeyTypedEvent& event)
-	{   
+	{
 		ImGuiIO& io = ImGui::GetIO();
 		int keycode = event.GetKeyCode();
 		if (keycode > 0 && keycode < 0x10000) {

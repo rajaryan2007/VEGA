@@ -65,6 +65,8 @@
       <Filter>VEGA</Filter>
     </ClInclude>
     <ClInclude Include="src\vgpch.h" />
+    <ClInclude Include="src\VEGA\input.h" />
+    <ClInclude Include="src\Platform\Windows\WindowInput.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Platform\OpenGL\ImGuiOpenGLRenderer.cpp">
@@ -89,5 +91,6 @@
       <Filter>VEGA</Filter>
     </ClCompile>
     <ClCompile Include="src\vgpch.cpp" />
+    <ClCompile Include="src\Platform\Windows\WindowInput.cpp" />
   </ItemGroup>
 </Project>
