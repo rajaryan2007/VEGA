@@ -4,6 +4,7 @@
 #include "VEGA/Log.h"
 #include "input.h"
 #include <glad/glad.h>
+#include <GLFW/glfw3.h>
 
 
 namespace VEGA{
@@ -20,6 +21,8 @@ namespace VEGA{
 		m_Window = std::unique_ptr<Window>(Window::Create());
 		m_Window->SetEventCallback(BIND_EVENT_FN(OnEvent));
 
+		m_ImGuiLayer = new ImGuiLayer();
+		PushOverlay(m_ImGuiLayer);	
 	}
 
 	Application::~Application()
@@ -38,7 +41,7 @@ namespace VEGA{
 		m_LayerStack.PushOverlay(layer);
 		layer->OnAttach();
 	}
-
+	
 	void Application::OnEvent(Event& e)
 	{
 		EventDispatcher dispatcher(e);
@@ -67,14 +70,19 @@ namespace VEGA{
 
 	while (m_Running)
 	{   
+		//glfwPollEvents();
+		m_Window->OnUpdate();
 		glClearColor(1,1,0, 1);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
 		for (Layer* layer : m_LayerStack)
 			layer->OnUpdate();
-		auto [x, y] = Input::GetMousePosition();
-		VG_CORE_TRACE("{0},{1}", x, y);
-		m_Window->OnUpdate();
+
+		m_ImGuiLayer->Begin();
+		for (Layer* layer : m_LayerStack)
+			layer->OnImGuiRender();
+		m_ImGuiLayer->End();
+		
 	}
 
 	};

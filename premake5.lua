@@ -9,6 +9,8 @@ IncludeDir = {}
 IncludeDir["GLFW"] = "VEGA/vendor/GLFW/include"
 IncludeDir["Glad"] = "VEGA/vendor/Glad/include"
 IncludeDir["ImGui"] = "VEGA/vendor/imgui"
+IncludeDir["glm"] = "VEGA/vendor/glm"
+
 include "VEGA/vendor/GLFW"
 include "VEGA/vendor/Glad"
 include "VEGA/vendor/imgui"
@@ -37,9 +39,8 @@ project "VEGA"
         "%{prj.name}/vendor/spdlog/include",
         "%{IncludeDir.GLFW}",
         "%{IncludeDir.Glad}",
-        "%{IncludeDir.ImGui}"
-
-
+        "%{IncludeDir.ImGui}",
+        "%{IncludeDir.glm}"
     }
     links
     {
@@ -97,13 +98,16 @@ project "Sandbox"
     files
     {
         "%{prj.name}/src/**.h",
-        "%{prj.name}/src/**.cpp"
+        "%{prj.name}/src/**.cpp",
+        "%{prj.name}/vendor/glm/glm/**.hpp",
+        "%{prj.name}/vendor/glm/glm/**.inl"
     }
 
     includedirs
     {
         "VEGA/vendor/spdlog/include",
-        "VEGA/src"
+        "VEGA/src",
+        "%{IncludeDir.glm}"
     }
 
     links

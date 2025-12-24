@@ -4,6 +4,7 @@
 #include "VEGA/LayerStack.h"
 #include "Events/Event.h"
 #include "VEGA/Events/ApplicationEvent.h"
+#include "VEGA/ImGui/ImGuiLayer.h"
 
 
 
@@ -28,7 +29,8 @@ namespace VEGA {
 	private:
 		bool OnWindowClose(WindowCloseEvent& e);
 
-		std::unique_ptr<class Window> m_Window;
+		std::unique_ptr<Window> m_Window;
+		ImGuiLayer* m_ImGuiLayer;
 		bool m_Running = true;
 		LayerStack m_LayerStack;
 		static Application* s_instance;

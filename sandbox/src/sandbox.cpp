@@ -1,5 +1,6 @@
 #include "VEGA.h"
 
+#include <glm/vec3.hpp>
 class ExampleLayer : public VEGA::Layer
 {
 public:
@@ -11,11 +12,19 @@ public:
 
 	void OnUpdate() override
 	{
-		
+		//VG_INFO("EXAMPleLayer");
+
+		if (VEGA::Input::IsKeyPressed(VG_KEY_TAB))
+			VG_INFO("TAB key is pressed!");
 	}
 	void OnEvent(VEGA::Event& event) override
 	{
 		//VG_TRACE("{0}", event.ToString());
+		if (event.GetEventType() == VEGA::EventType::KeyPressed)
+		{
+			VEGA::KeyPressedEvent& e = (VEGA::KeyPressedEvent&)event;
+			VG_TRACE("{0}", (char)e.GetKeyCode());
+		}
 	}
 	
 };
@@ -26,7 +35,7 @@ public:
 	Sandbox()
 	{
 		PushLayer(new ExampleLayer);
-		PushOverlay(new VEGA::ImGuiLayer());
+		
 	}
 	~Sandbox()
 	{

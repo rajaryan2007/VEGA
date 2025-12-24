@@ -24,6 +24,9 @@
     <ClInclude Include="src\Platform\OpenGL\ImGuiOpenGLRenderer.h">
       <Filter>Platform\OpenGL</Filter>
     </ClInclude>
+    <ClInclude Include="src\Platform\Windows\WindowInput.h">
+      <Filter>Platform\Windows</Filter>
+    </ClInclude>
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h">
       <Filter>Platform\Windows</Filter>
     </ClInclude>
@@ -64,13 +67,23 @@
     <ClInclude Include="src\VEGA\Window.h">
       <Filter>VEGA</Filter>
     </ClInclude>
+    <ClInclude Include="src\VEGA\input.h">
+      <Filter>VEGA</Filter>
+    </ClInclude>
+    <ClInclude Include="src\VEGA\keyCodes.h">
+      <Filter>VEGA</Filter>
+    </ClInclude>
+    <ClInclude Include="src\VEGA\mouseButtonCodes.h">
+      <Filter>VEGA</Filter>
+    </ClInclude>
     <ClInclude Include="src\vgpch.h" />
-    <ClInclude Include="src\VEGA\input.h" />
-    <ClInclude Include="src\Platform\Windows\WindowInput.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Platform\OpenGL\ImGuiOpenGLRenderer.cpp">
       <Filter>Platform\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\Windows\WindowInput.cpp">
+      <Filter>Platform\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp">
       <Filter>Platform\Windows</Filter>
@@ -91,6 +104,5 @@
       <Filter>VEGA</Filter>
     </ClCompile>
     <ClCompile Include="src\vgpch.cpp" />
-    <ClCompile Include="src\Platform\Windows\WindowInput.cpp" />
   </ItemGroup>
 </Project>

@@ -3,6 +3,9 @@
 
 #include "VEGA\Application.h"
 #include "VEGA\Layer.h"
+#include "VEGA\input.h"
+#include "VEGA\KeyCodes.h"
+#include "VEGA\MouseButtonCodes.h"
 
 #include "VEGA\Log.h"
 #include "VEGA\ImGui\ImGuiLayer.h"
