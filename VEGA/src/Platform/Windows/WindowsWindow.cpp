@@ -5,7 +5,10 @@
 #include "VEGA/Events/ApplicationEvent.h"
 #include "VEGA/Events/KeyEvent.h"
 #include "Glad/glad.h"
-
+#include "backends/imgui_impl_glfw.h"
+#include "imgui.h"
+#include "backends/imgui_impl_glfw.h"
+#include "imgui.h"
 
 
 namespace VEGA {
@@ -45,12 +48,15 @@ namespace VEGA {
 		}
 
 
-		m_Window = glfwCreateWindow((int)props.Width, (int)props.Height, m_Data.Title.c_str(), nullptr, nullptr);
+    m_Window = glfwCreateWindow((int)props.Width, (int)props.Height, m_Data.Title.c_str(), nullptr, nullptr);
 		glfwMakeContextCurrent(m_Window);
 		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
 		VG_CORE_ASSERT(status, "Failed to initialize Glad!");
 		glfwSetWindowUserPointer(m_Window, &m_Data);
 		SetVSync(true);
+
+	// If ImGui backend installed callbacks earlier with install_callbacks=true, it saved previous callbacks and chained them.
+	// When using install_callbacks=false we must forward the callbacks manually; ensure backend data is initialized by setting current context.
 
 		//set GLFW callbacks here
 		glfwSetWindowSizeCallback(m_Window, [](GLFWwindow* window, int width, int height) 
@@ -72,77 +78,77 @@ namespace VEGA {
 				WindowCloseEvent event;
 				data.EventCallback(event);
 		});
-		glfwSetKeyCallback(m_Window, [](GLFWwindow* window ,int key,int scancode,int action,int mods)
-		{
-				WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
-				switch (action)
-				{
-				  case GLFW_PRESS:
-				  {
-					KeyPressedEvent event(key, 0);
-					data.EventCallback(event);
-					break;
-				  }
-				  case GLFW_RELEASE:
-				  {
-					KeyReleasedEvent event(key);
-					data.EventCallback(event);
-					break;
-			   	  }   
-				  case GLFW_REPEAT:
-				  {
-					KeyPressedEvent event(key, 1);
-					data.EventCallback(event);
-					break;
-				  }
-				}
-				
-		});
-		glfwSetCharCallback(m_Window, [](GLFWwindow* window,unsigned int keycode) {
-			WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+glfwSetKeyCallback(m_Window, [](GLFWwindow* window ,int key,int scancode,int action,int mods)
+{
+        WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+        switch (action)
+        {
+          case GLFW_PRESS:
+          {
+            KeyPressedEvent event(key, 0);
+            data.EventCallback(event);
+            break;
+          }
+          case GLFW_RELEASE:
+          {
+            KeyReleasedEvent event(key);
+            data.EventCallback(event);
+            break;
+          }   
+          case GLFW_REPEAT:
+          {
+            KeyPressedEvent event(key, 1);
+            data.EventCallback(event);
+            break;
+          }
+        }
+        
+});
+glfwSetCharCallback(m_Window, [](GLFWwindow* window,unsigned int keycode) {
+        WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
 
-			KeyTypedEvent event(keycode);
-			data.EventCallback(event);
+        KeyTypedEvent event(keycode);
+        data.EventCallback(event);
 
-			});
+    });
 	
 
-		glfwSetMouseButtonCallback(m_Window, [](GLFWwindow* window, int button, int action, int mods)
-			{
-				WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+glfwSetMouseButtonCallback(m_Window, [](GLFWwindow* window, int button, int action, int mods)
+            {
+                WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
 
-				switch (action)
-				{
-				case GLFW_PRESS:
-				{
-					MouseButtonPressedEvent event(button);
-					data.EventCallback(event);
-					break;
-				}
-				case GLFW_RELEASE:
-				{
-					MouseButtonReleasedEvent event(button);
-					data.EventCallback(event);
-					break;
-				}
-				}
-			});
+                switch (action)
+                {
+                case GLFW_PRESS:
+                {
+                    MouseButtonPressedEvent event(button);
+                    data.EventCallback(event);
+                    break;
+                }
+                case GLFW_RELEASE:
+                {
+                    MouseButtonReleasedEvent event(button);
+                    data.EventCallback(event);
+                    break;
+                }
+                }
+            });
 
-		glfwSetScrollCallback(m_Window, [](GLFWwindow* window, double xOffset, double yOffset)
-			{
-				WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+glfwSetScrollCallback(m_Window, [](GLFWwindow* window, double xOffset, double yOffset)
+            {
+                WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
 
-				MouseScrolledEvent event((float)xOffset, (float)yOffset);
-				data.EventCallback(event);
-			});
+                MouseScrolledEvent event((float)xOffset, (float)yOffset);
+                data.EventCallback(event);
+            });
 		
-		glfwSetCursorPosCallback(m_Window, [](GLFWwindow* window, double xPos, double yPos)
-			{
-				WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+glfwSetCursorPosCallback(m_Window, [](GLFWwindow* window, double xPos, double yPos)
+            {
+                WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
 
-				MouseMovedEvent event((float)xPos, (float)yPos);
-				data.EventCallback(event);
-			});
+                MouseMovedEvent event((float)xPos, (float)yPos);
+                data.EventCallback(event);
+            });
 
 	}
 
@@ -153,8 +159,9 @@ namespace VEGA {
 
 	void WindowsWindow::OnUpdate()
 	{
-		glfwPollEvents();
-		glfwSwapBuffers(m_Window);
+    // Poll events and swap buffers
+    glfwPollEvents();
+    glfwSwapBuffers(m_Window);
 	}
 
 	void WindowsWindow::SetVSync(bool enabled)

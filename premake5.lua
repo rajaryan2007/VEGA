@@ -17,10 +17,10 @@ include "VEGA/vendor/imgui"
 
 project "VEGA"
     location "VEGA"
-    kind "SharedLib"
+    kind "StaticLib"
     language "C++"
     cppdialect "C++17"
-    staticruntime "On"
+    staticruntime "on"
 
     targetdir ("bin/" .. outputdir .. "/%{prj.name}")
     objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -30,7 +30,14 @@ project "VEGA"
     files
     {
         "%{prj.name}/src/**.h",
-        "%{prj.name}/src/**.cpp"
+        "%{prj.name}/src/**.cpp",
+        "%{prj.name}/vendor/glm/glm/**.hpp",
+        "%{prj.name}/vendor/glm/glm/**.inl"
+    }
+
+    defines
+    {
+        "_CRT_SECURE_NO_WARNINGS"
     }
 
     includedirs
@@ -63,11 +70,7 @@ project "VEGA"
             "GLFW_INCLUDE_NONE"
         }
 
-        postbuildcommands
-        {
-
-            ("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/Sandbox")
-        }
+        
 
     filter "configurations:Debug"
         defines "VG_DEBUG"
@@ -107,6 +110,7 @@ project "Sandbox"
     {
         "VEGA/vendor/spdlog/include",
         "VEGA/src",
+        "VEGA/vendor",
         "%{IncludeDir.glm}"
     }
 

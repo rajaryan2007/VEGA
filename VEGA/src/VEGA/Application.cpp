@@ -70,8 +70,9 @@ namespace VEGA{
 
 	while (m_Running)
 	{   
-		//glfwPollEvents();
+		// Poll events and swap buffers first so ImGui backend callbacks update IO before NewFrame
 		m_Window->OnUpdate();
+		// Clear
 		glClearColor(1,1,0, 1);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
@@ -83,6 +84,7 @@ namespace VEGA{
 			layer->OnImGuiRender();
 		m_ImGuiLayer->End();
 		
+
 	}
 
 	};

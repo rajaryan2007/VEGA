@@ -15,12 +15,14 @@ namespace VEGA
 		virtual void OnDetach() override;
 		virtual void OnAttach() override;
 		virtual void OnImGuiRender() ;
-		
+		virtual void OnEvent(Event& e) override;
+
 		void Begin();
 		void End();
 
 	private:
-		float m_Time = 0.0f;
+        float m_Time = 0.0f;
+		bool m_BlockEvents = true;
 		
 	};
 }

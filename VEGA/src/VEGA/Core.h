@@ -1,10 +1,14 @@
 #pragma once
 #ifdef VG_PLATFORM_WINDOWS
+#if HZ_DYNAMIC_LINK
       #ifdef VG_BUILD_DLL
              #define  VEGA_API __declspec(dllexport)
       #else
              #define VEGA_API __declspec(dllimport)
       #endif // HZ_BUILD_DLL
+#else
+#define VEGA_API
+#endif // HZ_DYNAMIC_LINK
 #else
        #error Vega only support Window!
 #endif
