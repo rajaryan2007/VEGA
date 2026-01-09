@@ -7,9 +7,8 @@
 #include "Glad/glad.h"
 #include "backends/imgui_impl_glfw.h"
 #include "imgui.h"
-#include "backends/imgui_impl_glfw.h"
-#include "imgui.h"
 
+#include "Platform/OpenGL/OpenGLContext.h"
 
 namespace VEGA {
 	static bool s_GLFWInitialized = false;
@@ -40,6 +39,7 @@ namespace VEGA {
 		m_Data.Height = props.Height;
 
 		VG_CORE_INFO("CREATE WINDOW {0} : {1}, {2}", props.Title, props.Width, props.Height);
+		
 		if (!s_GLFWInitialized) {
 			int success = glfwInit();
 			VG_CORE_ASSERT(success, "Could not initialize GLFW!");
@@ -49,9 +49,12 @@ namespace VEGA {
 
 
     m_Window = glfwCreateWindow((int)props.Width, (int)props.Height, m_Data.Title.c_str(), nullptr, nullptr);
-		glfwMakeContextCurrent(m_Window);
-		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
-		VG_CORE_ASSERT(status, "Failed to initialize Glad!");
+		
+	    m_Context = new OpenGLContext(m_Window);	
+		m_Context->Init();
+	   // glfwMakeContextCurrent(m_Window);
+		//int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
+		//VG_CORE_ASSERT(status, "Failed to initialize Glad!");
 		glfwSetWindowUserPointer(m_Window, &m_Data);
 		SetVSync(true);
 
@@ -160,8 +163,10 @@ glfwSetCursorPosCallback(m_Window, [](GLFWwindow* window, double xPos, double yP
 	void WindowsWindow::OnUpdate()
 	{
     // Poll events and swap buffers
+
     glfwPollEvents();
-    glfwSwapBuffers(m_Window);
+    m_Context->SwapBuffers();
+    //glfwSwapBuffers(m_Window);
 	}
 
 	void WindowsWindow::SetVSync(bool enabled)
