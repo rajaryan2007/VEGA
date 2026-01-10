@@ -16,6 +16,14 @@ namespace VEGA {
 		glfwMakeContextCurrent(m_WindowHandle);
 		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
 		VG_CORE_ASSERT(status, "Failed to initialize Glad!");
+
+		VG_CORE_INFO(
+			"OpenGL Info: {0} {1}",
+			reinterpret_cast<const char*>(glGetString(GL_VENDOR)),
+			reinterpret_cast<const char*>(glGetString(GL_RENDERER))
+		);
+		VG_CORE_INFO("  Version: {0}", reinterpret_cast<const char*>(glGetString(GL_VERSION)));
+
 	}
 	void OpenGLContext::SwapBuffers()
 	{
