@@ -1358,6 +1358,7 @@
     </ClInclude>
     <ClInclude Include="src\VEGA\Renderer\GraphicsContext.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h" />
+    <ClInclude Include="src\VEGA\Renderer\Shader.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Platform\Windows\WindowInput.cpp">
@@ -1388,5 +1389,6 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp" />
+    <ClCompile Include="src\VEGA\Renderer\Shader.cpp" />
   </ItemGroup>
 </Project>

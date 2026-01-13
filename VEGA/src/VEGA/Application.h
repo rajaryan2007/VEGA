@@ -6,6 +6,7 @@
 #include "VEGA/Events/ApplicationEvent.h"
 #include "VEGA/ImGui/ImGuiLayer.h"
 
+#include "VEGA\Renderer\Shader.h"
 
 
 namespace VEGA {
@@ -35,6 +36,7 @@ namespace VEGA {
 		LayerStack m_LayerStack;
 
 		unsigned int m_VertexArray, m_VertexBuffer, m_IndexBuffer;
+		std::unique_ptr<Shader> m_Shader;
 
 		static Application* s_instance;
 	};

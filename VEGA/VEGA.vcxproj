@@ -162,6 +162,7 @@
     <ClInclude Include="src\VEGA\LayerStack.h" />
     <ClInclude Include="src\VEGA\Log.h" />
     <ClInclude Include="src\VEGA\Renderer\GraphicsContext.h" />
+    <ClInclude Include="src\VEGA\Renderer\Shader.h" />
     <ClInclude Include="src\VEGA\Window.h" />
     <ClInclude Include="src\VEGA\input.h" />
     <ClInclude Include="src\VEGA\keyCodes.h" />
@@ -597,6 +598,7 @@
     <ClCompile Include="src\VEGA\Layer.cpp" />
     <ClCompile Include="src\VEGA\LayerStack.cpp" />
     <ClCompile Include="src\VEGA\Log.cpp" />
+    <ClCompile Include="src\VEGA\Renderer\Shader.cpp" />
     <ClCompile Include="src\vgpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
