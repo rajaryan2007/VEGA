@@ -161,7 +161,9 @@
     <ClInclude Include="src\VEGA\Layer.h" />
     <ClInclude Include="src\VEGA\LayerStack.h" />
     <ClInclude Include="src\VEGA\Log.h" />
+    <ClInclude Include="src\VEGA\Renderer\Buffer.h" />
     <ClInclude Include="src\VEGA\Renderer\GraphicsContext.h" />
+    <ClInclude Include="src\VEGA\Renderer\Renderer.h" />
     <ClInclude Include="src\VEGA\Renderer\Shader.h" />
     <ClInclude Include="src\VEGA\Window.h" />
     <ClInclude Include="src\VEGA\input.h" />
@@ -589,6 +591,8 @@
     <ClInclude Include="vendor\glm\glm\vector_relational.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.h" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowInput.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />
@@ -598,6 +602,8 @@
     <ClCompile Include="src\VEGA\Layer.cpp" />
     <ClCompile Include="src\VEGA\LayerStack.cpp" />
     <ClCompile Include="src\VEGA\Log.cpp" />
+    <ClCompile Include="src\VEGA\Renderer\Buffer.cpp" />
+    <ClCompile Include="src\VEGA\Renderer\Renderer.cpp" />
     <ClCompile Include="src\VEGA\Renderer\Shader.cpp" />
     <ClCompile Include="src\vgpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>

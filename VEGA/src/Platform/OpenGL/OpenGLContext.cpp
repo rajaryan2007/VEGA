@@ -2,7 +2,7 @@
 #include "OpenGLContext.h"	
 
 #include <GLFW/glfw3.h>
-#include "Glad/glad.h"	
+#include <Glad/glad.h>
 
 namespace VEGA {
 	OpenGLContext::OpenGLContext(GLFWwindow* windowHandle)

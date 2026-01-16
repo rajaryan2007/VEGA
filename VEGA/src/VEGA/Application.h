@@ -6,8 +6,8 @@
 #include "VEGA/Events/ApplicationEvent.h"
 #include "VEGA/ImGui/ImGuiLayer.h"
 
-#include "VEGA\Renderer\Shader.h"
-
+#include "VEGA/Renderer/Shader.h"
+#include "VEGA/Renderer/Buffer.h"
 
 namespace VEGA {
 
@@ -35,8 +35,10 @@ namespace VEGA {
 		bool m_Running = true;
 		LayerStack m_LayerStack;
 
-		unsigned int m_VertexArray, m_VertexBuffer, m_IndexBuffer;
+		unsigned int m_VertexArray;
 		std::unique_ptr<Shader> m_Shader;
+		std::unique_ptr<VertexBuffer> m_VertexBuffer;
+		std::unique_ptr<IndexBuffer> m_IndexBuffer;
 
 		static Application* s_instance;
 	};

@@ -1359,6 +1359,8 @@
     <ClInclude Include="src\VEGA\Renderer\GraphicsContext.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h" />
     <ClInclude Include="src\VEGA\Renderer\Shader.h" />
+    <ClInclude Include="src\VEGA\Renderer\Buffer.h" />
+    <ClInclude Include="src\VEGA\Renderer\Renderer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Platform\Windows\WindowInput.cpp">
@@ -1390,5 +1392,9 @@
     </ClCompile>
     <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp" />
     <ClCompile Include="src\VEGA\Renderer\Shader.cpp" />
+    <ClCompile Include="src\VEGA\Renderer\Buffer.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.h" />
+    <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp" />
+    <ClCompile Include="src\VEGA\Renderer\Renderer.cpp" />
   </ItemGroup>
 </Project>

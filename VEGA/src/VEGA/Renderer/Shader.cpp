@@ -3,6 +3,7 @@
 
 #include <glad/glad.h>
 
+
 VEGA::Shader::Shader(const std::string& vertexSrc, const std::string& fragmentSrc)
 {
 	GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
@@ -97,6 +98,10 @@ VEGA::Shader::~Shader()
 {
 	glDeleteProgram(m_RendererID);
 }
+
+
+
+
 
 void VEGA::Shader::Bind() const
 {
