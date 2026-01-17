@@ -1,0 +1,133 @@
+{
+	"backtrace" : 0,
+	"backtraceGraph" : 
+	{
+		"commands" : [],
+		"files" : 
+		[
+			"CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			}
+		]
+	},
+	"dependencies" : 
+	[
+		{
+			"id" : "glfw::@145eef247bfb46b6828c"
+		},
+		{
+			"id" : "boing::@714eac15f71a94114fdf"
+		},
+		{
+			"id" : "gears::@714eac15f71a94114fdf"
+		},
+		{
+			"id" : "heightmap::@714eac15f71a94114fdf"
+		},
+		{
+			"id" : "offscreen::@714eac15f71a94114fdf"
+		},
+		{
+			"id" : "particles::@714eac15f71a94114fdf"
+		},
+		{
+			"id" : "sharing::@714eac15f71a94114fdf"
+		},
+		{
+			"id" : "splitview::@714eac15f71a94114fdf"
+		},
+		{
+			"id" : "triangle-opengl::@714eac15f71a94114fdf"
+		},
+		{
+			"id" : "triangle-opengles::@714eac15f71a94114fdf"
+		},
+		{
+			"id" : "wave::@714eac15f71a94114fdf"
+		},
+		{
+			"id" : "monitors::@a44f0ac069e85531cdee"
+		},
+		{
+			"id" : "windows::@714eac15f71a94114fdf"
+		},
+		{
+			"id" : "allocator::@a44f0ac069e85531cdee"
+		},
+		{
+			"id" : "msaa::@a44f0ac069e85531cdee"
+		},
+		{
+			"id" : "glfwinfo::@a44f0ac069e85531cdee"
+		},
+		{
+			"id" : "clipboard::@a44f0ac069e85531cdee"
+		},
+		{
+			"id" : "events::@a44f0ac069e85531cdee"
+		},
+		{
+			"id" : "iconify::@a44f0ac069e85531cdee"
+		},
+		{
+			"id" : "reopen::@a44f0ac069e85531cdee"
+		},
+		{
+			"id" : "joysticks::@a44f0ac069e85531cdee"
+		},
+		{
+			"id" : "empty::@a44f0ac069e85531cdee"
+		},
+		{
+			"id" : "timeout::@a44f0ac069e85531cdee"
+		},
+		{
+			"id" : "icon::@a44f0ac069e85531cdee"
+		},
+		{
+			"id" : "cursor::@a44f0ac069e85531cdee"
+		},
+		{
+			"id" : "tearing::@a44f0ac069e85531cdee"
+		},
+		{
+			"id" : "title::@a44f0ac069e85531cdee"
+		},
+		{
+			"id" : "gamma::@a44f0ac069e85531cdee"
+		},
+		{
+			"id" : "inputlag::@a44f0ac069e85531cdee"
+		},
+		{
+			"id" : "triangle-vulkan::@a44f0ac069e85531cdee"
+		},
+		{
+			"id" : "threads::@a44f0ac069e85531cdee"
+		},
+		{
+			"id" : "window::@a44f0ac069e85531cdee"
+		},
+		{
+			"id" : "ZERO_CHECK::@6890427a1f51a3e7e1df"
+		}
+	],
+	"folder" : 
+	{
+		"name" : "CMakePredefinedTargets"
+	},
+	"id" : "ALL_BUILD::@6890427a1f51a3e7e1df",
+	"isGeneratorProvided" : true,
+	"name" : "ALL_BUILD",
+	"paths" : 
+	{
+		"build" : ".",
+		"source" : "."
+	},
+	"sources" : [],
+	"type" : "UTILITY"
+}

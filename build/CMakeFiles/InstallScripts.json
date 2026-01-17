@@ -1,0 +1,10 @@
+{
+	"InstallScripts" : 
+	[
+		"C:/Users/rion/source/repos/VEGA/build/cmake_install.cmake",
+		"C:/Users/rion/source/repos/VEGA/build/src/cmake_install.cmake",
+		"C:/Users/rion/source/repos/VEGA/build/examples/cmake_install.cmake",
+		"C:/Users/rion/source/repos/VEGA/build/tests/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

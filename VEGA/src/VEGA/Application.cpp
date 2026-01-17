@@ -13,6 +13,25 @@ namespace VEGA{
 
 	Application* Application::s_instance = nullptr;
 
+	static GLenum ShaderDataTypeToOpenGLBaseType(ShaderDataType type)
+	{
+		switch (type)
+		{
+		case VEGA::ShaderDataType::Float:    return GL_FLOAT;
+		case VEGA::ShaderDataType::Float2:   return GL_FLOAT;
+		case VEGA::ShaderDataType::Float3:   return GL_FLOAT;
+		case VEGA::ShaderDataType::Float4:   return GL_FLOAT;
+		case VEGA::ShaderDataType::Mat3:     return GL_FLOAT;
+		case VEGA::ShaderDataType::Mat4:     return GL_FLOAT;
+		case VEGA::ShaderDataType::Int:      return GL_INT;
+		case VEGA::ShaderDataType::Int2:     return GL_INT;
+		case VEGA::ShaderDataType::Int3:     return GL_INT;
+		case VEGA::ShaderDataType::Int4:     return GL_INT;
+		case VEGA::ShaderDataType::Bool:     return GL_BOOL;
+		}
+		VG_CORE_ASSERT(false, "Unknown ShaderDataType!");
+		return 0;
+	}
 
 	Application::Application()
 	{   
@@ -30,18 +49,33 @@ namespace VEGA{
 		
 
 		float vertices[] = {
-			-0.5f, -0.5f, 0.0f, 
-			 0.5f, -0.5f, 0.0f,
-			 0.0f,  0.5f, 0.0f, 
+			-0.5f, -0.5f, 0.0f,1.0f,0.0f,1.0f,1.0f,
+			 0.5f, -0.5f, 0.0f,1.0f,1.0f,0.0f,1.0f,
+			 0.0f,  0.5f, 0.0f,1.0f,1.0f,1.0f,1.0f,
 			
 		};
 
 		m_VertexBuffer.reset(VertexBuffer::Create(vertices,sizeof(vertices)));
 
-		
-		glEnableVertexAttribArray(0);
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (const void*)0);
-	    
+		{
+			BufferLayout layout = {
+				{ShaderDataType::Float3,"a_Position"},
+				{ShaderDataType::Float4,"a_Color" }
+
+			};
+
+			m_VertexBuffer->SetLayout(layout);
+		}
+		/*BufferLayout layout2(layout);
+		m_VertexBuffer->SetLayout(layout);*/
+		uint32_t index = 0;
+		const auto& layout = m_VertexBuffer->GetLayout();
+		for (const auto& element : layout )
+		{
+			glEnableVertexAttribArray(index);
+			glVertexAttribPointer(index, element.GetComponentCount(), ShaderDataTypeToOpenGLBaseType(element.Type), element.Normalized ? GL_TRUE : GL_FALSE, layout.GetStride(), (const void*)element.Offset);
+			index++;
+		}
 		
 		
 		uint32_t indices[] = {
@@ -54,11 +88,14 @@ namespace VEGA{
 		std::string vertexSrc = R"(
          #version 330 core
          layout(location =0) in vec3 a_Position;
-         
+         layout(location =1) in vec4 a_Color;         
+
          out vec3 v_Position; 
-          
+         out vec4 v_Color;         
+ 
          void main (){
             v_Position = a_Position;
+            v_Color = a_Color;
             gl_Position = vec4(a_Position,1.0);
          }
         )";
@@ -68,9 +105,9 @@ namespace VEGA{
          layout(location =0) out vec4 color;
           
          in vec3 v_Position;
-          
+         in vec4 v_Color; 
          void main (){
-             color = vec4(v_Position * 0.5 + 0.5,1.0);
+             color = vec4(v_Color);
          }
         )";
 		m_Shader.reset(new Shader(vertexSrc,fragmentSrc));
