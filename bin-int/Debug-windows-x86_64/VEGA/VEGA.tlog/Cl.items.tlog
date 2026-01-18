@@ -1,6 +1,7 @@
 C:\Users\rion\source\repos\VEGA\VEGA\src\Platform\OpenGL\OpenGLBuffer.cpp;C:\Users\rion\source\repos\VEGA\bin-int\Debug-windows-x86_64\VEGA\OpenGLBuffer.obj
 C:\Users\rion\source\repos\VEGA\VEGA\src\Platform\OpenGL\OpenGLBuffer.h;C:\Users\rion\source\repos\VEGA\bin-int\Debug-windows-x86_64\VEGA\OpenGLBuffer.obj
 C:\Users\rion\source\repos\VEGA\VEGA\src\Platform\OpenGL\OpenGLContext.cpp;C:\Users\rion\source\repos\VEGA\bin-int\Debug-windows-x86_64\VEGA\OpenGLContext.obj
+C:\Users\rion\source\repos\VEGA\VEGA\src\Platform\OpenGL\OpenGLVertexArray.cpp;C:\Users\rion\source\repos\VEGA\bin-int\Debug-windows-x86_64\VEGA\OpenGLVertexArray.obj
 C:\Users\rion\source\repos\VEGA\VEGA\src\Platform\Windows\WindowInput.cpp;C:\Users\rion\source\repos\VEGA\bin-int\Debug-windows-x86_64\VEGA\WindowInput.obj
 C:\Users\rion\source\repos\VEGA\VEGA\src\Platform\Windows\WindowsWindow.cpp;C:\Users\rion\source\repos\VEGA\bin-int\Debug-windows-x86_64\VEGA\WindowsWindow.obj
 C:\Users\rion\source\repos\VEGA\VEGA\src\VEGA\Application.cpp;C:\Users\rion\source\repos\VEGA\bin-int\Debug-windows-x86_64\VEGA\Application.obj
@@ -12,4 +13,6 @@ C:\Users\rion\source\repos\VEGA\VEGA\src\VEGA\Log.cpp;C:\Users\rion\source\repos
 C:\Users\rion\source\repos\VEGA\VEGA\src\VEGA\Renderer\Buffer.cpp;C:\Users\rion\source\repos\VEGA\bin-int\Debug-windows-x86_64\VEGA\Buffer.obj
 C:\Users\rion\source\repos\VEGA\VEGA\src\VEGA\Renderer\Renderer.cpp;C:\Users\rion\source\repos\VEGA\bin-int\Debug-windows-x86_64\VEGA\Renderer.obj
 C:\Users\rion\source\repos\VEGA\VEGA\src\VEGA\Renderer\Shader.cpp;C:\Users\rion\source\repos\VEGA\bin-int\Debug-windows-x86_64\VEGA\Shader.obj
+C:\Users\rion\source\repos\VEGA\VEGA\src\VEGA\Renderer\VertexArray.cpp;C:\Users\rion\source\repos\VEGA\bin-int\Debug-windows-x86_64\VEGA\VertexArray.obj
+C:\Users\rion\source\repos\VEGA\VEGA\src\VEGA\Renderer\VertexArray.h;C:\Users\rion\source\repos\VEGA\bin-int\Debug-windows-x86_64\VEGA\VertexArray.obj
 C:\Users\rion\source\repos\VEGA\VEGA\src\vgpch.cpp;C:\Users\rion\source\repos\VEGA\bin-int\Debug-windows-x86_64\VEGA\vgpch.obj

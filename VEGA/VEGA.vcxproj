@@ -147,6 +147,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h" />
+    <ClInclude Include="src\Platform\OpenGL\OpenGLVertexArray.h" />
     <ClInclude Include="src\Platform\Windows\WindowInput.h" />
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
     <ClInclude Include="src\VEGA.h" />
@@ -594,6 +595,7 @@
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.h" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\OpenGLVertexArray.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowInput.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />
     <ClCompile Include="src\VEGA\Application.cpp" />
@@ -605,6 +607,8 @@
     <ClCompile Include="src\VEGA\Renderer\Buffer.cpp" />
     <ClCompile Include="src\VEGA\Renderer\Renderer.cpp" />
     <ClCompile Include="src\VEGA\Renderer\Shader.cpp" />
+    <ClCompile Include="src\VEGA\Renderer\VertexArray.cpp" />
+    <ClCompile Include="src\VEGA\Renderer\VertexArray.h" />
     <ClCompile Include="src\vgpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>

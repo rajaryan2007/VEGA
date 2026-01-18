@@ -1,4 +1,6 @@
 #pragma once
+#include "vgpch.h" 
+
 
 namespace VEGA {
 
