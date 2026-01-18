@@ -293,6 +293,9 @@ node_modules/
 bin
 bin-int
 build
+./bin
+./bin-int
+./build
 
 
 # Visual Studio 6 auto-generated workspace file (contains which files were open etc.)
