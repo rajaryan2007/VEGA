@@ -78,10 +78,6 @@ namespace VEGA{
 
 		};
 
-
-		/*BufferLayout layout2(layout);
-		m_VertexBuffer->SetLayout(layout);*/
-
 		squareVB->SetLayout(SVlayout);
 
 		m_SqaureVA->AddVertexBuffer(squareVB);
