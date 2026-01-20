@@ -198,7 +198,16 @@ namespace VEGA{
 		glClearColor(1,1,0, 1);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
-		m_Shader2->Bind();
+		RenderCommand::SetClearColor({ 0.1f,0.1f,0.1f,1 });
+		RenderCommand::Clear();
+
+		Renderer::BeginScene();
+
+        m_Shader2->Bind();
+		Renderer::Submit(m_VertexArray, m_Shader2);	
+
+		Renderer::EndScene();
+
 		m_SqaureVA->Bind();
 		glDrawElements(GL_TRIANGLES, m_SqaureVA->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
 

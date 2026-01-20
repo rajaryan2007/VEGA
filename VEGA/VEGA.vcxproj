@@ -164,7 +164,9 @@
     <ClInclude Include="src\VEGA\Log.h" />
     <ClInclude Include="src\VEGA\Renderer\Buffer.h" />
     <ClInclude Include="src\VEGA\Renderer\GraphicsContext.h" />
+    <ClInclude Include="src\VEGA\Renderer\RenderCommand.h" />
     <ClInclude Include="src\VEGA\Renderer\Renderer.h" />
+    <ClInclude Include="src\VEGA\Renderer\RendererAPI.h" />
     <ClInclude Include="src\VEGA\Renderer\Shader.h" />
     <ClInclude Include="src\VEGA\Window.h" />
     <ClInclude Include="src\VEGA\input.h" />
@@ -606,6 +608,7 @@
     <ClCompile Include="src\VEGA\Log.cpp" />
     <ClCompile Include="src\VEGA\Renderer\Buffer.cpp" />
     <ClCompile Include="src\VEGA\Renderer\Renderer.cpp" />
+    <ClCompile Include="src\VEGA\Renderer\RendererAPI.cpp" />
     <ClCompile Include="src\VEGA\Renderer\Shader.cpp" />
     <ClCompile Include="src\VEGA\Renderer\VertexArray.cpp" />
     <ClCompile Include="src\VEGA\Renderer\VertexArray.h" />

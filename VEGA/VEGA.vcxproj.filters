@@ -1362,6 +1362,8 @@
     <ClInclude Include="src\VEGA\Renderer\Buffer.h" />
     <ClInclude Include="src\VEGA\Renderer\Renderer.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLVertexArray.h" />
+    <ClInclude Include="src\VEGA\Renderer\RendererAPI.h" />
+    <ClInclude Include="src\VEGA\Renderer\RenderCommand.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Platform\Windows\WindowInput.cpp">
@@ -1400,5 +1402,6 @@
     <ClCompile Include="src\VEGA\Renderer\VertexArray.h" />
     <ClCompile Include="src\VEGA\Renderer\VertexArray.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLVertexArray.cpp" />
+    <ClCompile Include="src\VEGA\Renderer\RendererAPI.cpp" />
   </ItemGroup>
 </Project>

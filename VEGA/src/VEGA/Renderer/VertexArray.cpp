@@ -10,10 +10,10 @@ namespace VEGA
 	{
 		switch (Renderer::GetAPI())
 		{
-		case RendererAPI::None:
+		case RendererAPI::API::None:
 			VG_CORE_ASSERT(false, "RendererAPI::NONE is currently not supported!");
 			return nullptr;
-		case RendererAPI::OpenGL:
+		case RendererAPI::API::OpenGL:
 			return new OpenGLVertexArray();
 		}
 		VG_CORE_ASSERT(false, "Unknown RendererAPI!");

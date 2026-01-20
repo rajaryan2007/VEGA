@@ -32,11 +32,11 @@ namespace VEGA {
 	{
 		switch (Renderer::GetAPI()) 
 		{
-			case RendererAPI::None: 
+		case RendererAPI::API::None:
 				VG_CORE_ASSERT(false, "RendererAPI::NONE is currently not supported!"); 
 				return nullptr;
 #if VG_PLATFORM_WINDOWS   
-			case RendererAPI::OpenGL: 
+		case RendererAPI::API::OpenGL:
 				return new OpenGLVertexBuffer(vertices, size);
 #endif		
 			default:
@@ -50,9 +50,9 @@ namespace VEGA {
 	{
 		switch (Renderer::GetAPI())
 		{
-		case RendererAPI::None:  VG_CORE_ASSERT(false, "Renderer::None i currently not supported!");
+		case RendererAPI::API::None:  VG_CORE_ASSERT(false, "Renderer::None i currently not supported!");
 			return nullptr;
-		case RendererAPI::OpenGL: return new OpenGLIndexBuffer(indices, size);
+		case RendererAPI::API::OpenGL: return new OpenGLIndexBuffer(indices, size);
 
 		}
 		VG_CORE_ASSERT(false, "Unknown RendererAPI");
