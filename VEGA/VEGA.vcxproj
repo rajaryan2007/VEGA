@@ -146,7 +146,9 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h" />
+    <ClInclude Include="src\Platform\OpenGL\OpenGLRendererAPI.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLVertexArray.h" />
     <ClInclude Include="src\Platform\Windows\WindowInput.h" />
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
@@ -168,6 +170,7 @@
     <ClInclude Include="src\VEGA\Renderer\Renderer.h" />
     <ClInclude Include="src\VEGA\Renderer\RendererAPI.h" />
     <ClInclude Include="src\VEGA\Renderer\Shader.h" />
+    <ClInclude Include="src\VEGA\Renderer\VertexArray.h" />
     <ClInclude Include="src\VEGA\Window.h" />
     <ClInclude Include="src\VEGA\input.h" />
     <ClInclude Include="src\VEGA\keyCodes.h" />
@@ -595,8 +598,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp" />
-    <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.h" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\OpenGLRendererAPI.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLVertexArray.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowInput.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />
@@ -607,11 +610,11 @@
     <ClCompile Include="src\VEGA\LayerStack.cpp" />
     <ClCompile Include="src\VEGA\Log.cpp" />
     <ClCompile Include="src\VEGA\Renderer\Buffer.cpp" />
+    <ClCompile Include="src\VEGA\Renderer\RenderCommand.cpp" />
     <ClCompile Include="src\VEGA\Renderer\Renderer.cpp" />
     <ClCompile Include="src\VEGA\Renderer\RendererAPI.cpp" />
     <ClCompile Include="src\VEGA\Renderer\Shader.cpp" />
     <ClCompile Include="src\VEGA\Renderer\VertexArray.cpp" />
-    <ClCompile Include="src\VEGA\Renderer\VertexArray.h" />
     <ClCompile Include="src\vgpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>

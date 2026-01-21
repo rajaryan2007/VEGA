@@ -5,8 +5,8 @@
 #include "input.h"
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-
-
+#include "VEGA/Renderer/Renderer.h"
+#include "VEGA/Renderer/RenderCommand.h"
 namespace VEGA{
 
 #define BIND_EVENT_FN(x) std::bind(&Application::x,this,std::placeholders::_1)
@@ -195,16 +195,14 @@ namespace VEGA{
 		// Poll events and swap buffers first so ImGui backend callbacks update IO before NewFrame
 		m_Window->OnUpdate();
 		// Clear
-		glClearColor(1,1,0, 1);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-
+		
 		RenderCommand::SetClearColor({ 0.1f,0.1f,0.1f,1 });
 		RenderCommand::Clear();
 
 		Renderer::BeginScene();
 
         m_Shader2->Bind();
-		Renderer::Submit(m_VertexArray, m_Shader2);	
+		Renderer::Submit(m_VertexArray);
 
 		Renderer::EndScene();
 
