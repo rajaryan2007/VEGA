@@ -2,6 +2,7 @@
 
 #include "vgpch.h"
 #include "VEGA/Renderer/Buffer.h"
+
 namespace VEGA
 {
 	class VertexArray {

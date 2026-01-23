@@ -9,6 +9,7 @@
 #include "VEGA/Renderer/Shader.h"
 #include "VEGA/Renderer/Buffer.h"
 #include "VEGA/Renderer/VertexArray.h"
+#include "VEGA/Renderer/OrthographicCamera.h"
 
 namespace VEGA {
 
@@ -45,6 +46,7 @@ namespace VEGA {
 		std::shared_ptr<Shader> m_Shader2;
 		std::shared_ptr<VertexArray> m_SqaureVA;
 
+		OrthographicCamera m_Camera;
 		static Application* s_instance;
 	};
 
