@@ -3,10 +3,9 @@
 #include "Application.h"
 #include "VEGA/Log.h"
 #include "input.h"
-#include <glad/glad.h>
+
 #include <GLFW/glfw3.h>
-#include "VEGA/Renderer/Renderer.h"
-#include "VEGA/Renderer/RenderCommand.h"
+
 namespace VEGA{
 
 #define BIND_EVENT_FN(x) std::bind(&Application::x,this,std::placeholders::_1)
@@ -16,7 +15,7 @@ namespace VEGA{
 	
 
 	Application::Application()
-		: m_Camera(-1.6f, 1.6f, -0.9f, 0.9f)
+		
 	{   
 		VG_CORE_ASSERT(!s_instance, "Application already exists!");
 		s_instance = this;
@@ -26,128 +25,7 @@ namespace VEGA{
 		m_ImGuiLayer = new ImGuiLayer();
 		PushOverlay(m_ImGuiLayer);	
 
-		m_VertexArray.reset(VertexArray::Create());
 		
-
-		float vertices[] = {
-			-0.5f, -0.5f, 0.0f,1.0f,0.0f,1.0f,1.0f,
-			 0.5f, -0.5f, 0.0f,1.0f,1.0f,0.0f,1.0f,
-			 0.0f,  0.5f, 0.0f,1.0f,1.0f,1.0f,1.0f,
-			
-		};
-
-		m_VertexBuffer.reset(VertexBuffer::Create(vertices,sizeof(vertices)));
-
-		
-        BufferLayout layout = {
-				{ShaderDataType::Float3,"a_Position"},
-				{ShaderDataType::Float4,"a_Color" }
-
-	    };
-
-		
-		/*BufferLayout layout2(layout);
-		m_VertexBuffer->SetLayout(layout);*/
-		
-	    m_VertexBuffer->SetLayout(layout);
-		m_VertexArray->AddVertexBuffer(m_VertexBuffer);
-		
-
-
-		uint32_t indices[] = {
-			0, 1, 2
-		};       
-
-		m_IndexBuffer.reset(IndexBuffer::Create(indices,sizeof(indices)/ sizeof(uint32_t)));
-		m_VertexArray->SetIndexBuffer(m_IndexBuffer);
-        
-		m_SqaureVA.reset(VertexArray::Create());
-
-		float vertiecsSquare[] = {
-			-0.5f, -0.5f, 0.0f,0.2f,0.6f,1.3f,1.f,
-			 0.5f, -0.5f, 0.0f,1.0f,0.0f,0.6f,1.0f,
-			 0.5f,  0.5f, 0.0f,1.3f,0.0f,1.0f,1.0f,
-			-0.5f,  0.5f, 0.0f,1.6f,0.8f,1.0f,1.0f,
-		};
-
-		std::shared_ptr<VertexBuffer> squareVB; 
-		squareVB.reset(VertexBuffer::Create(vertiecsSquare, sizeof(vertiecsSquare)));
-
-		BufferLayout SVlayout = {
-			{ShaderDataType::Float3,"a_Position"},
-			{ShaderDataType::Float4,"a_Color" }
-
-		};
-
-		squareVB->SetLayout(SVlayout);
-
-		m_SqaureVA->AddVertexBuffer(squareVB);
-
-		uint32_t squareIndices[] = {
-			0, 1, 2,
-			2, 3, 0
-		};
-		std::shared_ptr<IndexBuffer> squareIB; 
-		squareIB.reset(IndexBuffer::Create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t)));
-		m_SqaureVA->SetIndexBuffer(squareIB);
-
-
-		std::string vertexSrc = R"(
-         #version 330 core
-         layout(location =0) in vec3 a_Position;
-         layout(location =1) in vec4 a_Color;         
-
-         out vec3 v_Position; 
-         out vec4 v_Color;         
- 
-         void main (){
-            v_Position = a_Position;
-            v_Color = a_Color;
-            gl_Position = vec4(a_Position,1.0);
-         }
-        )";
-
-		std::string fragmentSrc = R"(
-         #version 330 core
-         layout(location =0) out vec4 color;
-          
-         in vec3 v_Position;
-         in vec4 v_Color; 
-         void main (){
-             color = vec4(v_Color);
-         }
-        )";
-
-		std::string vertexSrc2 = R"(
-         #version 330 core
-         layout(location =0) in vec3 a_Position;
-         layout(location =1) in vec4 a_Color;         
-         
-         uniform mat4 u_ViewProjection;
-
-         out vec3 v_Position; 
-         out vec4 v_Color;         
- 
-         void main (){
-            v_Position = a_Position;
-            v_Color = a_Color;
-            gl_Position = u_ViewProjection * vec4(a_Position,1.0);
-         }
-        )";
-
-		std::string fragmentSrc2 = R"(
-         #version 330 core
-         layout(location =0) out vec4 color;
-          
-         in vec3 v_Position;
-         in vec4 v_Color; 
-         void main (){
-             color = vec4(v_Color);
-         }
-        )";
-
-		m_Shader.reset(new Shader(vertexSrc,fragmentSrc));
-		m_Shader2.reset(new Shader(vertexSrc2, fragmentSrc2));
 	}
 	 
 	Application::~Application()
@@ -195,27 +73,7 @@ namespace VEGA{
 
 	while (m_Running)
 	{   
-		// Poll events and swap buffers first so ImGui backend callbacks update IO before NewFrame
 		m_Window->OnUpdate();
-		// Clear
-		
-		RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
-		RenderCommand::Clear();
-
-		
-		m_Camera.SetRotation(15.0f);
-		Renderer::BeginScene(m_Camera);
-
-		m_Shader2->Bind();
-		m_Shader2->SetUniformMat4(
-			"u_ViewProjection",
-			m_Camera.GetViewProjectionMatrix()
-		);
-
-		Renderer::Submit(m_VertexArray,m_Shader2);
-		Renderer::Submit(m_SqaureVA,m_Shader2);
-
-		Renderer::EndScene();
 		for (Layer* layer : m_LayerStack)
 			layer->OnUpdate();
 

@@ -6,10 +6,7 @@
 #include "VEGA/Events/ApplicationEvent.h"
 #include "VEGA/ImGui/ImGuiLayer.h"
 
-#include "VEGA/Renderer/Shader.h"
-#include "VEGA/Renderer/Buffer.h"
-#include "VEGA/Renderer/VertexArray.h"
-#include "VEGA/Renderer/OrthographicCamera.h"
+
 
 namespace VEGA {
 
@@ -38,15 +35,9 @@ namespace VEGA {
 		LayerStack m_LayerStack;
 
 		
-		std::shared_ptr<Shader> m_Shader;
-		std::shared_ptr<VertexArray> m_VertexArray;
-		std::shared_ptr<VertexBuffer> m_VertexBuffer;
-		std::shared_ptr<IndexBuffer> m_IndexBuffer;
+		
 
-		std::shared_ptr<Shader> m_Shader2;
-		std::shared_ptr<VertexArray> m_SqaureVA;
-
-		OrthographicCamera m_Camera;
+		
 		static Application* s_instance;
 	};
 

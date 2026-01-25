@@ -5,34 +5,207 @@ class ExampleLayer : public VEGA::Layer
 {
 public:
 	ExampleLayer()
-		:Layer("Example")
+		:Layer("Example"), m_Camera(-1.6f, 1.6f, -0.9f, 0.9f), m_CameraPosition(0.0f, 0.0f, 0.0f)
 	{
+		m_VertexArray.reset(VEGA::VertexArray::Create());
 
+
+		float vertices[] = {
+			-0.5f, -0.5f, 0.0f,1.0f,0.0f,1.0f,1.0f,
+			 0.5f, -0.5f, 0.0f,1.0f,1.0f,0.0f,1.0f,
+			 0.0f,  0.5f, 0.0f,1.0f,1.0f,1.0f,1.0f,
+
+		};
+
+		m_VertexBuffer.reset(VEGA::VertexBuffer::Create(vertices, sizeof(vertices)));
+
+
+		VEGA::BufferLayout layout = {
+				{VEGA::ShaderDataType::Float3,"a_Position"},
+				{VEGA::ShaderDataType::Float4,"a_Color" }
+
+		};
+
+
+		/*BufferLayout layout2(layout);
+		m_VertexBuffer->SetLayout(layout);*/
+
+		m_VertexBuffer->SetLayout(layout);
+		m_VertexArray->AddVertexBuffer(m_VertexBuffer);
+
+
+
+		uint32_t indices[] = {
+			0, 1, 2
+		};
+
+		m_IndexBuffer.reset(VEGA::IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t)));
+		m_VertexArray->SetIndexBuffer(m_IndexBuffer);
+
+		m_SqaureVA.reset(VEGA::VertexArray::Create());
+
+		float vertiecsSquare[] = {
+			-0.5f, -0.5f, 0.0f,0.2f,0.6f,1.3f,1.f,
+			 0.5f, -0.5f, 0.0f,1.0f,0.0f,0.6f,1.0f,
+			 0.5f,  0.5f, 0.0f,1.3f,0.0f,1.0f,1.0f,
+			-0.5f,  0.5f, 0.0f,1.6f,0.8f,1.0f,1.0f,
+		};
+
+		std::shared_ptr<VEGA::VertexBuffer> squareVB;
+		squareVB.reset(VEGA::VertexBuffer::Create(vertiecsSquare, sizeof(vertiecsSquare)));
+
+		VEGA::BufferLayout SVlayout = {
+			{VEGA::ShaderDataType::Float3,"a_Position"},
+			{VEGA::ShaderDataType::Float4,"a_Color" }
+
+		};
+
+		squareVB->SetLayout(SVlayout);
+
+		m_SqaureVA->AddVertexBuffer(squareVB);
+
+		uint32_t squareIndices[] = {
+			0, 1, 2,
+			2, 3, 0
+		};
+		std::shared_ptr<VEGA::IndexBuffer> squareIB;
+		squareIB.reset(VEGA::IndexBuffer::Create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t)));
+		m_SqaureVA->SetIndexBuffer(squareIB);
+
+
+		std::string vertexSrc = R"(
+         #version 330 core
+         layout(location =0) in vec3 a_Position;
+         layout(location =1) in vec4 a_Color;         
+
+         out vec3 v_Position; 
+         out vec4 v_Color;         
+ 
+         void main (){
+            v_Position = a_Position;
+            v_Color = a_Color;
+            gl_Position = vec4(a_Position,1.0);
+         }
+        )";
+
+		std::string fragmentSrc = R"(
+         #version 330 core
+         layout(location =0) out vec4 color;
+          
+         in vec3 v_Position;
+         in vec4 v_Color; 
+         void main (){
+             color = vec4(v_Color);
+         }
+        )";
+
+		std::string vertexSrc2 = R"(
+         #version 330 core
+         layout(location =0) in vec3 a_Position;
+         layout(location =1) in vec4 a_Color;         
+         
+         uniform mat4 u_ViewProjection;
+
+         out vec3 v_Position; 
+         out vec4 v_Color;         
+ 
+         void main (){
+            v_Position = a_Position;
+            v_Color = a_Color;
+            gl_Position = u_ViewProjection * vec4(a_Position,1.0);
+         }
+        )";
+
+		std::string fragmentSrc2 = R"(
+         #version 330 core
+         layout(location =0) out vec4 color;
+          
+         in vec3 v_Position;
+         in vec4 v_Color; 
+         void main (){
+             color = vec4(v_Color);
+         }
+        )";
+
+		m_Shader.reset(new VEGA::Shader(vertexSrc, fragmentSrc));
+		m_Shader2.reset(new VEGA::Shader(vertexSrc2, fragmentSrc2));
 	}
 
 	void OnUpdate() override
 	{
-		//VG_INFO("EXAMPleLayer");
-
-		if (VEGA::Input::IsKeyPressed(VG_KEY_TAB))
-			VG_INFO("TAB key is pressed!");
-	}
-	void OnEvent(VEGA::Event& event) override
-	{
-		//VG_TRACE("{0}", event.ToString());
-		if (event.GetEventType() == VEGA::EventType::KeyPressed)
+		
+		if(VEGA::Input::IsKeyPressed(VG_KEY_LEFT))
 		{
-			VEGA::KeyPressedEvent& e = (VEGA::KeyPressedEvent&)event;
-			VG_TRACE("{0}", (char)e.GetKeyCode());
+			m_CameraPosition.x += m_CameraSpeed;
 		}
+		else if (VEGA::Input::IsKeyPressed(VG_KEY_RIGHT))
+		{
+			m_CameraPosition.x -= m_CameraSpeed;
+		}
+		if (VEGA::Input::IsKeyPressed(VG_KEY_DOWN))
+		{
+			m_CameraPosition.y += m_CameraSpeed;
+		}
+		else if (VEGA::Input::IsKeyPressed(VG_KEY_UP))
+		{
+			m_CameraPosition.y -= m_CameraSpeed;
+		}
+
+		if(VEGA::Input::IsKeyPressed(VG_KEY_A))
+		{
+			m_CameraRotation -= m_CameraRotationSpeed;
+		}
+		else if (VEGA::Input::IsKeyPressed(VG_KEY_D))
+		{
+			m_CameraRotation += m_CameraRotationSpeed;
+		}
+		// Poll events and swap buffers first so ImGui backend callbacks update IO before NewFrame
+		
+		// Clear
+
+
+
+		VEGA::RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
+		VEGA::RenderCommand::Clear();
+
+		m_Camera.SetPosition(m_CameraPosition);
+		m_Camera.SetRotation(m_CameraRotation);
+		VEGA::Renderer::BeginScene(m_Camera);
+
+		m_Shader2->Bind();
+		m_Shader2->SetUniformMat4(
+			"u_ViewProjection",
+			m_Camera.GetViewProjectionMatrix()
+		);
+
+		VEGA::Renderer::Submit(m_VertexArray, m_Shader2);
+		VEGA::Renderer::Submit(m_SqaureVA, m_Shader2);
+
+		VEGA::Renderer::EndScene();
 	}
 	
+
+private:
+	
+	std::shared_ptr<VEGA::Shader> m_Shader;
+	std::shared_ptr<VEGA::VertexArray> m_VertexArray;
+	std::shared_ptr<VEGA::VertexBuffer> m_VertexBuffer;
+	std::shared_ptr<VEGA::IndexBuffer> m_IndexBuffer;
+
+	std::shared_ptr<VEGA::Shader> m_Shader2;
+	std::shared_ptr<VEGA::VertexArray> m_SqaureVA;
+	VEGA::OrthographicCamera m_Camera;
+	glm::vec3 m_CameraPosition;
+	float m_CameraRotation = 0.0f;
+	float m_CameraRotationSpeed = 1.0f;
+	float m_CameraSpeed = 0.1f;
 };
 
 class Sandbox : public VEGA::Application
 {
 public:
 	Sandbox()
+		
 	{
 		PushLayer(new ExampleLayer);
 		
