@@ -1456,5 +1456,6 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="src\VEGA\Renderer\OrthographicCamera.cpp" />
+    <ClCompile Include="src\VEGA\Core\Timestep.h" />
   </ItemGroup>
 </Project>

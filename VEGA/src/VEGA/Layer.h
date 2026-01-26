@@ -1,7 +1,7 @@
 #pragma once
 #include "VEGA/Core.h"
 #include "VEGA/Events/Event.h"
-
+#include "VEGA/Core/Timestep.h"
 
 namespace  VEGA {
 	class VEGA_API Layer
@@ -12,7 +12,7 @@ namespace  VEGA {
 
 		virtual void OnAttach() {}
 		virtual void OnDetach() {}
-		virtual void OnUpdate() {}
+		virtual void OnUpdate(Timestep ts) {}
 		virtual void OnEvent(Event& event) {}
 		virtual void OnImGuiRender() {}
 

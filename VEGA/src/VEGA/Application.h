@@ -5,7 +5,7 @@
 #include "Events/Event.h"
 #include "VEGA/Events/ApplicationEvent.h"
 #include "VEGA/ImGui/ImGuiLayer.h"
-
+#include "VEGA/Core/Timestep.h"
 
 
 namespace VEGA {
@@ -33,7 +33,8 @@ namespace VEGA {
 		ImGuiLayer* m_ImGuiLayer;
 		bool m_Running = true;
 		LayerStack m_LayerStack;
-
+		float m_LastFrameTime = 0.0f;
+	private:
 		
 		
 

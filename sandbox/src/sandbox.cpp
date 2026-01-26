@@ -131,33 +131,36 @@ public:
 		m_Shader2.reset(new VEGA::Shader(vertexSrc2, fragmentSrc2));
 	}
 
-	void OnUpdate() override
+	void OnUpdate(VEGA::Timestep ts) override
 	{
-		
+		VG_TRACE("Delta time {0}s ({1}ms)", ts.GetSeconds(), ts.GetMilliseconds());
+
+		float time = ts;
+
 		if(VEGA::Input::IsKeyPressed(VG_KEY_LEFT))
 		{
-			m_CameraPosition.x += m_CameraSpeed;
+			m_CameraPosition.x += m_CameraSpeed * ts;
 		}
 		else if (VEGA::Input::IsKeyPressed(VG_KEY_RIGHT))
 		{
-			m_CameraPosition.x -= m_CameraSpeed;
+			m_CameraPosition.x -= m_CameraSpeed * ts;
 		}
 		if (VEGA::Input::IsKeyPressed(VG_KEY_DOWN))
 		{
-			m_CameraPosition.y += m_CameraSpeed;
+			m_CameraPosition.y += m_CameraSpeed * ts;
 		}
 		else if (VEGA::Input::IsKeyPressed(VG_KEY_UP))
 		{
-			m_CameraPosition.y -= m_CameraSpeed;
+			m_CameraPosition.y -= m_CameraSpeed * ts;
 		}
 
-		if(VEGA::Input::IsKeyPressed(VG_KEY_A))
+		if (VEGA::Input::IsKeyPressed(VG_KEY_A))
 		{
-			m_CameraRotation -= m_CameraRotationSpeed;
+			m_CameraRotation -= m_CameraRotationSpeed * ts;
 		}
 		else if (VEGA::Input::IsKeyPressed(VG_KEY_D))
 		{
-			m_CameraRotation += m_CameraRotationSpeed;
+			m_CameraRotation += m_CameraRotationSpeed * ts;
 		}
 		// Poll events and swap buffers first so ImGui backend callbacks update IO before NewFrame
 		
@@ -197,8 +200,8 @@ private:
 	VEGA::OrthographicCamera m_Camera;
 	glm::vec3 m_CameraPosition;
 	float m_CameraRotation = 0.0f;
-	float m_CameraRotationSpeed = 1.0f;
-	float m_CameraSpeed = 0.1f;
+	float m_CameraRotationSpeed = 120.0f;
+	float m_CameraSpeed = 2.0f;
 };
 
 class Sandbox : public VEGA::Application

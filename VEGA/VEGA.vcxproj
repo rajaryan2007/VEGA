@@ -605,6 +605,7 @@
     <ClCompile Include="src\Platform\Windows\WindowInput.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />
     <ClCompile Include="src\VEGA\Application.cpp" />
+    <ClCompile Include="src\VEGA\Core\Timestep.h" />
     <ClCompile Include="src\VEGA\ImGui\ImGuiBuild.cpp" />
     <ClCompile Include="src\VEGA\ImGui\ImGuiLayer.cpp" />
     <ClCompile Include="src\VEGA\Layer.cpp" />
