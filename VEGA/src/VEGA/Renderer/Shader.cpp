@@ -132,3 +132,9 @@ void VEGA::Shader::SetUniformFloat4(const std::string& name, const glm::vec4& va
 	GLuint location = glGetUniformLocation(m_RendererID, name.c_str());
 	glUniform4f(location, value.x, value.y, value.z, value.w);
 }
+
+void VEGA::Shader::SetUniformVec3(const std::string& name, const glm::vec3& value)
+{
+	GLuint location = glGetUniformLocation(m_RendererID, name.c_str());
+	glUniform3f(location, value.x, value.y, value.z);
+}
