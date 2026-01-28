@@ -3,6 +3,11 @@
 #include <glm/vec3.hpp>
 
 #include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
+#include "Platform/OpenGL/OpenGLShader.h"
+#include <imgui/imgui.h>
+
 
 class ExampleLayer : public VEGA::Layer
 {
@@ -124,19 +129,21 @@ public:
          layout(location =0) out vec4 color;
           
          in vec3 v_Position;
-         in vec4 v_Color; 
+         uniform vec4 v_Color; 
+
+
          void main (){
              color = vec4(v_Color);
          }
         )";
 
-		m_Shader.reset(new VEGA::Shader(vertexSrc, fragmentSrc));
-		m_Shader2.reset(new VEGA::Shader(vertexSrc2, fragmentSrc2));
+		m_Shader.reset(VEGA::Shader::Create(vertexSrc, fragmentSrc));
+		m_Shader2.reset(VEGA::Shader::Create(vertexSrc2, fragmentSrc2));
 	}
 
 	void OnUpdate(VEGA::Timestep ts) override
 	{
-		VG_TRACE("Delta time {0}s ({1}ms)", ts.GetSeconds(), ts.GetMilliseconds());
+		//VG_TRACE("Delta time {0}s ({1}ms)", ts.GetSeconds(), ts.GetMilliseconds());
 
 		float time = ts;
 
@@ -195,25 +202,51 @@ public:
 		m_Camera.SetRotation(m_CameraRotation);
 		VEGA::Renderer::BeginScene(m_Camera);
 
-		m_Shader2->Bind();
-		m_Shader2->SetUniformMat4(
-			"u_ViewProjection",
-			m_Camera.GetViewProjectionMatrix()
-		);
+		
 
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), m_Transform);
 		glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
-	
-		for (int i = 0; i < 5; i++) {
-			glm::mat4 pos = glm::translate(glm::mat4(1.0f), glm::vec3(i * 0.3f, 0.0f, 0.0f));
+	    
+		glm::vec4 redColor = { 0.8f, 0.2f, 0.3f, 1.0f };	
+		 
+
+		/*VEGA::Material material = new VEGA::Material(Matrial_Shader2);
+		VEGA::MaterialInstanceRef m1 new VEGA::MaterialInstance(material);
+
+		squareMesh->SetMaterial(material);*/
+
+		std::dynamic_pointer_cast<VEGA::OpenGLShader>(m_Shader2)->Bind();
+		std::dynamic_pointer_cast<VEGA::OpenGLShader>(m_Shader2)->SetUniformFloat4("v_Color", blueColor);
+
+		for (int i = 0; i < 20; i++) {
+
+			for(int j = 0; j < 20; j++) {
+				glm::mat4 pos = glm::translate(glm::mat4(1.0f), glm::vec3(i * 0.11f, j * 0.11f, 0.0f));
+				glm::mat4 transform = pos * scale;
+				/*if(j % 2 == 0)
+					m_Shader2->SetUniformFloat4("v_Color", redColor);
+				else
+					m_Shader2->SetUniformFloat4("v_Color", blueColor);*/
+				VEGA::Renderer::Submit(m_Shader2, m_SqaureVA, transform);
+			}
+		/*	glm::mat4 pos = glm::translate(glm::mat4(1.0f), glm::vec3(i * 0.3f, 0.0f, 0.0f));
 			glm::mat4 transform = pos * scale;
-			VEGA::Renderer::Submit(m_Shader2, m_SqaureVA, transform);
+			VEGA::Renderer::Submit(m_Shader2, m_SqaureVA, transform);*/
 		}
 			/*VEGA::Renderer::Submit(m_Shader2, m_VertexArray);*/
 		VEGA::Renderer::EndScene();
 	}
 	
 
+	void OnImGuiRender() override
+	{
+		ImGui::Begin("Settings");
+		ImGui::Text("Camera Position: (%.2f, %.2f, %.2f)", m_CameraPosition.x, m_CameraPosition.y, m_CameraPosition.z);
+		ImGui::Text("Camera Rotation: %.2f", m_CameraRotation);
+		ImGui::Text("Square Position: (%.2f, %.2f, %.2f)", m_Transform.x, m_Transform.y, m_Transform.z);
+		ImGui::ColorEdit3("Square Color", glm::value_ptr(blueColor));
+		ImGui::End();
+	}
 private:
 	
 	std::shared_ptr<VEGA::Shader> m_Shader;
@@ -228,7 +261,7 @@ private:
 	float m_CameraRotation = 0.0f;
 	float m_CameraRotationSpeed = 120.0f;
 	float m_CameraSpeed = 2.0f;
-
+	glm::vec4 blueColor = { 0.2f, 0.3f, 0.8f, 1.0f };
 	glm::vec3 m_Transform;
 	float m_squareMoveSpeed = 0.5f;
 };

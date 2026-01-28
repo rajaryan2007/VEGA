@@ -1396,6 +1396,7 @@
       <Filter>vendor\glm\glm</Filter>
     </ClInclude>
     <ClInclude Include="src\VEGA\Renderer\OrthographicCamera.h" />
+    <ClInclude Include="src\Platform\OpenGL\OpenGLShader.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp">
@@ -1457,5 +1458,6 @@
     </ClCompile>
     <ClCompile Include="src\VEGA\Renderer\OrthographicCamera.cpp" />
     <ClCompile Include="src\VEGA\Core\Timestep.h" />
+    <ClCompile Include="src\Platform\OpenGL\OpenGLShader.cpp" />
   </ItemGroup>
 </Project>

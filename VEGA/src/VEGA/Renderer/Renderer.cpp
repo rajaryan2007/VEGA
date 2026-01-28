@@ -1,6 +1,9 @@
 #include "vgpch.h"
 #include "Renderer.h"
 #include "RendererAPI.h"
+
+#include "Platform/OpenGL/OpenGLShader.h"
+
 #include "Shader.h"
 namespace VEGA {
 
@@ -20,8 +23,11 @@ namespace VEGA {
         // Implementation for submitting a vertex array to be rendered
 		
 		shader->Bind();
-		shader->SetUniformMat4("u_ViewProjection", s_SceneData->ViewProjectionMatrix);
-		shader->SetUniformMat4("u_Transform", transform);
+		std::dynamic_pointer_cast<OpenGLShader>(shader)->SetUniformMat4("u_ViewProjection", s_SceneData->ViewProjectionMatrix);
+		std::dynamic_pointer_cast<OpenGLShader>(shader)->SetUniformMat4("u_Transform", transform);
+		
+		/*mi.bind();*/
+
 		vertexArray->Bind();
 		RenderCommand::DrawIndexed(vertexArray);
 	}
