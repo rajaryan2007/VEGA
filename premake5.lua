@@ -10,10 +10,12 @@ IncludeDir["GLFW"] = "VEGA/vendor/GLFW/include"
 IncludeDir["Glad"] = "VEGA/vendor/Glad/include"
 IncludeDir["ImGui"] = "VEGA/vendor/imgui"
 IncludeDir["glm"] = "VEGA/vendor/glm"
+IncludeDir["stb"] = "VEGA/vendor/stb_image"
 
 include "VEGA/vendor/GLFW"
 include "VEGA/vendor/Glad"
 include "VEGA/vendor/imgui"
+
 
 project "VEGA"
     location "VEGA"
@@ -47,7 +49,8 @@ project "VEGA"
         "%{IncludeDir.GLFW}",
         "%{IncludeDir.Glad}",
         "%{IncludeDir.ImGui}",
-        "%{IncludeDir.glm}"
+        "%{IncludeDir.glm}",
+        "%{IncludeDir.stb}"
     }
     links
     {
@@ -102,6 +105,8 @@ project "Sandbox"
     {
         "%{prj.name}/src/**.h",
         "%{prj.name}/src/**.cpp",
+        "%{prj.name}/vendor/stb_image/**.h",
+        "%{prj.name}/vendor/stb_image/**.cpp",
         "%{prj.name}/vendor/glm/glm/**.hpp",
         "%{prj.name}/vendor/glm/glm/**.inl"
     }

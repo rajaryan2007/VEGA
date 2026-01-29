@@ -22,6 +22,7 @@ namespace VEGA{
 		m_Window = std::unique_ptr<Window>(Window::Create());
 		m_Window->SetEventCallback(BIND_EVENT_FN(OnEvent));
 		m_Window->SetVSync(false);
+		
 		m_ImGuiLayer = new ImGuiLayer();
 		PushOverlay(m_ImGuiLayer);		
 	}
@@ -42,22 +43,34 @@ namespace VEGA{
 		m_LayerStack.PushOverlay(layer);
 		layer->OnAttach();
 	}
+	//bool Application::OnWindowResize(WindowResizeEvent& e)
+	//{
+	//	// Update the OpenGL viewport immediately
+	//	glViewport(0, 0, (int)e.GetWidth(), (int)e.GetHeight());
+	//	VG_CORE_INFO("Window resized: {0}, {1}", e.GetWidth(), e.GetHeight());
+	//	// return false so other layers may also handle the event if needed
+	//	return false;
+	//}
 	
 	void Application::OnEvent(Event& e)
 	{
 		EventDispatcher dispatcher(e);
 		dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(OnWindowClose));
+		//dispatcher.Dispatch<WindowResizeEvent>(BIND_EVENT_FN(OnWindowResize)); // <-- add dispatch
+
 		//VG_CORE_TRACE("{0}", e.ToString());
 
-
+		
 		for (auto it = m_LayerStack.end(); it != m_LayerStack.begin();)
 		{
 			(*--it)->OnEvent(e);
 			if (e.Handled)
 				break;
 		}
-	}
-
+	};
+	
+	/*OnWindowResize(WindowResizeEvent& e);*/
+	
 	void Application::Run() {
     WindowResizeEvent e(1200, 720);
 	if (e.IsInCategory(EventCategoryApplication))

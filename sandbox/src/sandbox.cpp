@@ -6,6 +6,7 @@
 #include <glm/gtc/type_ptr.hpp>
 
 #include "Platform/OpenGL/OpenGLShader.h"
+#include "Platform/OpenGL/OpenGLTexture.h"
 #include <imgui/imgui.h>
 
 
@@ -52,10 +53,10 @@ public:
 		m_SqaureVA.reset(VEGA::VertexArray::Create());
 
 		float vertiecsSquare[] = {
-			-0.5f, -0.5f, 0.0f,0.2f,0.6f,1.3f,1.f,
-			 0.5f, -0.5f, 0.0f,1.0f,0.0f,0.6f,1.0f,
-			 0.5f,  0.5f, 0.0f,1.3f,0.0f,1.0f,1.0f,
-			-0.5f,  0.5f, 0.0f,1.6f,0.8f,1.0f,1.0f,
+			-0.5f, -0.5f, 0.0f,0.0f,0.0f,
+			 0.5f, -0.5f, 0.0f,1.0f,0.0f,
+			 0.5f,  0.5f, 0.0f,1.0f,1.0f,
+			-0.5f,  0.5f, 0.0f,0.0f,1.0f,
 		};
 
 		std::shared_ptr<VEGA::VertexBuffer> squareVB;
@@ -63,7 +64,7 @@ public:
 
 		VEGA::BufferLayout SVlayout = {
 			{VEGA::ShaderDataType::Float3,"a_Position"},
-			{VEGA::ShaderDataType::Float4,"a_Color" }
+			{VEGA::ShaderDataType::Float2,"a_TexCoord" }
 
 		};
 
@@ -82,8 +83,8 @@ public:
 
 		std::string vertexSrc = R"(
          #version 330 core
-         layout(location =0) in vec3 a_Position;
-         layout(location =1) in vec4 a_Color;         
+         layout( location = 0 ) in vec3 a_Position;
+         layout( location = 1 ) in vec4 a_Color;         
 
          out vec3 v_Position; 
          out vec4 v_Color;         
@@ -137,9 +138,54 @@ public:
          }
         )";
 
+
+		std::string TexturevertexSrc = R"(
+       #version 330 core
+
+       layout(location = 0) in vec3 a_Position;
+       layout(location = 1) in vec2 a_TexCoord;
+
+       uniform mat4 u_ViewProjection;
+       uniform mat4 u_Transform;
+
+       out vec3 v_Position;
+       out vec2 v_TexCoord;
+
+       void main()
+       {
+          v_Position = a_Position;
+          v_TexCoord = a_TexCoord;
+          gl_Position = u_ViewProjection * u_Transform * vec4(a_Position, 1.0);
+       }
+
+       )";
+
+		std::string TexturefragmentSrc = R"(
+        #version 330 core
+
+        layout(location = 0) out vec4 color;
+
+        in vec3 v_Position;
+        in vec2 v_TexCoord;
+
+        uniform sampler2D u_Texture;
+
+         void main()
+         {
+             color = texture(u_Texture, v_TexCoord);
+         }
+        )";
+
+		m_TextureShader.reset(VEGA::Shader::Create(TexturevertexSrc, TexturefragmentSrc));
 		m_Shader.reset(VEGA::Shader::Create(vertexSrc, fragmentSrc));
 		m_Shader2.reset(VEGA::Shader::Create(vertexSrc2, fragmentSrc2));
-	}
+        
+		m_Texture = (VEGA::Texture2D::Create("assests/textures/Lily.jpg"));
+		
+		
+		std::dynamic_pointer_cast<VEGA::OpenGLShader>(m_TextureShader)->Bind();
+		std::dynamic_pointer_cast<VEGA::OpenGLShader>(m_TextureShader)->SetUniformInt("u_Texture", 0);
+}
 
 	void OnUpdate(VEGA::Timestep ts) override
 	{
@@ -218,6 +264,8 @@ public:
 		std::dynamic_pointer_cast<VEGA::OpenGLShader>(m_Shader2)->Bind();
 		std::dynamic_pointer_cast<VEGA::OpenGLShader>(m_Shader2)->SetUniformFloat4("v_Color", blueColor);
 
+
+
 		for (int i = 0; i < 20; i++) {
 
 			for(int j = 0; j < 20; j++) {
@@ -229,6 +277,9 @@ public:
 					m_Shader2->SetUniformFloat4("v_Color", blueColor);*/
 				VEGA::Renderer::Submit(m_Shader2, m_SqaureVA, transform);
 			}
+			m_Texture->Bind();
+			m_TextureShader->Bind();
+			VEGA::Renderer::Submit(m_TextureShader, m_SqaureVA, transform);
 		/*	glm::mat4 pos = glm::translate(glm::mat4(1.0f), glm::vec3(i * 0.3f, 0.0f, 0.0f));
 			glm::mat4 transform = pos * scale;
 			VEGA::Renderer::Submit(m_Shader2, m_SqaureVA, transform);*/
@@ -249,13 +300,15 @@ public:
 	}
 private:
 	
-	std::shared_ptr<VEGA::Shader> m_Shader;
-	std::shared_ptr<VEGA::VertexArray> m_VertexArray;
-	std::shared_ptr<VEGA::VertexBuffer> m_VertexBuffer;
-	std::shared_ptr<VEGA::IndexBuffer> m_IndexBuffer;
+	VEGA::Ref<VEGA::Shader> m_Shader;
+	VEGA::Ref<VEGA::VertexArray> m_VertexArray;
+	VEGA::Ref<VEGA::VertexBuffer> m_VertexBuffer;
+	VEGA::Ref<VEGA::IndexBuffer> m_IndexBuffer;
+	
+	VEGA::Ref<VEGA::Texture2D> m_Texture;
 
-	std::shared_ptr<VEGA::Shader> m_Shader2;
-	std::shared_ptr<VEGA::VertexArray> m_SqaureVA;
+	VEGA::Ref<VEGA::Shader> m_Shader2,m_TextureShader;
+	VEGA::Ref<VEGA::VertexArray> m_SqaureVA;
 	VEGA::OrthographicCamera m_Camera;
 	glm::vec3 m_CameraPosition;
 	float m_CameraRotation = 0.0f;
@@ -272,8 +325,7 @@ public:
 	Sandbox()
 		
 	{
-		PushLayer(new ExampleLayer);
-		
+		PushLayer(new ExampleLayer);		
 	}
 	~Sandbox()
 	{

@@ -24,6 +24,8 @@ namespace VEGA {
 		void PushLayer(Layer* layer);
 		void PushOverlay(Layer* layer);
 
+		//bool OnWindowResize(WindowResizeEvent& e);
+
 		inline Window& GetWindow() { return *m_Window; }
 		inline static Application& Get() { return *s_instance; }
 	private:

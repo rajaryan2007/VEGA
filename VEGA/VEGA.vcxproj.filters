@@ -16,6 +16,9 @@
     <Filter Include="src\VEGA">
       <UniqueIdentifier>{7F8626CF-6B53-81DA-946C-6F828098B668}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\VEGA\Core">
+      <UniqueIdentifier>{3792E2F5-A352-5E2C-6C8D-A7A9D80CA308}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\VEGA\Events">
       <UniqueIdentifier>{830DF2FD-EF98-5FC2-F8A9-E2B664B4BBC2}</UniqueIdentifier>
     </Filter>
@@ -57,6 +60,12 @@
     <ClInclude Include="src\Platform\OpenGL\OpenGLRendererAPI.h">
       <Filter>src\Platform\OpenGL</Filter>
     </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\OpenGLShader.h">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\OpenGLTexture.h">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClInclude>
     <ClInclude Include="src\Platform\OpenGL\OpenGLVertexArray.h">
       <Filter>src\Platform\OpenGL</Filter>
     </ClInclude>
@@ -74,6 +83,9 @@
     </ClInclude>
     <ClInclude Include="src\VEGA\Core.h">
       <Filter>src\VEGA</Filter>
+    </ClInclude>
+    <ClInclude Include="src\VEGA\Core\Timestep.h">
+      <Filter>src\VEGA\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\VEGA\EntryPoint.h">
       <Filter>src\VEGA</Filter>
@@ -108,6 +120,9 @@
     <ClInclude Include="src\VEGA\Renderer\GraphicsContext.h">
       <Filter>src\VEGA\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="src\VEGA\Renderer\OrthographicCamera.h">
+      <Filter>src\VEGA\Renderer</Filter>
+    </ClInclude>
     <ClInclude Include="src\VEGA\Renderer\RenderCommand.h">
       <Filter>src\VEGA\Renderer</Filter>
     </ClInclude>
@@ -118,6 +133,9 @@
       <Filter>src\VEGA\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\VEGA\Renderer\Shader.h">
+      <Filter>src\VEGA\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\VEGA\Renderer\Texture.h">
       <Filter>src\VEGA\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\VEGA\Renderer\VertexArray.h">
@@ -1395,8 +1413,7 @@
     <ClInclude Include="vendor\glm\glm\vector_relational.hpp">
       <Filter>vendor\glm\glm</Filter>
     </ClInclude>
-    <ClInclude Include="src\VEGA\Renderer\OrthographicCamera.h" />
-    <ClInclude Include="src\Platform\OpenGL\OpenGLShader.h" />
+    <ClInclude Include="vendor\stb_image\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp">
@@ -1406,6 +1423,12 @@
       <Filter>src\Platform\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\OpenGL\OpenGLRendererAPI.cpp">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLShader.cpp">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLTexture.cpp">
       <Filter>src\Platform\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\OpenGL\OpenGLVertexArray.cpp">
@@ -1438,6 +1461,9 @@
     <ClCompile Include="src\VEGA\Renderer\Buffer.cpp">
       <Filter>src\VEGA\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="src\VEGA\Renderer\OrthographicCamera.cpp">
+      <Filter>src\VEGA\Renderer</Filter>
+    </ClCompile>
     <ClCompile Include="src\VEGA\Renderer\RenderCommand.cpp">
       <Filter>src\VEGA\Renderer</Filter>
     </ClCompile>
@@ -1450,14 +1476,15 @@
     <ClCompile Include="src\VEGA\Renderer\Shader.cpp">
       <Filter>src\VEGA\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="src\VEGA\Renderer\Texture.cpp">
+      <Filter>src\VEGA\Renderer</Filter>
+    </ClCompile>
     <ClCompile Include="src\VEGA\Renderer\VertexArray.cpp">
       <Filter>src\VEGA\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\vgpch.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\VEGA\Renderer\OrthographicCamera.cpp" />
-    <ClCompile Include="src\VEGA\Core\Timestep.h" />
-    <ClCompile Include="src\Platform\OpenGL\OpenGLShader.cpp" />
+    <ClCompile Include="vendor\stb_image\stb_image.cpp" />
   </ItemGroup>
 </Project>
