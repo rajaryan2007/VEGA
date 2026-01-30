@@ -1,6 +1,9 @@
 #include "vgpch.h"
 
 #include "Application.h"
+
+#include "VEGA/Renderer/Renderer.h"
+
 #include "VEGA/Log.h"
 #include "input.h"
 
@@ -23,6 +26,8 @@ namespace VEGA{
 		m_Window->SetEventCallback(BIND_EVENT_FN(OnEvent));
 		m_Window->SetVSync(false);
 		
+		Renderer::Init();
+
 		m_ImGuiLayer = new ImGuiLayer();
 		PushOverlay(m_ImGuiLayer);		
 	}

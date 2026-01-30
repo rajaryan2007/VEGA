@@ -173,6 +173,7 @@ public:
          void main()
          {
              color = texture(u_Texture, v_TexCoord);
+
          }
         )";
 
@@ -181,7 +182,7 @@ public:
 		m_Shader2.reset(VEGA::Shader::Create(vertexSrc2, fragmentSrc2));
         
 		m_Texture = (VEGA::Texture2D::Create("assests/textures/Lily.jpg"));
-		
+		m_TextureLogo = (VEGA::Texture2D::Create("assests/textures/VEGA.png"));
 		
 		std::dynamic_pointer_cast<VEGA::OpenGLShader>(m_TextureShader)->Bind();
 		std::dynamic_pointer_cast<VEGA::OpenGLShader>(m_TextureShader)->SetUniformInt("u_Texture", 0);
@@ -279,7 +280,13 @@ public:
 			}
 			m_Texture->Bind();
 			m_TextureShader->Bind();
-			VEGA::Renderer::Submit(m_TextureShader, m_SqaureVA, transform);
+			glm::mat4 logoTransform = glm::translate(glm::mat4(1.0f), m_Transform + glm::vec3(0.0f, 0.0f, 0.1f));
+			VEGA::Renderer::Submit(m_TextureShader, m_SqaureVA, logoTransform);
+
+
+			m_TextureLogo->Bind();
+			 logoTransform = glm::translate(glm::mat4(1.0f), m_Transform + glm::vec3(0.0f, 0.0f, 0.2f));
+			VEGA::Renderer::Submit(m_TextureShader, m_SqaureVA, logoTransform);
 		/*	glm::mat4 pos = glm::translate(glm::mat4(1.0f), glm::vec3(i * 0.3f, 0.0f, 0.0f));
 			glm::mat4 transform = pos * scale;
 			VEGA::Renderer::Submit(m_Shader2, m_SqaureVA, transform);*/
@@ -305,7 +312,7 @@ private:
 	VEGA::Ref<VEGA::VertexBuffer> m_VertexBuffer;
 	VEGA::Ref<VEGA::IndexBuffer> m_IndexBuffer;
 	
-	VEGA::Ref<VEGA::Texture2D> m_Texture;
+	VEGA::Ref<VEGA::Texture2D> m_Texture,m_TextureLogo;
 
 	VEGA::Ref<VEGA::Shader> m_Shader2,m_TextureShader;
 	VEGA::Ref<VEGA::VertexArray> m_SqaureVA;
