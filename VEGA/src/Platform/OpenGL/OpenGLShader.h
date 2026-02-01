@@ -10,12 +10,14 @@ namespace VEGA {
 	class OpenGLShader : public Shader
 	{
 	public:
-		OpenGLShader(const  std::string& vertexSrc, const std::string& fragmentSrc);
+		OpenGLShader(const std::string& name ,const  std::string& vertexSrc, const std::string& fragmentSrc);
 		OpenGLShader(const  std::string& filepath);
 		virtual ~OpenGLShader();
 
 		virtual void Bind() const override;
 		virtual void Unbind() const override;
+
+		virtual const std::string& GetName() const override { return m_Name; };
 
 		void SetUniformMat4(const std::string& name, const glm::mat4& matrix);
 		void SetUniformInt(const std::string& name, int value);
@@ -28,7 +30,7 @@ namespace VEGA {
 	    
 	
 	private:
-
+		std::string m_Name;	
 		uint32_t m_RendererID;
 	};
 }

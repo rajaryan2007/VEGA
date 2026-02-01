@@ -22,8 +22,8 @@ namespace VEGA {
 void VEGA::OpenGLShader::Compile(const std::unordered_map<GLenum, std::string>& shaderSources)
 {
 	GLuint program = glCreateProgram();
-	std::vector<GLuint> shaderIDs;
-	shaderIDs.reserve(shaderSources.size());
+	std::array<GLuint,2> shaderIDs;
+	int GLShaderIndex = 0;	
 
 	for (auto& [type, source] : shaderSources)
 	{
@@ -50,7 +50,7 @@ void VEGA::OpenGLShader::Compile(const std::unordered_map<GLenum, std::string>& 
 		}
 
 		glAttachShader(program, shader);
-		shaderIDs.push_back(shader);
+		shaderIDs[GLShaderIndex++] = shader;
 	}
 
 	glLinkProgram(program);
@@ -89,14 +89,23 @@ VEGA::OpenGLShader::OpenGLShader(const std::string& filepath)
 	std::string source = ReadFile(filepath);
 	auto shaderSources = preProcess(source);
 	Compile(shaderSources);
+	// Option A: operate on m_Name (simple)
+	auto lastSlash = filepath.find_last_of("/\\");
+	if (lastSlash != std::string::npos)
+	    m_Name = filepath.substr(lastSlash + 1); // "Texture.glsl"
+	auto lastDot = m_Name.rfind('.');
+	if (lastDot != std::string::npos)
+	    m_Name = m_Name.substr(0, lastDot); // "Texture"
 }
 
-VEGA::OpenGLShader::OpenGLShader(const std::string& vertexSrc, const std::string& fragmentSrc) 
+VEGA::OpenGLShader::OpenGLShader(const std::string& name, const std::string& vertexSrc, const std::string& fragmentSrc) 
+	: m_Name(name)
 {
 	std::unordered_map<GLenum, std::string> sources;
 	sources[GL_VERTEX_SHADER] = vertexSrc;
 	sources[GL_FRAGMENT_SHADER] = fragmentSrc;
 	Compile(sources);
+	m_Name = name;
 }
 
 
@@ -120,7 +129,7 @@ void VEGA::OpenGLShader::Unbind() const
 std::string VEGA::OpenGLShader::ReadFile(const std::string& filepath)
 {
 	std::string result;
-	std::ifstream in(filepath, std::ios::in, std::ios::binary);
+	std::ifstream in(filepath, std::ios::in | std::ios::binary);
 	if (in)
 	{
 		in.seekg(0, std::ios::end);

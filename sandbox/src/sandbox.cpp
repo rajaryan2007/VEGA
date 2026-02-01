@@ -9,6 +9,8 @@
 #include "Platform/OpenGL/OpenGLTexture.h"
 #include <imgui/imgui.h>
 
+#include "VEGA/Renderer/Shader.h"
+
 
 class ExampleLayer : public VEGA::Layer
 {
@@ -177,15 +179,17 @@ public:
          }
         )";
 
-		m_TextureShader.reset(VEGA::Shader::Create("assests/shaders/Texture.glsl"));
-		m_Shader.reset(VEGA::Shader::Create(vertexSrc, fragmentSrc));
-		m_Shader2.reset(VEGA::Shader::Create(vertexSrc2, fragmentSrc2));
+		auto textureShader = m_ShaderLibrary.Load("assests/shaders/Texture.glsl");
+		m_Shader = (VEGA::Shader::Create("triangle", vertexSrc, fragmentSrc));
+		m_Shader2 = (VEGA::Shader::Create("triangle",vertexSrc2, fragmentSrc2));
         
+		
+
 		m_Texture = (VEGA::Texture2D::Create("assests/textures/Lily.jpg"));
 		m_TextureLogo = (VEGA::Texture2D::Create("assests/textures/VEGA.png"));
 		
-		std::dynamic_pointer_cast<VEGA::OpenGLShader>(m_TextureShader)->Bind();
-		std::dynamic_pointer_cast<VEGA::OpenGLShader>(m_TextureShader)->SetUniformInt("u_Texture", 0);
+		std::dynamic_pointer_cast<VEGA::OpenGLShader>(textureShader)->Bind();
+		std::dynamic_pointer_cast<VEGA::OpenGLShader>(textureShader)->SetUniformInt("u_Texture", 0);
 }
 
 	void OnUpdate(VEGA::Timestep ts) override
@@ -236,7 +240,7 @@ public:
 		{
 			m_Transform.y -= m_squareMoveSpeed * ts;
 		}
-		// Poll events and swap buffers first so ImGui backend callbacks update IO before NewFrame
+		// Poll events and swap buffers first so ImGui  callbacks update IO before NewFrame
 		
 		// Clear
 
@@ -278,15 +282,17 @@ public:
 					m_Shader2->SetUniformFloat4("v_Color", blueColor);*/
 				VEGA::Renderer::Submit(m_Shader2, m_SqaureVA, transform);
 			}
+
+			auto textureShader = m_ShaderLibrary.Get("Texture");
 			m_Texture->Bind();
-			m_TextureShader->Bind();
+			
 			glm::mat4 logoTransform = glm::translate(glm::mat4(1.0f), m_Transform + glm::vec3(0.0f, 0.0f, 0.1f));
-			VEGA::Renderer::Submit(m_TextureShader, m_SqaureVA, logoTransform);
+			VEGA::Renderer::Submit(textureShader, m_SqaureVA, logoTransform);
 
 
 			m_TextureLogo->Bind();
 			 logoTransform = glm::translate(glm::mat4(1.0f), m_Transform + glm::vec3(0.0f, 0.0f, 0.2f));
-			VEGA::Renderer::Submit(m_TextureShader, m_SqaureVA, logoTransform);
+			VEGA::Renderer::Submit(textureShader, m_SqaureVA, logoTransform);
 		/*	glm::mat4 pos = glm::translate(glm::mat4(1.0f), glm::vec3(i * 0.3f, 0.0f, 0.0f));
 			glm::mat4 transform = pos * scale;
 			VEGA::Renderer::Submit(m_Shader2, m_SqaureVA, transform);*/
@@ -306,7 +312,7 @@ public:
 		ImGui::End();
 	}
 private:
-	
+	VEGA::ShaderLibrary m_ShaderLibrary;
 	VEGA::Ref<VEGA::Shader> m_Shader;
 	VEGA::Ref<VEGA::VertexArray> m_VertexArray;
 	VEGA::Ref<VEGA::VertexBuffer> m_VertexBuffer;
@@ -314,7 +320,7 @@ private:
 	
 	VEGA::Ref<VEGA::Texture2D> m_Texture,m_TextureLogo;
 
-	VEGA::Ref<VEGA::Shader> m_Shader2,m_TextureShader;
+	VEGA::Ref<VEGA::Shader> m_Shader2;
 	VEGA::Ref<VEGA::VertexArray> m_SqaureVA;
 	VEGA::OrthographicCamera m_Camera;
 	glm::vec3 m_CameraPosition;
