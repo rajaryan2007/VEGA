@@ -177,7 +177,7 @@ public:
          }
         )";
 
-		m_TextureShader.reset(VEGA::Shader::Create(TexturevertexSrc, TexturefragmentSrc));
+		m_TextureShader.reset(VEGA::Shader::Create("assests/shaders/Texture.glsl"));
 		m_Shader.reset(VEGA::Shader::Create(vertexSrc, fragmentSrc));
 		m_Shader2.reset(VEGA::Shader::Create(vertexSrc2, fragmentSrc2));
         
