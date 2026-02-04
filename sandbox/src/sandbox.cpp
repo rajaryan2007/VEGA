@@ -261,6 +261,12 @@ public:
 	void OnEvent(VEGA::Event& e) override
 	{
 		m_CameraController.OnEvent(e);
+
+		/*if (e.GetEventType() == VEGA::EventType::WindowResize)
+		{
+			auto& re = static_cast<VEGA::WindowResizeEvent&>(e);
+			VEGA::RenderCommand::SetViewport(0, 0, re.GetWidth(), re.GetHeight());
+		}*/
 	}
 	
 
