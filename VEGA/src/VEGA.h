@@ -6,7 +6,7 @@
 #include "VEGA\input.h"
 #include "VEGA\KeyCodes.h"
 #include "VEGA\MouseButtonCodes.h"
-
+#include "VEGA\OrthograpicCameraContoroller.h"
 
 #include "VEGA\Core\Timestep.h"
 

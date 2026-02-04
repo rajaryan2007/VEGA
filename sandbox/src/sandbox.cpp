@@ -16,7 +16,7 @@ class ExampleLayer : public VEGA::Layer
 {
 public:
 	ExampleLayer()
-		:Layer("Example"), m_Camera(-1.6f, 1.6f, -0.9f, 0.9f), m_CameraPosition(0.0f, 0.0f, 0.0f), m_Transform(0.0f, 0.0f, 0.0f)
+		:Layer("Example"), m_CameraController(1280.0f / 720.0f), m_Transform(0.0f, 0.0f, 0.0f)
 	{
 		m_VertexArray.reset(VEGA::VertexArray::Create());
 
@@ -112,17 +112,15 @@ public:
 		std::string vertexSrc2 = R"(
          #version 330 core
          layout(location =0) in vec3 a_Position;
-         layout(location =1) in vec4 a_Color;         
+         layout(location =1) in vec2 a_TexCoord;         
          
          uniform mat4 u_ViewProjection;
          uniform mat4 u_Transform;         
  
          out vec3 v_Position; 
-         out vec4 v_Color;         
  
          void main (){
             v_Position = a_Position;
-            v_Color = a_Color;
             gl_Position =  u_ViewProjection * (u_Transform) * vec4(a_Position,1.0);
          }
         )";
@@ -195,51 +193,11 @@ public:
 	void OnUpdate(VEGA::Timestep ts) override
 	{
 		//VG_TRACE("Delta time {0}s ({1}ms)", ts.GetSeconds(), ts.GetMilliseconds());
+		m_CameraController.OnUpdate(ts);
 
 		float time = ts;
 
-		if(VEGA::Input::IsKeyPressed(VG_KEY_LEFT))
-		{
-			m_CameraPosition.x += m_CameraSpeed * ts;
-		}
-		else if (VEGA::Input::IsKeyPressed(VG_KEY_RIGHT))
-		{
-			m_CameraPosition.x -= m_CameraSpeed * ts;
-		}
-		if (VEGA::Input::IsKeyPressed(VG_KEY_DOWN))
-		{
-			m_CameraPosition.y += m_CameraSpeed * ts;
-		}
-		else if (VEGA::Input::IsKeyPressed(VG_KEY_UP))
-		{
-			m_CameraPosition.y -= m_CameraSpeed * ts;
-		}
-
-		if (VEGA::Input::IsKeyPressed(VG_KEY_A))
-		{
-			m_CameraRotation -= m_CameraRotationSpeed * ts;
-		}
-		else if (VEGA::Input::IsKeyPressed(VG_KEY_D))
-		{
-			m_CameraRotation += m_CameraRotationSpeed * ts;
-		}
-
-		if (VEGA::Input::IsKeyPressed(VG_KEY_J))
-		{
-			m_Transform.x += m_squareMoveSpeed * ts;
-		}
-		else if (VEGA::Input::IsKeyPressed(VG_KEY_L))
-		{
-			m_Transform.x -= m_squareMoveSpeed * ts;
-		}
-		if (VEGA::Input::IsKeyPressed(VG_KEY_I))
-		{
-			m_Transform.y += m_squareMoveSpeed * ts;
-		}
-		else if (VEGA::Input::IsKeyPressed(VG_KEY_K))
-		{
-			m_Transform.y -= m_squareMoveSpeed * ts;
-		}
+		
 		// Poll events and swap buffers first so ImGui  callbacks update IO before NewFrame
 		
 		// Clear
@@ -249,9 +207,8 @@ public:
 		VEGA::RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
 		VEGA::RenderCommand::Clear();
 
-		m_Camera.SetPosition(m_CameraPosition);
-		m_Camera.SetRotation(m_CameraRotation);
-		VEGA::Renderer::BeginScene(m_Camera);
+		
+		VEGA::Renderer::BeginScene(m_CameraController.GetCamera());
 
 		
 
@@ -280,7 +237,7 @@ public:
 					m_Shader2->SetUniformFloat4("v_Color", redColor);
 				else
 					m_Shader2->SetUniformFloat4("v_Color", blueColor);*/
-				VEGA::Renderer::Submit(m_Shader2, m_SqaureVA, transform);
+				//VEGA::Renderer::Submit(m_Shader2, m_SqaureVA, transform);
 			}
 
 			auto textureShader = m_ShaderLibrary.Get("Texture");
@@ -300,13 +257,17 @@ public:
 			/*VEGA::Renderer::Submit(m_Shader2, m_VertexArray);*/
 		VEGA::Renderer::EndScene();
 	}
+
+	void OnEvent(VEGA::Event& e) override
+	{
+		m_CameraController.OnEvent(e);
+	}
 	
 
 	void OnImGuiRender() override
 	{
 		ImGui::Begin("Settings");
-		ImGui::Text("Camera Position: (%.2f, %.2f, %.2f)", m_CameraPosition.x, m_CameraPosition.y, m_CameraPosition.z);
-		ImGui::Text("Camera Rotation: %.2f", m_CameraRotation);
+		
 		ImGui::Text("Square Position: (%.2f, %.2f, %.2f)", m_Transform.x, m_Transform.y, m_Transform.z);
 		ImGui::ColorEdit3("Square Color", glm::value_ptr(blueColor));
 		ImGui::End();
@@ -322,14 +283,12 @@ private:
 
 	VEGA::Ref<VEGA::Shader> m_Shader2;
 	VEGA::Ref<VEGA::VertexArray> m_SqaureVA;
-	VEGA::OrthographicCamera m_Camera;
-	glm::vec3 m_CameraPosition;
-	float m_CameraRotation = 0.0f;
-	float m_CameraRotationSpeed = 120.0f;
-	float m_CameraSpeed = 2.0f;
+
+	VEGA::OrthographicCameraContoroller m_CameraController;
+	
 	glm::vec4 blueColor = { 0.2f, 0.3f, 0.8f, 1.0f };
 	glm::vec3 m_Transform;
-	float m_squareMoveSpeed = 0.5f;
+	
 };
 
 class Sandbox : public VEGA::Application

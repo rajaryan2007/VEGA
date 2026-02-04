@@ -167,6 +167,7 @@
     <ClInclude Include="src\VEGA\Layer.h" />
     <ClInclude Include="src\VEGA\LayerStack.h" />
     <ClInclude Include="src\VEGA\Log.h" />
+    <ClInclude Include="src\VEGA\OrthograpicCameraContoroller.h" />
     <ClInclude Include="src\VEGA\Renderer\Buffer.h" />
     <ClInclude Include="src\VEGA\Renderer\GraphicsContext.h" />
     <ClInclude Include="src\VEGA\Renderer\OrthographicCamera.h" />
@@ -617,6 +618,7 @@
     <ClCompile Include="src\VEGA\Layer.cpp" />
     <ClCompile Include="src\VEGA\LayerStack.cpp" />
     <ClCompile Include="src\VEGA\Log.cpp" />
+    <ClCompile Include="src\VEGA\OrthograpicCameraContoroller.cpp" />
     <ClCompile Include="src\VEGA\Renderer\Buffer.cpp" />
     <ClCompile Include="src\VEGA\Renderer\OrthographicCamera.cpp" />
     <ClCompile Include="src\VEGA\Renderer\RenderCommand.cpp" />
