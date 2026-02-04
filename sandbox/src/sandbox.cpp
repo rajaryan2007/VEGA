@@ -1,7 +1,6 @@
-#include "VEGA.h"
-
 #include <glm/vec3.hpp>
-
+#include "VEGA.h"
+#include "VEGA\EntryPoint.h"
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
@@ -11,6 +10,7 @@
 
 #include "VEGA/Renderer/Shader.h"
 
+#include "Sandbox2d.h"
 
 class ExampleLayer : public VEGA::Layer
 {
@@ -18,7 +18,7 @@ public:
 	ExampleLayer()
 		:Layer("Example"), m_CameraController(1280.0f / 720.0f), m_Transform(0.0f, 0.0f, 0.0f)
 	{
-		m_VertexArray.reset(VEGA::VertexArray::Create());
+		m_VertexArray = (VEGA::VertexArray::Create());
 
 
 		float vertices[] = {
@@ -52,7 +52,7 @@ public:
 		m_IndexBuffer.reset(VEGA::IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t)));
 		m_VertexArray->SetIndexBuffer(m_IndexBuffer);
 
-		m_SqaureVA.reset(VEGA::VertexArray::Create());
+		m_SqaureVA = (VEGA::VertexArray::Create());
 
 		float vertiecsSquare[] = {
 			-0.5f, -0.5f, 0.0f,0.0f,0.0f,
@@ -272,11 +272,7 @@ public:
 
 	void OnImGuiRender() override
 	{
-		ImGui::Begin("Settings");
 		
-		ImGui::Text("Square Position: (%.2f, %.2f, %.2f)", m_Transform.x, m_Transform.y, m_Transform.z);
-		ImGui::ColorEdit3("Square Color", glm::value_ptr(blueColor));
-		ImGui::End();
 	}
 private:
 	VEGA::ShaderLibrary m_ShaderLibrary;
@@ -303,7 +299,8 @@ public:
 	Sandbox()
 		
 	{
-		PushLayer(new ExampleLayer);		
+		PushLayer(new ExampleLayer());	
+		PushLayer(new Sandbox2D());
 	}
 	~Sandbox()
 	{

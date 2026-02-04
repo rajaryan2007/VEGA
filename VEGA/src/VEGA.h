@@ -26,4 +26,3 @@
 
 // Entry point ---
 
-#include "VEGA\EntryPoint.h"

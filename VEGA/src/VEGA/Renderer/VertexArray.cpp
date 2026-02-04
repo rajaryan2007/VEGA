@@ -6,7 +6,7 @@
 
 namespace VEGA
 {
-	VertexArray* VertexArray::Create()
+	Ref<VertexArray> VertexArray::Create()
 	{
 		switch (Renderer::GetAPI())
 		{
@@ -14,7 +14,7 @@ namespace VEGA
 			VG_CORE_ASSERT(false, "RendererAPI::NONE is currently not supported!");
 			return nullptr;
 		case RendererAPI::API::OpenGL:
-			return new OpenGLVertexArray();
+			return std::make_shared<OpenGLVertexArray>();
 		}
 		VG_CORE_ASSERT(false, "Unknown RendererAPI!");
 		return nullptr;
