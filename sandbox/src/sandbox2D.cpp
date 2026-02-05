@@ -8,6 +8,7 @@
 
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include "VEGA/Renderer/Renderer2D.h"
 
 Sandbox2D::Sandbox2D()
 	: Layer("Sandbox2D"), m_CameraController(1280.0f / 720.0f), m_Transform(0.0f, 0.0f, 0.0f)
@@ -67,19 +68,11 @@ void Sandbox2D::OnUpdate(VEGA::Timestep ts)
     VEGA::RenderCommand::Clear();
    
 
-    VEGA::Renderer::BeginScene(m_CameraController.GetCamera());
+    
 
-	std::dynamic_pointer_cast<VEGA::OpenGLShader>(textureShader)->Bind();
-    std::dynamic_pointer_cast<VEGA::OpenGLShader>(textureShader)->SetUniformFloat4 ("u_color", blueColor);
-
-
-    glm::mat4 transform = glm::translate(glm::mat4(1.0f), m_Transform);
-    glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
-
-    textureShader->Bind();
-	
-	VEGA::Renderer::Submit(textureShader, m_SqaureVA, transform);
-  
+	VEGA::Renderer2D::BeginScene(m_CameraController.GetCamera());
+	VEGA::Renderer2D::DrawQuad(m_Transform, { 1.0f, 1.0f }, blueColor);
+	VEGA::Renderer2D::EndScene();
 
 
     VEGA::Renderer::EndScene();
@@ -87,7 +80,7 @@ void Sandbox2D::OnUpdate(VEGA::Timestep ts)
 
 void Sandbox2D::OnEvent(VEGA::Event& event)
 {
-
+    m_CameraController.OnEvent(event);
 }
 
 void Sandbox2D::OnImGuiRender()

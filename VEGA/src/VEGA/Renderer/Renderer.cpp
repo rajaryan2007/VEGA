@@ -3,6 +3,7 @@
 #include "RendererAPI.h"
 
 #include "Platform/OpenGL/OpenGLShader.h"
+#include "Renderer2D.h"
 
 #include "Shader.h"
 namespace VEGA {
@@ -11,6 +12,7 @@ namespace VEGA {
 
 	void Renderer::Init() {
 		RenderCommand::Init();
+		Renderer2D::Init();
 	}
 
 	void Renderer::OnWindowResize(uint32_t width, uint32_t height)

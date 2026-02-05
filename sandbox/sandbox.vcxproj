@@ -148,9 +148,6 @@
   <ItemGroup>
     <ClInclude Include="src\sandbox2D.h" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="assests\shaders\flatSquare.glsl" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

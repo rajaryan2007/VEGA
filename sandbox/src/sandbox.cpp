@@ -1,6 +1,6 @@
 #include <glm/vec3.hpp>
 #include "VEGA.h"
-#include "VEGA\EntryPoint.h"
+#include "VEGA/EntryPoint.h"
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
@@ -299,7 +299,7 @@ public:
 	Sandbox()
 		
 	{
-		PushLayer(new ExampleLayer());	
+		//PushLayer(new ExampleLayer());	
 		PushLayer(new Sandbox2D());
 	}
 	~Sandbox()
