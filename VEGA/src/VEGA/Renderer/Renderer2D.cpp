@@ -4,6 +4,8 @@
 #include "VertexArray.h"
 #include "Shader.h"
 
+#include "glm/gtc/matrix_transform.hpp"
+
 #include "Platform/OpenGL/OpenGLShader.h"
 #include "RenderCommand.h"
 
@@ -66,9 +68,9 @@ namespace VEGA {
 	void Renderer2D::BeginScene(const OrthographicCamera& camera)
 	{
 		
-		std::dynamic_pointer_cast<OpenGLShader>(s_Data->Shader)->Bind();
-		std::dynamic_pointer_cast<OpenGLShader>(s_Data->Shader)->SetUniformMat4("u_ViewProjection", camera.GetViewProjectionMatrix());
-		std::dynamic_pointer_cast<OpenGLShader>(s_Data->Shader)->SetUniformMat4("u_Transform", glm::mat4(1.0f));
+		s_Data->Shader->Bind();
+		s_Data->Shader->SetMat4("u_ViewProjection", camera.GetViewProjectionMatrix());
+		
 
 	}
 
@@ -87,8 +89,11 @@ namespace VEGA {
 	void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color)
 	{
 		
-		std::dynamic_pointer_cast<OpenGLShader>(s_Data->Shader)->Bind();
-		std::dynamic_pointer_cast<OpenGLShader>(s_Data->Shader)->SetUniformFloat4("u_color", color);
+		s_Data->Shader->Bind();
+
+		s_Data->Shader->SetFloat4("u_color", color);
+		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position) * glm::scale(glm::mat4(1.0f), { size.x,size.y,1.0f });
+		s_Data->Shader->SetMat4("u_Transform", transform);
 
 		s_Data->VertexArray->Bind();
 		RenderCommand::DrawIndexed(s_Data->VertexArray);

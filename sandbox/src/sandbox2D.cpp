@@ -71,8 +71,12 @@ void Sandbox2D::OnUpdate(VEGA::Timestep ts)
     
 
 	VEGA::Renderer2D::BeginScene(m_CameraController.GetCamera());
-	VEGA::Renderer2D::DrawQuad(m_Transform, { 1.0f, 1.0f }, blueColor);
-	VEGA::Renderer2D::EndScene();
+	
+    VEGA::Renderer2D::DrawQuad(m_Transform, { 1.0f, 1.0f }, blueColor);
+
+    VEGA::Renderer2D::DrawQuad({0.5f,-0.5f}, { 0.5f, 1.0f }, redColor);
+	
+    VEGA::Renderer2D::EndScene();
 
 
     VEGA::Renderer::EndScene();
