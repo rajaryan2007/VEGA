@@ -19,6 +19,9 @@ Sandbox2D::Sandbox2D()
 void Sandbox2D::OnAttach()
 {
     
+	
+     
+
     m_SqaureVA = (VEGA::VertexArray::Create());
 
     float vertiecsSquare[] = {
@@ -52,7 +55,7 @@ void Sandbox2D::OnAttach()
 
     
     textureShader = VEGA::Shader::Create("assests/shaders/flatSquare.glsl");
-
+    m_TextureLOGO = VEGA::Texture2D::Create("assests/textures/Lily.jpg");
 }
 
 void Sandbox2D::OnDetach()
@@ -72,12 +75,12 @@ void Sandbox2D::OnUpdate(VEGA::Timestep ts)
 
 	VEGA::Renderer2D::BeginScene(m_CameraController.GetCamera());
 	
-    VEGA::Renderer2D::DrawQuad(m_Transform, { 1.0f, 1.0f }, blueColor);
+    //VEGA::Renderer2D::DrawQuad(m_Transform, { 1.0f, 1.0f }, blueColor);
 
-    VEGA::Renderer2D::DrawQuad({0.5f,-0.5f}, { 0.5f, 1.0f }, redColor);
-	
+    //VEGA::Renderer2D::DrawQuad({0.5f,-0.5f}, { 0.5f, 1.0f }, redColor);
+    VEGA::Renderer2D::DrawQuad(m_Transform, { 1.0f, 1.0f }, m_TextureLOGO);
+
     VEGA::Renderer2D::EndScene();
-
 
     VEGA::Renderer::EndScene();
 }

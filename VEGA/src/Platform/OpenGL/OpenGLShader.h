@@ -3,6 +3,7 @@
 #include <glm/glm.hpp>
 #include <unordered_map>
 #include "VEGA/Renderer/Shader.h"
+#include "VEGA/Renderer/Texture.h"
 
 typedef unsigned int GLenum;
 
@@ -20,11 +21,12 @@ namespace VEGA {
 		virtual void SetFloat3(const std::string& name,const glm::vec3& value) override;
 		virtual void SetFloat4(const std::string& name, const glm::vec4& value) override;
 		virtual void SetMat4(const std::string& name,const glm::mat4& value) override;
+		virtual void SetInt(const std::string& name, const int value) override;
 
 		virtual const std::string& GetName() const override { return m_Name; };
 
 		void SetUniformMat4(const std::string& name, const glm::mat4& matrix);
-		void SetUniformInt(const std::string& name, int value);
+		void SetUniformInt(const std::string& name,const int value);
 		void SetUniformFloat4(const std::string& name, const glm::vec4& value);
 		void SetUniformVec3(const std::string& name, const glm::vec3& value);
 	private:

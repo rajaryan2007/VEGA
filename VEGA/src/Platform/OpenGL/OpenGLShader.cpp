@@ -143,6 +143,14 @@ void VEGA::OpenGLShader::SetMat4(const std::string& name, const glm::mat4& value
 	glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(value));
 }
 
+
+
+
+void VEGA::OpenGLShader::SetInt(const std::string& name, const int value)
+{
+	SetUniformInt(name, value);
+}
+
 std::string VEGA::OpenGLShader::ReadFile(const std::string& filepath)
 {
 	std::string result;
@@ -196,7 +204,7 @@ void VEGA::OpenGLShader::SetUniformMat4(const std::string& name, const glm::mat4
 	glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(matrix));
 }
 
-void VEGA::OpenGLShader::SetUniformInt(const std::string& name, int value)
+void VEGA::OpenGLShader::SetUniformInt(const std::string& name,const int value)
 {
 	GLuint location = glGetUniformLocation(m_RendererID, name.c_str());
 	glUniform1i(location, value);
