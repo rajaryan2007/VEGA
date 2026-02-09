@@ -7,6 +7,7 @@
 #include "glm/gtc/matrix_transform.hpp"
 
 #include "Platform/OpenGL/OpenGLShader.h"
+#include "VEGA/Renderer/Texture.h"
 
 #include "RenderCommand.h"
 
@@ -16,7 +17,7 @@ namespace VEGA {
 	{
 		Ref<VertexArray> VertexArray;
 		Ref<Shader> TextureShader;
-		Ref<Shader> Shader;
+		Ref<Texture2D > WhiteTexture;
 	};
 
 	static Renderer2DStorage* s_Data;
@@ -54,14 +55,20 @@ namespace VEGA {
 		std::shared_ptr<VEGA::IndexBuffer> squareIB;
 		squareIB.reset(VEGA::IndexBuffer::Create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t)));
 		s_Data->VertexArray->SetIndexBuffer(squareIB);
+		uint32_t whitePixel = 0xffffffff;
+		
+		s_Data->WhiteTexture = Texture2D::Create(1, 1);
+		s_Data->WhiteTexture->SetData(&whitePixel,sizeof(uint32_t));
 
-		s_Data->Shader = VEGA::Shader::Create("assests/shaders/flatSquare.glsl");
+		
+		//s_Data->Shader = VEGA::Shader::Create("assests/shaders/flatSquare.glsl");
 		s_Data->TextureShader = VEGA::Shader::Create("assests/shaders/Texture.glsl");
 
 		s_Data->TextureShader->Bind();
 		s_Data->TextureShader->SetInt("u_Texture", 0);
 
 	}
+
 
 	void Renderer2D::Shutdown()
 	{
@@ -72,9 +79,7 @@ namespace VEGA {
 	void Renderer2D::BeginScene(const OrthographicCamera& camera)
 	{
 		
-		s_Data->Shader->Bind();
-		s_Data->Shader->SetMat4("u_ViewProjection", camera.GetViewProjectionMatrix());
-		
+	
 		s_Data->TextureShader->Bind();
 		s_Data->TextureShader->SetMat4("u_ViewProjection", camera.GetViewProjectionMatrix());
 
@@ -94,26 +99,25 @@ namespace VEGA {
 
 	void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color)
 	{
-		
-		s_Data->Shader->Bind();
+		s_Data->TextureShader->SetFloat4("u_Color", color);
+		s_Data->WhiteTexture->Bind();
 
-		s_Data->Shader->SetFloat4("u_color", color);
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position) * glm::scale(glm::mat4(1.0f), { size.x,size.y,1.0f });
-		s_Data->Shader->SetMat4("u_Transform", transform);
+		s_Data->TextureShader->SetMat4("u_Transform", transform);
 
 		s_Data->VertexArray->Bind();
 		RenderCommand::DrawIndexed(s_Data->VertexArray);
 	}
 
+		
 	void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const Ref<Texture2D>& texture)
 	{
-		s_Data->TextureShader->Bind();
-
+		s_Data->TextureShader->SetFloat4("u_Color", glm::vec4(1.0f));
+		texture->Bind();
+		
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position) * glm::scale(glm::mat4(1.0f), { size.x,size.y,1.0f });
 		s_Data->TextureShader->SetMat4("u_Transform", transform);
 		
-		texture->Bind();
-
 		s_Data->VertexArray->Bind();
 		RenderCommand::DrawIndexed(s_Data->VertexArray);
 	}

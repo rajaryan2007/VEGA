@@ -25,10 +25,12 @@ void main()
  in vec3 v_Position;
  in vec2 v_TexCoord;
 
+ uniform vec4 u_Color;
  uniform sampler2D u_Texture;
 
   void main()
   {
-      color = texture(u_Texture, v_TexCoord);
+      color = texture(u_Texture, v_TexCoord) * u_Color;
+
   }
 

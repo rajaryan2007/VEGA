@@ -14,7 +14,7 @@ namespace VEGA
 
 		virtual void OnDetach() override;
 		virtual void OnAttach() override;
-		virtual void OnImGuiRender() ;
+//		virtual void OnImGuiRender() ;
 		virtual void OnEvent(Event& e) override;
 
 		void Begin();
