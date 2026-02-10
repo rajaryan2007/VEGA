@@ -158,6 +158,7 @@
     <ClInclude Include="src\VEGA\Application.h" />
     <ClInclude Include="src\VEGA\Core.h" />
     <ClInclude Include="src\VEGA\Core\Timestep.h" />
+    <ClInclude Include="src\VEGA\Debug\instrumentor.h" />
     <ClInclude Include="src\VEGA\EntryPoint.h" />
     <ClInclude Include="src\VEGA\Events\ApplicationEvent.h" />
     <ClInclude Include="src\VEGA\Events\Event.h" />

@@ -15,6 +15,9 @@
 #include <sstream>
 #include <VEGA/Log.h>
 
+
+#include "VEGA/Debug/instrumentor.h"
+
 #ifdef VG_PLATFORM_WINDOWs
    #include <Windows.h>
 #endif // VG_PLATFORM_WINDOWs
