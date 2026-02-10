@@ -89,24 +89,27 @@ namespace VEGA{
 
 	while (m_Running)
 	{   
-		float time = (float)glfwGetTime();
+		VG_PROFILE_SCOPE("Frame");
+		{
+			VG_PROFILE_SCOPE("application");
+			float time = (float)glfwGetTime();
 
-		Timestep timestep = time - m_LastFrameTime;
-		m_LastFrameTime = time;
+			Timestep timestep = time - m_LastFrameTime;
+			m_LastFrameTime = time;
 
-		if (!m_Minimized) {
-             for (Layer* layer : m_LayerStack)
-				 layer->OnUpdate(timestep);
-			
+			if (!m_Minimized) {
+				for (Layer* layer : m_LayerStack)
+					layer->OnUpdate(timestep);
+
+			}
+			m_ImGuiLayer->Begin();
+			for (Layer* layer : m_LayerStack)
+				layer->OnImGuiRender();
+			m_ImGuiLayer->End();
+
+
+			m_Window->OnUpdate();
 		}
-		m_ImGuiLayer->Begin();
-		for (Layer* layer : m_LayerStack)
-			layer->OnImGuiRender();
-		m_ImGuiLayer->End();
-
-		
-		m_Window->OnUpdate();
-		
 
 	}
 

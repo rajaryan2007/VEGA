@@ -29,14 +29,8 @@ private:
 
 	VEGA::OrthographicCameraContoroller m_CameraController;
 
-	struct ProfileResult
-	{
-		const char* Name;
-		float Time;
 
-	};
 
-	std::vector<ProfileResult> m_PropfileResult;
 
 	glm::vec4 blueColor = { 0.2f, 0.3f, 0.8f, 1.0f };
 	glm::vec3 m_Transform;
