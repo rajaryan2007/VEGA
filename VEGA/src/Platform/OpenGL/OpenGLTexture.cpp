@@ -10,9 +10,14 @@ namespace VEGA {
 	OpenGLTexture2D::OpenGLTexture2D(const std::string& path)
 		: m_Path(path)
 	{
+		VG_PROFILE_FUNCTION();
 		int width, height, channels;
+		unsigned char* data = nullptr;
 		stbi_set_flip_vertically_on_load(1);
-		unsigned char* data = stbi_load(path.c_str(), &width, &height, &channels, 0);
+		{
+			VG_PROFILE_FUNCTION("OpenGL Texture::OpenGL");
+			data = stbi_load(path.c_str(), &width, &height, &channels, 0);
+		}
 		VG_CORE_ASSERT(data, "Failed to load image!");
 		m_Width = width;
 		m_Height = height;
@@ -56,6 +61,7 @@ namespace VEGA {
 	OpenGLTexture2D::OpenGLTexture2D(uint32_t width, uint32_t hight)
 		: m_Width(width),m_Height(hight)
 	{
+		VG_PROFILE_FUNCTION();
 		
 		m_InternalFormat = GL_RGBA8, m_DataFormat = GL_RGBA;
 		
@@ -78,6 +84,7 @@ namespace VEGA {
 
 	void OpenGLTexture2D::SetData(void* data, uint32_t size)
 	{   
+		VG_PROFILE_FUNCTION();
 		uint32_t bpp = m_DataFormat == GL_RGBA ? 4 : 3;
 		VG_CORE_ASSERT(size == m_Width * m_Height * bpp,"Data must be entire texture");
 
@@ -86,10 +93,12 @@ namespace VEGA {
 
 	OpenGLTexture2D::~OpenGLTexture2D()
 	{
+		VG_PROFILE_FUNCTION();
 		glDeleteTextures(1, &m_RendererID);
 	}
 	void OpenGLTexture2D::Bind(uint32_t slot) const
 	{
+		VG_PROFILE_FUNCTION();
 		glBindTextureUnit(slot, m_RendererID);
 	}
 }

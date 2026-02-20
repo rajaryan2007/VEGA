@@ -24,7 +24,8 @@ namespace VEGA {
 
 
 	void Renderer2D::Init()
-	{  
+	{
+		VG_PROFILE_FUNCTION();
 		s_Data = new Renderer2DStorage();
 		
 		s_Data->VertexArray = (VEGA::VertexArray::Create());
@@ -72,13 +73,13 @@ namespace VEGA {
 
 	void Renderer2D::Shutdown()
 	{
-		
+		VG_PROFILE_FUNCTION();
 		delete s_Data;
 	}
 
 	void Renderer2D::BeginScene(const OrthographicCamera& camera)
 	{
-		
+		VG_PROFILE_FUNCTION();
 	
 		s_Data->TextureShader->Bind();
 		s_Data->TextureShader->SetMat4("u_ViewProjection", camera.GetViewProjectionMatrix());
@@ -87,11 +88,12 @@ namespace VEGA {
 
 	void Renderer2D::EndScene()
 	{
-		
+		VG_PROFILE_FUNCTION();
 	}
 
 	void Renderer2D::DrawQuad(const glm::vec2& position, const glm::vec2& size, const glm::vec4& color)
 	{
+		VG_PROFILE_FUNCTION();
 		
 		DrawQuad({ position.x,position.y,0.0f }, size, color);
 
@@ -99,6 +101,7 @@ namespace VEGA {
 
 	void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color)
 	{
+		VG_PROFILE_FUNCTION();
 		s_Data->TextureShader->SetFloat4("u_Color", color);
 		s_Data->WhiteTexture->Bind();
 
@@ -112,10 +115,13 @@ namespace VEGA {
 		
 	void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const Ref<Texture2D>& texture)
 	{
+		VG_PROFILE_FUNCTION();
 		s_Data->TextureShader->SetFloat4("u_Color", glm::vec4(1.0f));
+		s_Data->TextureShader->SetFloat("u_TilingFactor", 1.0f);
 		texture->Bind();
 		
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position) * glm::scale(glm::mat4(1.0f), { size.x,size.y,1.0f });
+		
 		s_Data->TextureShader->SetMat4("u_Transform", transform);
 		
 		s_Data->VertexArray->Bind();
@@ -124,15 +130,17 @@ namespace VEGA {
 
 	void Renderer2D::DrawQuad(const glm::vec2& position, const glm::vec2& size, const Ref<Texture2D>& texture)
 	{
+		VG_PROFILE_FUNCTION();
 		DrawQuad({ position.x ,position.y,0 }, size, texture);
 	}
 
 	void Renderer2D::DrawRotatedQuad(const glm::vec2& position, const glm::vec2& size, float rotation, const glm::vec4& color)
 	{
-		
+		VG_PROFILE_FUNCTION();
 	}
 	void Renderer2D::DrawRotatedQuad(const glm::vec3& position, const glm::vec2& size, float rotation, const glm::vec4& color)
 	{
+		VG_PROFILE_FUNCTION();
 		
 	}
 }

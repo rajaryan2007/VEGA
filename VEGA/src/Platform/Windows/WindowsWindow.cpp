@@ -21,10 +21,12 @@ namespace VEGA {
 
 	Window* Window::Create(const WindowProps& props)
 	{
+		VG_PROFILE_FUNCTION();
 		return new WindowsWindow(props);
 	}
 	WindowsWindow::WindowsWindow(const WindowProps& props)
 	{
+		VG_PROFILE_FUNCTION();
 		Init(props);
 	}
 	WindowsWindow::~WindowsWindow()
@@ -156,8 +158,13 @@ glfwSetCursorPosCallback(m_Window, [](GLFWwindow* window, double xPos, double yP
 	}
 
 	void WindowsWindow::Shutdown()
-	{
+	{ 
+		VG_PROFILE_FUNCTION();
 		glfwDestroyWindow(m_Window);
+		/*--s_GLFWindowCount;
+		if(s_GLFWindowCount == 0) {
+			glfwTerminate();
+		}*/
 	}
 
 	void WindowsWindow::OnUpdate()
