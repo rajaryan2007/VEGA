@@ -25,6 +25,7 @@ namespace VEGA {
 
 		virtual const std::string& GetName() const override { return m_Name; };
 
+		void SetFloat(const std::string& name, const float value);
 		void SetUniformMat4(const std::string& name, const glm::mat4& matrix);
 		void SetUniformInt(const std::string& name,const int value);
 		void SetUniformFloat4(const std::string& name, const glm::vec4& value);

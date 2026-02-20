@@ -7,6 +7,7 @@ namespace VEGA {
 	{
 	public:
 		inline static void Init() {
+			VG_PROFILE_FUNCTION();
 			// Initialize the RendererAPI
 			s_RendererAPI->Init();
 		}	

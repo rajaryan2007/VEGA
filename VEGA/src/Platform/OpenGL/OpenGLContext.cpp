@@ -4,15 +4,19 @@
 #include <GLFW/glfw3.h>
 #include <Glad/glad.h>
 
-namespace VEGA {
+namespace VEGA {\
+
+	static uint32_t s_GLFWWindowCount = 0;
 	OpenGLContext::OpenGLContext(GLFWwindow* windowHandle)
 		:m_WindowHandle(windowHandle)
-	{
+	{   
+		VG_PROFILE_FUNCTION();
 		VG_CORE_ASSERT(windowHandle, "Window handle is null!");
 
 	}
 	void OpenGLContext::Init()
 	{ 
+		VG_PROFILE_FUNCTION();
 		glfwMakeContextCurrent(m_WindowHandle);
 		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
 		VG_CORE_ASSERT(status, "Failed to initialize Glad!");
@@ -27,6 +31,7 @@ namespace VEGA {
 	}
 	void OpenGLContext::SwapBuffers()
 	{
+		VG_PROFILE_FUNCTION();
 		glfwSwapBuffers(m_WindowHandle);
 	}
 }
