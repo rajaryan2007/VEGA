@@ -10,6 +10,7 @@ namespace VEGA {
 		static void Init();
 		static void Shutdown();
 		static void BeginScene(const OrthographicCamera& camera);
+		static void flush();
 		static void EndScene();
 		
 		// Primitives

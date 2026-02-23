@@ -58,7 +58,7 @@ namespace VEGA {
 		stbi_image_free(data);
 	}
 
-	OpenGLTexture2D::OpenGLTexture2D(uint32_t width, uint32_t hight)
+	OpenGLTexture2D::OpenGLTexture2D(u32 width, u32 hight)
 		: m_Width(width),m_Height(hight)
 	{
 		VG_PROFILE_FUNCTION();
@@ -82,10 +82,10 @@ namespace VEGA {
 		//stbi_image_free(data);
 	}
 
-	void OpenGLTexture2D::SetData(void* data, uint32_t size)
+	void OpenGLTexture2D::SetData(void* data, u32 size)
 	{   
 		VG_PROFILE_FUNCTION();
-		uint32_t bpp = m_DataFormat == GL_RGBA ? 4 : 3;
+		u32 bpp = m_DataFormat == GL_RGBA ? 4 : 3;
 		VG_CORE_ASSERT(size == m_Width * m_Height * bpp,"Data must be entire texture");
 
 		glTextureSubImage2D(m_RendererID,0,0,0,m_Width,m_Height,m_DataFormat,GL_UNSIGNED_BYTE,data);
@@ -96,7 +96,7 @@ namespace VEGA {
 		VG_PROFILE_FUNCTION();
 		glDeleteTextures(1, &m_RendererID);
 	}
-	void OpenGLTexture2D::Bind(uint32_t slot) const
+	void OpenGLTexture2D::Bind(u32 slot) const
 	{
 		VG_PROFILE_FUNCTION();
 		glBindTextureUnit(slot, m_RendererID);

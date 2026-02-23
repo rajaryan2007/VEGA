@@ -38,6 +38,6 @@ namespace VEGA {
 	
 	private:
 		std::string m_Name;	
-		uint32_t m_RendererID;
+		u32 m_RendererID;
 	};
 }

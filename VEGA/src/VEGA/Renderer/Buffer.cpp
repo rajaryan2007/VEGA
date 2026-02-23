@@ -7,7 +7,7 @@
 
 namespace VEGA {
 
-	uint32_t ShaderDataTypeSize(ShaderDataType type)
+	u32 ShaderDataTypeSize(ShaderDataType type)
 	{
 		switch (type)
 		{
@@ -28,7 +28,7 @@ namespace VEGA {
 	}
 
 
-	VertexBuffer* VertexBuffer::Create(float* vertices, uint32_t size) 
+	VertexBuffer* VertexBuffer::Create(float* vertices, u32 size)
 	{
 		switch (Renderer::GetAPI()) 
 		{
@@ -46,7 +46,25 @@ namespace VEGA {
 		return nullptr;
 	}
 
-	IndexBuffer* IndexBuffer::Create(uint32_t* indices, uint32_t size)
+	Ref<VertexBuffer> VertexBuffer::Create(u32 size)
+	{
+		switch (Renderer::GetAPI())
+		{
+		case RendererAPI::API::None:
+			VG_CORE_ASSERT(false, "RendererAPI::NONE is currently not supported!");
+			return nullptr;
+#if VG_PLATFORM_WINDOWS   
+		case RendererAPI::API::OpenGL:
+			return CreateRef<OpenGLVertexBuffer>(size);
+#endif		
+		default:
+			VG_CORE_ASSERT(false, "Unknown RendererAPI!");
+			return nullptr;
+		}
+		return nullptr;
+	}
+
+	IndexBuffer* IndexBuffer::Create(u32* indices, u32 size)
 	{
 		switch (Renderer::GetAPI())
 		{
