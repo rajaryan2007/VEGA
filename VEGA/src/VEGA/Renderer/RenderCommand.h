@@ -12,7 +12,7 @@ namespace VEGA {
 			s_RendererAPI->Init();
 		}	
 
-		inline static void SetViewport(uint32_t x, uint32_t y, uint32_t width, uint32_t height)
+		inline static void SetViewport(u32 x, u32 y, u32 width, u32 height)
 		{
 			s_RendererAPI->SetViewport(x, y, width, height);
 		};
@@ -25,9 +25,9 @@ namespace VEGA {
 			s_RendererAPI->Clear();
 		};
 
-        inline static void DrawIndexed(const std::shared_ptr<VertexArray>& vertexArray)
+        inline static void DrawIndexed(const std::shared_ptr<VertexArray>& vertexArray,u32 indexCount = 0)
 		{
-			s_RendererAPI->DrawIndexed(vertexArray);
+			s_RendererAPI->DrawIndexed(vertexArray, indexCount);
 		}
 	private:
 		static RendererAPI* s_RendererAPI;

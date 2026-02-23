@@ -6,7 +6,7 @@
 
 namespace VEGA {\
 
-	static uint32_t s_GLFWWindowCount = 0;
+	static u32 s_GLFWWindowCount = 0;
 	OpenGLContext::OpenGLContext(GLFWwindow* windowHandle)
 		:m_WindowHandle(windowHandle)
 	{   

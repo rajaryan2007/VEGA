@@ -16,7 +16,7 @@ namespace VEGA
 
 
 		static void Init();
-		static void OnWindowResize(uint32_t width, uint32_t height);
+		static void OnWindowResize(u32 width, u32 height);
 		static void BeginScene(OrthographicCamera& camera);
 		static void EndScene();
 

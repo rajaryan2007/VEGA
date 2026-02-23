@@ -10,14 +10,14 @@ namespace VEGA {
 	};
 	
 	
-	uint32_t ShaderDataTypeSize(ShaderDataType type);
+	u32 ShaderDataTypeSize(ShaderDataType type);
 
 		struct BufferElement
 		{
 			std::string Name;
 			ShaderDataType Type = ShaderDataType::None;
-			uint32_t Size = 0;
-			uint32_t Offset = 0;
+			u32 Size = 0;
+			u32 Offset = 0;
 			bool Normalized = false;
 
 			BufferElement() {};
@@ -28,7 +28,7 @@ namespace VEGA {
 
 			}
 
-			uint32_t GetComponentCount() const
+			u32 GetComponentCount() const
 			{
 				switch (Type)
 				{
@@ -58,7 +58,7 @@ namespace VEGA {
 				{
 					CalculateOffsetsAndStride();
 				}
-				inline uint32_t GetStride() const { return m_Stride; }
+				inline u32 GetStride() const { return m_Stride; }
 				inline const std::vector<BufferElement>& GetElements() const { return m_Elements; }
 
 				std::vector<BufferElement>::iterator begin() { return m_Elements.begin(); }
@@ -68,7 +68,7 @@ namespace VEGA {
 			private:
 				void CalculateOffsetsAndStride()
 				{
-					uint32_t offset = 0;
+					u32 offset = 0;
 					m_Stride = 0;
 
 					for (auto& element : m_Elements)
@@ -82,7 +82,7 @@ namespace VEGA {
 
 			private:
 				std::vector<BufferElement> m_Elements;
-				uint32_t m_Stride = 0;
+				u32 m_Stride = 0;
 			};
 
 
@@ -94,11 +94,14 @@ namespace VEGA {
 				virtual void Bind() const = 0;
 				virtual void Unbind() const = 0;
 
+				
 				virtual const BufferLayout& GetLayout() const = 0;
 				virtual void SetLayout(const BufferLayout& layout) = 0;
 
+				virtual void SetData(const void* data, u32 size) = 0;
 
-				static VertexBuffer* Create(float* vertices, uint32_t size);
+				static Ref<VertexBuffer> Create(u32 size);
+				static VertexBuffer* Create(float* vertices, u32 size);
 			};
 
 			class IndexBuffer
@@ -111,9 +114,9 @@ namespace VEGA {
 				virtual void Bind() const = 0;
 				virtual void Unbind() const = 0;
 
-				virtual uint32_t GetCount() const = 0;
+				virtual u32 GetCount() const = 0;
 
-				static IndexBuffer* Create(uint32_t* vertiecs, uint32_t size);
+				static IndexBuffer* Create(u32* vertiecs, u32 size);
 
 
 			};
