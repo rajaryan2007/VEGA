@@ -36,8 +36,6 @@ void main()
 
   void main()
   {
-      //color = texture(u_Texture, v_TexCoord * u_TilingFactor) * u_Color;
-     color = v_Color;
-
+      color = texture(u_Texture, v_TexCoord * u_TilingFactor) * u_Color * v_Color;
   }
 
