@@ -18,6 +18,9 @@ namespace VEGA {
 		glm::vec3 Position;
 		glm::vec2 TexCoord;
 		glm::vec4 Color;
+
+		f32 TexIndex;
+		f32 TilingFactor;
 	};
 
 	struct Renderer2DData
@@ -25,15 +28,21 @@ namespace VEGA {
 		const u32 MaxQuads = 10000;
 		const u32 MaxVertices = MaxQuads * 4;
 		const u32 MaxIndices = MaxQuads * 6;
+		static const u32 MaxTextureSlots = 32; // TODO: RenderCaps
 
 		Ref<VertexArray> VertexArray;
 		Ref<VertexBuffer> VertexBuffer;
 		Ref<Shader> TextureShader;
 		Ref<Texture2D > WhiteTexture;
 
+
+
 		u32 QuadIndexCount = 0;
 		QuadVertex* QuadVertexBufferBase = nullptr;
 		QuadVertex* QuadVertexBufferPtr = nullptr;
+        
+		std::array<Ref<Texture2D>, MaxTextureSlots> TextureSlots;
+		u32 TextureSlotIndex = 1; // 0
 	};
 
 	static Renderer2DData s_Data;
@@ -55,7 +64,10 @@ namespace VEGA {
 		BufferLayout SVlayout = {
 	       {ShaderDataType::Float3, "a_Position"},
 	       {ShaderDataType::Float2, "a_TexCoord"},
-	       {ShaderDataType::Float4, "a_Color"}
+	       {ShaderDataType::Float4, "a_Color"},
+		   {ShaderDataType::Float, "a_TexIndex"},
+		   
+		   {ShaderDataType::Float, "a_TilingFactor"}
 		};
 
 		s_Data.VertexBuffer->SetLayout(SVlayout);
@@ -86,13 +98,20 @@ namespace VEGA {
 		s_Data.WhiteTexture = Texture2D::Create(1, 1);
 		s_Data.WhiteTexture->SetData(&whitePixel,sizeof(u32));
 
-		
+		i32 samplers[s_Data.MaxTextureSlots];
+		for (u32 i  = 0;i<s_Data.MaxTextureSlots;i++)
+		{
+			samplers[i] = i;
+		}
+
 		//s_Data->Shader = VEGA::Shader::Create("assests/shaders/flatSquare.glsl");
 		s_Data.TextureShader = VEGA::Shader::Create("assests/shaders/Texture.glsl");
 
 		s_Data.TextureShader->Bind();
-		s_Data.TextureShader->SetInt("u_Texture", 0);
+		//s_Data.TextureShader->SetInt("u_Texture", 0);
+		s_Data.TextureShader->SetIntArray("u_Texture", samplers, s_Data.MaxTextureSlots);
 
+		s_Data.TextureSlots[0] = s_Data.WhiteTexture;
 
 	}
 
@@ -114,16 +133,21 @@ namespace VEGA {
 		s_Data.TextureShader->SetMat4("u_ViewProjection", camera.GetViewProjectionMatrix());
 		s_Data.TextureShader->SetMat4("u_Transform", glm::mat4(1.0f));
 		s_Data.TextureShader->SetFloat4("u_Color", glm::vec4(1.0f));
-		s_Data.TextureShader->SetFloat("u_TilingFactor", 1.0f);
+		s_Data.TextureShader->SetFloat("v_TilingFactor", 1.0f);
 		s_Data.WhiteTexture->Bind();
 
 		s_Data.QuadIndexCount = 0;
 		s_Data.QuadVertexBufferPtr = s_Data.QuadVertexBufferBase;
+
+		s_Data.TextureSlotIndex = 1;
 	}
 
 	void Renderer2D::flush()
 	{
-		
+		for(u32 i = 0; i < s_Data.TextureSlotIndex; i++)
+		{
+			s_Data.TextureSlots[i]->Bind(i);
+		}
 
 		RenderCommand::DrawIndexed(s_Data.VertexArray, s_Data.QuadIndexCount);
 
@@ -149,24 +173,30 @@ namespace VEGA {
 	{
 		VG_PROFILE_FUNCTION();
 
+		const f32 texIndex = 0.0f;
+
 		s_Data.QuadVertexBufferPtr->Position = position;
 		s_Data.QuadVertexBufferPtr->TexCoord = { 0.0f, 0.0f };
 		s_Data.QuadVertexBufferPtr->Color = color;
+		s_Data.QuadVertexBufferPtr->TexIndex = texIndex; // White Texture
 		s_Data.QuadVertexBufferPtr++;
 
 		s_Data.QuadVertexBufferPtr->Position = { position.x + size.x, position.y, 0.0f };
 		s_Data.QuadVertexBufferPtr->TexCoord = { 1.0f, 0.0f };
 		s_Data.QuadVertexBufferPtr->Color = color;
+		s_Data.QuadVertexBufferPtr->TexIndex = texIndex;
 		s_Data.QuadVertexBufferPtr++;
 
 		s_Data.QuadVertexBufferPtr->Position = { position.x + size.x, position.y + size.y, 0.0f };
 		s_Data.QuadVertexBufferPtr->TexCoord = { 1.0f, 1.0f };
 		s_Data.QuadVertexBufferPtr->Color = color;
+		s_Data.QuadVertexBufferPtr->TexIndex = texIndex;
 		s_Data.QuadVertexBufferPtr++;
 
 		s_Data.QuadVertexBufferPtr->Position = { position.x, position.y + size.y, 0.0f };
 		s_Data.QuadVertexBufferPtr->TexCoord = { 0.0f, 1.0f };
 		s_Data.QuadVertexBufferPtr->Color = color;
+		s_Data.QuadVertexBufferPtr->TexIndex = texIndex;
 		s_Data.QuadVertexBufferPtr++;
 
 		s_Data.QuadIndexCount += 6;
@@ -175,7 +205,61 @@ namespace VEGA {
 		
 	void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const Ref<Texture2D>& texture, float tiling_factor , const glm::vec4& tintColor)
 	{
+
 		VG_PROFILE_FUNCTION();
+
+		constexpr glm::vec4 defaultColor = { 1.0f,1.0f,1.0f,1.0f };
+
+		f32 textureIndex = 0.0f;
+		for (u32 i = 1; i < s_Data.TextureSlots.size(); ++i)
+		{
+			if (s_Data.TextureSlots[i] && s_Data.TextureSlots[i] == texture)
+			{
+				textureIndex = (f32)i;
+				break;
+			}
+		}
+
+		if (textureIndex == 0)
+		{
+			
+
+			textureIndex = s_Data.TextureSlotIndex;
+			s_Data.TextureSlots[s_Data.TextureSlotIndex] = texture;
+			++s_Data.TextureSlotIndex;
+		}
+
+		s_Data.QuadVertexBufferPtr->Position = position;
+		s_Data.QuadVertexBufferPtr->TexCoord = { 0.0f, 0.0f };
+		s_Data.QuadVertexBufferPtr->Color = defaultColor;
+		s_Data.QuadVertexBufferPtr->TexIndex = textureIndex;
+		s_Data.QuadVertexBufferPtr->TilingFactor = tiling_factor;
+		s_Data.QuadVertexBufferPtr++;
+
+		s_Data.QuadVertexBufferPtr->Position = { position.x + size.x, position.y, 0.0f };
+		s_Data.QuadVertexBufferPtr->TexCoord = { 1.0f, 0.0f };
+		s_Data.QuadVertexBufferPtr->Color = defaultColor;
+		s_Data.QuadVertexBufferPtr->TexIndex = textureIndex;
+		s_Data.QuadVertexBufferPtr->TilingFactor = tiling_factor;
+		s_Data.QuadVertexBufferPtr++;
+
+		s_Data.QuadVertexBufferPtr->Position = { position.x + size.x, position.y + size.y, 0.0f };
+		s_Data.QuadVertexBufferPtr->TexCoord = { 1.0f, 1.0f };
+		s_Data.QuadVertexBufferPtr->Color = defaultColor;
+		s_Data.QuadVertexBufferPtr->TexIndex = textureIndex;
+		s_Data.QuadVertexBufferPtr->TilingFactor = tiling_factor;
+		s_Data.QuadVertexBufferPtr++;
+
+		s_Data.QuadVertexBufferPtr->Position = { position.x, position.y + size.y, 0.0f };
+		s_Data.QuadVertexBufferPtr->TexCoord = { 0.0f, 1.0f };
+		s_Data.QuadVertexBufferPtr->Color = defaultColor;
+		s_Data.QuadVertexBufferPtr->TexIndex = textureIndex;
+		s_Data.QuadVertexBufferPtr->TilingFactor = tiling_factor;
+		s_Data.QuadVertexBufferPtr++;
+
+		s_Data.QuadIndexCount += 6;
+
+#if OLD_PATH	
 		s_Data.TextureShader->SetFloat4("u_Color", tintColor);
 		s_Data.TextureShader->SetFloat("u_TilingFactor", tiling_factor);
 		texture->Bind();
@@ -186,6 +270,7 @@ namespace VEGA {
 		
 		s_Data.VertexArray->Bind();
 		RenderCommand::DrawIndexed(s_Data.VertexArray);
+#endif
 	}
 
 	void Renderer2D::DrawQuad(const glm::vec2& position, const glm::vec2& size, const Ref<Texture2D>& texture, float tiling_factor , const glm::vec4& tintColor )
@@ -204,11 +289,11 @@ namespace VEGA {
 	{
 		VG_PROFILE_FUNCTION();
 		s_Data.QuadVertexBufferPtr->Position = position;
-		s_Data.QuadVertexBufferPtr->TexCoord = {0.0f,0.0f};
+		s_Data.QuadVertexBufferPtr->TexCoord = { 0.0f,0.0f };
 		s_Data.QuadVertexBufferPtr->Color = color;
 		s_Data.QuadVertexBufferPtr++;
 
-		s_Data.QuadVertexBufferPtr->Position = {position.x + size.x , position.y,0.0f};
+		s_Data.QuadVertexBufferPtr->Position = { position.x + size.x , position.y,0.0f };
 		s_Data.QuadVertexBufferPtr->TexCoord = { 0.0f,0.0f };
 		s_Data.QuadVertexBufferPtr->Color = color;
 		s_Data.QuadVertexBufferPtr++;
@@ -218,7 +303,7 @@ namespace VEGA {
 		s_Data.QuadVertexBufferPtr->Color = color;
 		s_Data.QuadVertexBufferPtr++;
 
-		s_Data.QuadVertexBufferPtr->Position = {position.x ,position.y + size.y ,0.};
+		s_Data.QuadVertexBufferPtr->Position = { position.x ,position.y + size.y ,0. };
 		s_Data.QuadVertexBufferPtr->TexCoord = { 0.0f,0.0f };
 		s_Data.QuadVertexBufferPtr->Color = color;
 		s_Data.QuadVertexBufferPtr++;

@@ -16,6 +16,8 @@ namespace VEGA {
 
 		/*static Texture* Create(const std::string& path);
 		static Texture* Create(unsigned int width, unsigned int height);*/
+
+		virtual bool operator==(const Texture& other) const = 0;
 	};
 
 	class Texture2D : public Texture {

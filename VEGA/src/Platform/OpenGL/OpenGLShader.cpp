@@ -138,6 +138,11 @@ void VEGA::OpenGLShader::SetFloat3(const std::string& name, const glm::vec3& val
 	glUniform3f(location, value.x, value.y, value.z);
 }
 
+void VEGA::OpenGLShader::SetIntArray(const std::string& name, int* values, u32 count)
+{
+	UploadUniformIntArray( name.c_str(), values, count);
+}
+
 void VEGA::OpenGLShader::SetFloat4(const std::string& name, const glm::vec4& value)
 {
 	VG_PROFILE_FUNCTION();
@@ -220,6 +225,12 @@ void VEGA::OpenGLShader::SetUniformMat4(const std::string& name, const glm::mat4
 {
 	GLuint location = glGetUniformLocation(m_RendererID, name.c_str());
 	glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(matrix));
+}
+
+void VEGA::OpenGLShader::UploadUniformIntArray(const std::string& name, i32* values, u32 count)
+{
+	GLint location = glGetUniformLocation(m_RendererID, name.c_str());
+	glUniform1iv(location, count, values);
 }
 
 void VEGA::OpenGLShader::SetUniformInt(const std::string& name,const int value)

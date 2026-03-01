@@ -88,14 +88,15 @@ void Sandbox2D::OnUpdate(VEGA::Timestep ts)
             PROFILE_SCOPE("Renderer2D::Scene");
             VEGA::Renderer2D::BeginScene(m_CameraController.GetCamera());
             {
-
+                
                 PROFILE_SCOPE("DrawQuad");
-                //VEGA::Renderer2D::DrawQuad(m_Transform, { 5.0f, 5.0f }, blueColor);
+                 VEGA::Renderer2D::DrawQuad(glm::vec3(-0.5f, -00.5f, 0.0f), { 1.0f, 1.0f }, m_TextureLOGO);
+                 VEGA::Renderer2D::DrawQuad(glm::vec3(-2.5f, -2.5f, 0.0f), {5.0f, 5.0f}, blueColor);
 
 
-                VEGA::Renderer2D::DrawRotatedQuad({ 0.0f,0.0f }, { 1.0f, 1.0f },glm::radians(00.0f), blueColor);
+                //VEGA::Renderer2D::DrawRotatedQuad({ 0.0f,0.0f }, { 1.0f, 1.0f },glm::radians(00.0f), redColor);
                 //VEGA::Renderer2D::DrawQuad({ 0.5f,-0.5f }, { 0.5f, 1.0f }, blueColor);
-                //VEGA::Renderer2D::DrawRotatedQuad(glm::vec3(0.0f, 0.0f, 0.1f), { 1.0f, 1.0f },glm::radians(45.0f), m_TextureLOGO);
+               
             }
         }
         VEGA::Renderer2D::EndScene();

@@ -15,6 +15,12 @@ namespace VEGA {
 		virtual void SetData(void* data, u32 size) override;
 
 		virtual void Bind(u32 slot = 0) const override;
+
+		// Change the parameter type of operator== from 'const Texture2D&' to 'const Texture&' to match the base class
+		virtual bool operator==(const Texture& other)const override
+		{
+			return m_RendererID == ((const OpenGLTexture2D&)other).m_RendererID;
+		};
 	private:
 		u32 m_Width, m_Height;
 		std::string m_Path;
