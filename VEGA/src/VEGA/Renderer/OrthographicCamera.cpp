@@ -4,13 +4,13 @@
 
 
 namespace VEGA {
-	OrthographicCamera::OrthographicCamera(float left, float right, float bottom, float top)
+	OrthographicCamera::OrthographicCamera(f32 left, f32 right, f32 bottom, f32 top)
 	{
 		SetProjection(left, right, bottom, top);
 		RecalculateViewMatrix();
 	}
 
-	void OrthographicCamera::SetProjection(float left, float right, float bottom, float top)
+	void OrthographicCamera::SetProjection(f32 left, f32 right, f32 bottom, f32 top)
 	{
 		m_ProjectionMatrix = glm::ortho(left, right, bottom, top, -1.0f, 1.0f);
 		m_ViewProjectionMatrix = m_ProjectionMatrix * m_ViewMatrix;

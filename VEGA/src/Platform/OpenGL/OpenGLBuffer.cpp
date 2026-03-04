@@ -5,7 +5,7 @@
 #include <glad/glad.h>
 
 namespace VEGA {
-	OpenGLVertexBuffer::OpenGLVertexBuffer(float* vertices, u32 size)
+	OpenGLVertexBuffer::OpenGLVertexBuffer(f32* vertices, u32 size)
 	{ 
 		VG_PROFILE_FUNCTION();
 		glCreateBuffers(1, &m_RendererID);

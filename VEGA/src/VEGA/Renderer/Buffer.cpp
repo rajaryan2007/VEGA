@@ -28,7 +28,7 @@ namespace VEGA {
 	}
 
 
-	VertexBuffer* VertexBuffer::Create(float* vertices, u32 size)
+	VertexBuffer* VertexBuffer::Create(f32* vertices, u32 size)
 	{
 		switch (Renderer::GetAPI()) 
 		{
