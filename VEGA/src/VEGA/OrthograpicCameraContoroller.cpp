@@ -5,12 +5,13 @@
 #include "VEGA/keyCodes.h"
 #include "VEGA/Input.h"
 
-
-VEGA::OrthographicCameraContoroller::OrthographicCameraContoroller( float aspectRatio, bool rotation /*= false*/)
-	:m_AspectRatio(aspectRatio), m_Camera(-m_AspectRatio * m_ZoomLevel, m_AspectRatio* m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel)
+// Fix constructor initialization for m_Camera and m_Bounds
+VEGA::OrthographicCameraContoroller::OrthographicCameraContoroller(float aspectRatio, bool rotation /*= false*/)
+	: m_AspectRatio(aspectRatio), m_Rotation(rotation), m_ZoomLevel(1.0f),
+	m_Bounds{ -aspectRatio * m_ZoomLevel, aspectRatio * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel },
+	m_Camera(m_Bounds.Left, m_Bounds.Right, m_Bounds.Bottom, m_Bounds.Top)
 {
-
-	
+	// Other initialization if needed
 }
 
 void VEGA::OrthographicCameraContoroller::OnUpdate(Timestep ts)
@@ -85,13 +86,19 @@ bool VEGA::OrthographicCameraContoroller::OnMouseScrolled(MouseScrolledEvent& e)
 {
 	m_ZoomLevel -= e.GetYOffset() * 0.25f;
 	m_ZoomLevel = std::max(m_ZoomLevel, 0.25f);
-	m_Camera.SetProjection(-m_AspectRatio * m_ZoomLevel, m_AspectRatio * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel);
+	//m_Camera.SetProjection(-m_AspectRatio * m_ZoomLevel, m_AspectRatio * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel);
+	m_Camera.SetProjection(m_Bounds.Left, m_Bounds.Right, m_Bounds.Bottom, m_Bounds.Top);
+	
+	m_Bounds = { -m_AspectRatio * m_ZoomLevel, m_AspectRatio * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel };
 	return false;
 }
 
 bool VEGA::OrthographicCameraContoroller::OnWindowResized(WindowResizeEvent& e)
 {
 	m_AspectRatio = (float)e.GetWidth() / (float)e.GetHeight();
-	m_Camera.SetProjection(-m_AspectRatio * m_ZoomLevel, m_AspectRatio * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel);
+	m_Bounds = { -m_AspectRatio * m_ZoomLevel, m_AspectRatio * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel };
+	m_Camera.SetProjection(m_Bounds.Left, m_Bounds.Right, m_Bounds.Bottom, m_Bounds.Top);
+
+	//m_Camera.SetProjection(-m_AspectRatio * m_ZoomLevel, m_AspectRatio * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel);
 	return false;
 }

@@ -23,5 +23,19 @@ namespace VEGA {
 		static void DrawRotatedQuad(const glm::vec3& position, const glm::vec2& size, f32 rotation, const glm::vec4& color);
 		static void DrawRotatedQuad(const glm::vec3& position, const glm::vec2& size, f32 rotation, Ref<Texture2D>& texture,f32 tiling_factor = 1.0f,const glm::vec4& tintColor = glm::vec4(1.0f));
 		static void DrawRotatedQuad(const glm::vec2& position, const glm::vec2& size, f32 rotation, Ref<Texture2D>& texture,f32 tiling_factor = 1.0f,const glm::vec4& tintColor = glm::vec4(1.0f));
+	    
+		struct Statistics {
+			u32 DrawCalls = 0;
+			u32 QuadCount = 0;
+
+			u32 GetTotalVertexCount() { return QuadCount * 4; }
+			u32 GetTotalIndexCount() { return QuadCount * 6; }
+		};
+
+		static Statistics GetStats();
+		static void FlushAndReset();
+		static void ResetStats();
+	
+	
 	};
 }

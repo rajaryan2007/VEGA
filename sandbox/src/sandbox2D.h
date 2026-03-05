@@ -1,7 +1,7 @@
 #pragma once
 #include "VEGA.h"
 
-
+#include "ParticleSystem.h"
 
 class Sandbox2D : public VEGA::Layer
 {
@@ -35,5 +35,8 @@ private:
 	glm::vec4 blueColor = { 0.2f, 0.3f, 0.8f, 1.0f };
 	glm::vec3 m_Transform;
 	glm::vec4 redColor = { 0.8f, 0.2f, 0.3f, 1.0f };
+    
+	ParticleSystem m_ParticleSystem;
+	ParticleProps m_ParticleProps;
 };
 

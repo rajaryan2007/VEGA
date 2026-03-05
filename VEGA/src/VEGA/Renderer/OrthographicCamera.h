@@ -3,6 +3,11 @@
 #include <glm/glm.hpp>
 
 namespace VEGA {
+	
+	
+	
+	
+	
 	class OrthographicCamera
 	{
 	public:

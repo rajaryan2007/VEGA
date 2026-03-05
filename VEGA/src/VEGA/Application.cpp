@@ -78,15 +78,13 @@ namespace VEGA{
 	/*OnWindowResize(WindowResizeEvent& e);*/
 	
 	void Application::Run() {
-    WindowResizeEvent e(1200, 720);
-	if (e.IsInCategory(EventCategoryApplication))
-	{
-		VG_TRACE(e.ToString());
-	}
-	if (e.IsInCategory(EventCategoryInput))
-	{
-		VG_TRACE(e.ToString());
-	}
+    // Dispatch an initial resize event to set up the viewport and camera
+    {
+        int width = m_Window->GetWidth();
+        int height = m_Window->GetHeight();
+        WindowResizeEvent e(width, height);
+        OnEvent(e);
+    }
 
 	while (m_Running)
 	{   
