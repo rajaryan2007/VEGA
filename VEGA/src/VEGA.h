@@ -6,7 +6,7 @@
 #include "VEGA\input.h"
 #include "VEGA\KeyCodes.h"
 #include "VEGA\MouseButtonCodes.h"
-#include "VEGA\OrthograpicCameraContoroller.h"
+#include "VEGA\Renderer2D\OrthograpicCameraContoroller.h"
 
 #include "VEGA\Core\Timestep.h"
 
@@ -15,13 +15,17 @@
 #include "VEGA\ImGui\ImGuiLayer.h"
 
 
+
 #include "VEGA\Renderer\Renderer.h"
 #include "VEGA\Renderer\RenderCommand.h"
 #include "VEGA\Renderer\Buffer.h"
 #include "VEGA\Renderer\VertexArray.h"
 #include "VEGA\Renderer\Shader.h"
 #include "VEGA\Renderer\Texture.h"
-#include "VEGA\Renderer\OrthographicCamera.h"
+
+#include "VEGA\Renderer2D\OrthographicCamera.h"
+#include "VEGA\Renderer2D\Renderer2D.h"
+#include "VEGA\Renderer2D\SubTexture2D.h"
 
 
 // Entry point ---

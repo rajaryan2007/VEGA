@@ -1,9 +1,9 @@
 #include "vgpch.h"
+#include "VEGA\Renderer2D\Renderer2D.h"
 #include "Renderer.h"
 #include "RendererAPI.h"
 
 #include "Platform/OpenGL/OpenGLShader.h"
-#include "Renderer2D.h"
 
 #include "Shader.h"
 namespace VEGA {

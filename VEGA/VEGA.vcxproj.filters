@@ -117,7 +117,7 @@
     <ClInclude Include="src\VEGA\Log.h">
       <Filter>src\VEGA</Filter>
     </ClInclude>
-    <ClInclude Include="src\VEGA\OrthograpicCameraContoroller.h">
+    <ClInclude Include="src\VEGA\Renderer2D\OrthograpicCameraContoroller.h">
       <Filter>src\VEGA</Filter>
     </ClInclude>
     <ClInclude Include="src\VEGA\Renderer\Buffer.h">
@@ -126,7 +126,7 @@
     <ClInclude Include="src\VEGA\Renderer\GraphicsContext.h">
       <Filter>src\VEGA\Renderer</Filter>
     </ClInclude>
-    <ClInclude Include="src\VEGA\Renderer\OrthographicCamera.h">
+    <ClInclude Include="src\VEGA\Renderer2D\OrthographicCamera.h">
       <Filter>src\VEGA\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\VEGA\Renderer\RenderCommand.h">
@@ -1422,8 +1422,10 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="src\VEGA\Renderer\Renderer2D.h" />
+    <ClInclude Include="src\VEGA\Renderer2D\Renderer2D.h" />
     <ClInclude Include="src\VEGA\Debug\instrumentor.h" />
+    <ClInclude Include="src\VEGA\Renderer2D\SubTexture2D.h" />
+    <ClInclude Include="src\VEGA\Renderer3D\Renderer3D.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp">
@@ -1468,13 +1470,13 @@
     <ClCompile Include="src\VEGA\Log.cpp">
       <Filter>src\VEGA</Filter>
     </ClCompile>
-    <ClCompile Include="src\VEGA\OrthograpicCameraContoroller.cpp">
+    <ClCompile Include="src\VEGA\Renderer2D\OrthograpicCameraContoroller.cpp">
       <Filter>src\VEGA</Filter>
     </ClCompile>
     <ClCompile Include="src\VEGA\Renderer\Buffer.cpp">
       <Filter>src\VEGA\Renderer</Filter>
     </ClCompile>
-    <ClCompile Include="src\VEGA\Renderer\OrthographicCamera.cpp">
+    <ClCompile Include="src\VEGA\Renderer2D\OrthographicCamera.cpp">
       <Filter>src\VEGA\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\VEGA\Renderer\RenderCommand.cpp">
@@ -1501,6 +1503,8 @@
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
-    <ClCompile Include="src\VEGA\Renderer\Renderer2D.cpp" />
+    <ClCompile Include="src\VEGA\Renderer2D\Renderer2D.cpp" />
+    <ClCompile Include="src\VEGA\Renderer2D\SubTexture2D.cpp" />
+    <ClCompile Include="src\VEGA\Renderer3D\Renderer3D.cpp" />
   </ItemGroup>
 </Project>

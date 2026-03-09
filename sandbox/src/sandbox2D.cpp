@@ -1,15 +1,15 @@
-#include "Sandbox2d.h"
+#include "Sandbox2D.h"
 
 #define STATISTICS
 #include <chrono>
 
-#include "Platform/OpenGL/OpenGLShader.h"
-#include "Platform/OpenGL/OpenGLTexture.h"
+//#include "Platform/OpenGL/OpenGLShader.h"
+//#include "Platform/OpenGL/OpenGLTexture.h"
 #include <imgui/imgui.h>
 
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
-#include "VEGA/Renderer/Renderer2D.h"
+
 
 
 
@@ -61,7 +61,9 @@ void Sandbox2D::OnAttach()
     
     textureShader = VEGA::Shader::Create("assests/shaders/flatSquare.glsl");
     m_TextureLOGO = VEGA::Texture2D::Create("assests/textures/Lily.jpg");
+    m_TestTexture = VEGA::Texture2D::Create("assests/textures/bmw.jpg");
     
+    m_Test = VEGA::SubTexture2D::CreateFromCoords(m_TestTexture, { 1080,1920 }, {1280,1280});
 
 	// Init here
 	m_ParticleProps.ColorBegin = { 254 / 255.0f, 212 / 255.0f, 123 / 255.0f, 1.0f };
@@ -109,9 +111,9 @@ void Sandbox2D::OnUpdate(VEGA::Timestep ts)
 
 
                 //VEGA::Renderer2D::DrawRotatedQuad({ 2.0f,0.20f }, { 1.0f, 1.0f }, rotation, redColor);
-                VEGA::Renderer2D::DrawRotatedQuad({ 0.0f,0.0f }, { 1.0f, 1.0f }, rotation, m_TextureLOGO);
+                //VEGA::Renderer2D::DrawRotatedQuad({ 0.0f,0.0f }, { 1.0f, 1.0f }, rotation, m_TextureLOGO);
                 //VEGA::Renderer2D::DrawQuad({ 0.5f,-0.5f,0.0f }, { 0.5f, 1.0f }, redColor);
-               
+                VEGA::Renderer2D::DrawQuad({ 0.0f,0.0f }, { 1.0f, 1.0f }, m_Test);
                 
                 for (f32 y = -5.0f; y < 5.0f; y += 0.5f)
                 {

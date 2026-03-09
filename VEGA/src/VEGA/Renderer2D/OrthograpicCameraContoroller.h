@@ -2,7 +2,7 @@
 #include <glm/glm.hpp>
 #include "VEGA/Events/Event.h"
 #include "VEGA/Events/MouseEvent.h"
-#include "VEGA/Renderer/OrthographicCamera.h"
+#include "VEGA/Renderer2D/OrthographicCamera.h"
 #include "VEGA/Events/ApplicationEvent.h"
 
 

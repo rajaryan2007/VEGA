@@ -1,9 +1,9 @@
 #pragma once
 
 #include "RendererAPI.h"
-#include "VEGA/Renderer/VertexArray.h"
+#include "VEGA\Renderer\VertexArray.h"
 #include "RenderCommand.h"
-#include "OrthographicCamera.h"
+#include "VEGA\Renderer2D\OrthographicCamera.h"
 #include <memory>
 
 

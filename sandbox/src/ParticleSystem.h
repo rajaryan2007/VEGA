@@ -15,7 +15,7 @@ struct ParticleProps
 class ParticleSystem
 {
 public:
-	ParticleSystem(u32 maxParticels = 10000);
+	ParticleSystem(u32 maxParticels = 1000);
 
 	void OnUpdate(VEGA::Timestep ts);
 	void OnRender(VEGA::OrthographicCamera& camera);

@@ -1,10 +1,11 @@
 #include "ParticleSystem.h"
 
 #include "Random.h"
-#include "VEGA/Renderer/Renderer2D.h"
+
 #include <glm/gtc/constants.hpp>
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/gtx/compatibility.hpp>
+#include "VEGA/Renderer2D/Renderer2D.h"
 
 ParticleSystem::ParticleSystem(u32 maxParticels)
 	:m_PoolIndex(maxParticels - 1 )

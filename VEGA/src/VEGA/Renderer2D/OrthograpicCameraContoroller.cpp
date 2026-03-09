@@ -1,6 +1,6 @@
 #include "vgpch.h"
 #include "OrthograpicCameraContoroller.h"
-#include "VEGA/Renderer/OrthographicCamera.h"
+#include "VEGA/Renderer2D/OrthographicCamera.h"
 #include "VEGA/Core/Timestep.h"
 #include "VEGA/keyCodes.h"
 #include "VEGA/Input.h"

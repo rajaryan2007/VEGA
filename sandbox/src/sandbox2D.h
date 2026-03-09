@@ -26,7 +26,8 @@ private:
 	
 	VEGA::Ref<VEGA::VertexArray> m_SqaureVA;
 	VEGA::Ref<VEGA::Texture2D> m_TextureLOGO;
-
+	VEGA::Ref<VEGA::Texture2D> m_TestTexture;
+	VEGA::Ref<VEGA::SubTexture2D> m_Test;
 	VEGA::OrthographicCameraContoroller m_CameraController;
 
 
