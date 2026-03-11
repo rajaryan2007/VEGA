@@ -10,9 +10,12 @@ namespace VEGA {
 		virtual ~OpenGLTexture2D();
 		
 
+
 		virtual u32 GetWidth() const override { return m_Width; }
 		virtual u32 GetHeight() const override { return m_Height; }
 		virtual void SetData(void* data, u32 size) override;
+        
+		virtual u32 GetRendererID() const override { return m_RendererID; }
 
 		virtual void Bind(u32 slot = 0) const override;
 

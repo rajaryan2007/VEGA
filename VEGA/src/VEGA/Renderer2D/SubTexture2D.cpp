@@ -24,4 +24,23 @@ namespace VEGA {
 
 	}
 
+	VEGA::Ref<SubTexture2D> SubTexture2D::CreateFromPixels(const Ref<Texture2D>& texture, glm::vec2 pixelPos, glm::vec2 pixelSize) {
+		f32 texWidth = texture->GetWidth();
+		f32 texHeight = texture->GetHeight();
+
+		f32 flippedY = texHeight - (pixelPos.y + pixelSize.y);
+
+		glm::vec2 min = {
+			pixelPos.x / texWidth,
+			flippedY / texHeight
+		};
+
+		glm::vec2 max = {
+			(pixelPos.x + pixelSize.x) / texWidth,
+			(flippedY + pixelSize.y) / texHeight
+		};
+
+		return CreateRef<SubTexture2D>(texture, min, max);
+	}
+
 }

@@ -137,6 +137,50 @@ project "Sandbox"
             "VG_PLATFORM_WINDOWS"
         }
 
+project "VEGA_EDITOR"
+    location "VEGA_EDITOR"
+    kind "ConsoleApp"
+    language "C++"
+    cppdialect "C++17"
+    staticruntime "On"
+
+    targetdir ("bin/" .. outputdir .. "/%{prj.name}")
+    objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
+
+    files
+    {
+        "%{prj.name}/src/**.h",
+        "%{prj.name}/src/**.cpp",
+     
+        "%{prj.name}/vendor/glm/glm/**.hpp",
+        "%{prj.name}/vendor/glm/glm/**.inl"
+    }
+
+    includedirs
+    {
+        "VEGA/vendor/spdlog/include",
+        "VEGA/src",
+        "VEGA/vendor",
+        "%{IncludeDir.glm}"
+    }
+
+    links
+    {
+        "VEGA"
+    }
+
+
+    dependson { "VEGA" }
+
+    filter "system:windows"
+        systemversion "latest"
+        buildoptions { "/utf-8" }
+
+        defines
+        {
+            "VG_PLATFORM_WINDOWS"
+        }
+
  filter "configurations:Debug"
     defines "VG_DEBUG"
     buildoptions "/MDd"

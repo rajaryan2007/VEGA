@@ -14,6 +14,8 @@ namespace VEGA {
 		virtual void Bind(unsigned int slot = 0) const = 0;
 		virtual void SetData(void* data, u32 size) = 0;
 
+		virtual u32 GetRendererID() const = 0;
+
 		/*static Texture* Create(const std::string& path);
 		static Texture* Create(unsigned int width, unsigned int height);*/
 

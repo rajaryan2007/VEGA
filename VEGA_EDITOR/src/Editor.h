@@ -1,0 +1,60 @@
+#pragma once
+#include "VEGA.h"
+
+namespace VEGA
+{
+	class Editor : public Layer
+	{
+	public:
+		Editor();
+		virtual ~Editor() = default;
+
+		void OnAttach() override;
+		void OnDetach() override;
+
+		void OnUpdate(Timestep ts) override;
+		void OnEvent(Event& event) override;
+
+		virtual void OnImGuiRender() override;
+
+	private:
+		ShaderLibrary m_ShaderLibrary;
+
+
+		Ref<Shader> m_Shader, textureShader;
+		Ref<VertexArray> m_VertexArray;
+		Ref<FrameBuffer> m_FrameBuffer;
+
+		Ref<VertexArray > m_SqaureVA;
+		Ref<Texture2D> m_TextureLOGO;
+		Ref<Texture2D> m_TestTexture;
+		Ref<Texture2D> m_TestSprite;
+
+		Ref<SubTexture2D > m_Test;
+		Ref<SubTexture2D> m_TestSubSprite;
+		Ref<SubTexture2D> grass;
+		Ref<SubTexture2D> water;
+		Ref<SubTexture2D> dirt;
+
+
+		OrthographicCameraContoroller m_CameraController;
+
+
+
+
+		glm::vec4 blueColor = { 0.2f, 0.3f, 0.8f, 1.0f };
+		glm::vec3 m_Transform;
+		glm::vec4 redColor = { 0.8f, 0.2f, 0.3f, 1.0f };
+
+		u32 m_mapWidth, m_mapHeight;
+
+		glm::vec2 m_ViewPortSize;
+
+		std::unordered_map<char, Ref<SubTexture2D>> Land;
+
+
+	};
+}
+
+
+

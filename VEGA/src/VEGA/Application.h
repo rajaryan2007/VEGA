@@ -14,7 +14,7 @@ namespace VEGA {
 	class VEGA_API Application
 	{
 	public:
-		Application();
+		Application(const std::string& name = "VEGA APP");
 		virtual ~Application();
 
 		void Run();
@@ -24,6 +24,7 @@ namespace VEGA {
 		void PushLayer(Layer* layer);
 		void PushOverlay(Layer* layer);
 
+		void Close();
 		//bool OnWindowResize(WindowResizeEvent& e);
 
 		inline Window& GetWindow() { return *m_Window; }

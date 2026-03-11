@@ -17,13 +17,13 @@ namespace VEGA{
 
 	
 
-	Application::Application()
+	Application::Application( const std::string& name)
 		
 	{   
 		VG_PROFILE_FUNCTION();
 		VG_CORE_ASSERT(!s_instance, "Application already exists!");
 		s_instance = this;
-		m_Window = std::unique_ptr<Window>(Window::Create());
+		m_Window = std::unique_ptr<Window>(Window::Create(WindowProps(name)));
 		m_Window->SetEventCallback(BIND_EVENT_FN(OnEvent));
 		m_Window->SetVSync(false);
 		
@@ -49,6 +49,12 @@ namespace VEGA{
 		m_LayerStack.PushOverlay(layer);
 		layer->OnAttach();
 	}
+
+	void Application::Close()
+	{
+		m_Running = false;
+	}
+
 	//bool Application::OnWindowResize(WindowResizeEvent& e)
 	//{
 	//	// Update the OpenGL viewport immediately
@@ -95,6 +101,9 @@ namespace VEGA{
 
 			Timestep timestep = time - m_LastFrameTime;
 			m_LastFrameTime = time;
+
+			if (timestep > 0.25f)
+				timestep = 0.25f;
 
 			if (!m_Minimized) {
 				for (Layer* layer : m_LayerStack)

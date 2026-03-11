@@ -19,6 +19,9 @@
     <Filter Include="src\VEGA\Core">
       <UniqueIdentifier>{3792E2F5-A352-5E2C-6C8D-A7A9D80CA308}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\VEGA\Debug">
+      <UniqueIdentifier>{353441B2-2102-35B8-0A96-A5DEF602111D}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\VEGA\Events">
       <UniqueIdentifier>{830DF2FD-EF98-5FC2-F8A9-E2B664B4BBC2}</UniqueIdentifier>
     </Filter>
@@ -27,6 +30,12 @@
     </Filter>
     <Filter Include="src\VEGA\Renderer">
       <UniqueIdentifier>{0589A639-719F-A4CF-BA16-30F1266C7557}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\VEGA\Renderer2D">
+      <UniqueIdentifier>{FBE46C3D-6746-4A4B-F0B3-90FD5C14810A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\VEGA\Renderer3D">
+      <UniqueIdentifier>{1CE56C3D-8846-4A4B-11B4-90FD7D14810A}</UniqueIdentifier>
     </Filter>
     <Filter Include="vendor">
       <UniqueIdentifier>{B3738122-9F15-ACF8-88D0-BF4C74113349}</UniqueIdentifier>
@@ -54,6 +63,9 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Platform\OpenGL\FrameBufferOpenGL.h">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClInclude>
     <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h">
       <Filter>src\Platform\OpenGL</Filter>
     </ClInclude>
@@ -90,6 +102,9 @@
     <ClInclude Include="src\VEGA\Core\Timestep.h">
       <Filter>src\VEGA\Core</Filter>
     </ClInclude>
+    <ClInclude Include="src\VEGA\Debug\instrumentor.h">
+      <Filter>src\VEGA\Debug</Filter>
+    </ClInclude>
     <ClInclude Include="src\VEGA\EntryPoint.h">
       <Filter>src\VEGA</Filter>
     </ClInclude>
@@ -117,16 +132,13 @@
     <ClInclude Include="src\VEGA\Log.h">
       <Filter>src\VEGA</Filter>
     </ClInclude>
-    <ClInclude Include="src\VEGA\Renderer2D\OrthograpicCameraContoroller.h">
-      <Filter>src\VEGA</Filter>
-    </ClInclude>
     <ClInclude Include="src\VEGA\Renderer\Buffer.h">
       <Filter>src\VEGA\Renderer</Filter>
     </ClInclude>
-    <ClInclude Include="src\VEGA\Renderer\GraphicsContext.h">
+    <ClInclude Include="src\VEGA\Renderer\FrameBuffer.h">
       <Filter>src\VEGA\Renderer</Filter>
     </ClInclude>
-    <ClInclude Include="src\VEGA\Renderer2D\OrthographicCamera.h">
+    <ClInclude Include="src\VEGA\Renderer\GraphicsContext.h">
       <Filter>src\VEGA\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\VEGA\Renderer\RenderCommand.h">
@@ -146,6 +158,21 @@
     </ClInclude>
     <ClInclude Include="src\VEGA\Renderer\VertexArray.h">
       <Filter>src\VEGA\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\VEGA\Renderer2D\OrthographicCamera.h">
+      <Filter>src\VEGA\Renderer2D</Filter>
+    </ClInclude>
+    <ClInclude Include="src\VEGA\Renderer2D\OrthograpicCameraContoroller.h">
+      <Filter>src\VEGA\Renderer2D</Filter>
+    </ClInclude>
+    <ClInclude Include="src\VEGA\Renderer2D\Renderer2D.h">
+      <Filter>src\VEGA\Renderer2D</Filter>
+    </ClInclude>
+    <ClInclude Include="src\VEGA\Renderer2D\SubTexture2D.h">
+      <Filter>src\VEGA\Renderer2D</Filter>
+    </ClInclude>
+    <ClInclude Include="src\VEGA\Renderer3D\Renderer3D.h">
+      <Filter>src\VEGA\Renderer3D</Filter>
     </ClInclude>
     <ClInclude Include="src\VEGA\Window.h">
       <Filter>src\VEGA</Filter>
@@ -1422,12 +1449,11 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="src\VEGA\Renderer2D\Renderer2D.h" />
-    <ClInclude Include="src\VEGA\Debug\instrumentor.h" />
-    <ClInclude Include="src\VEGA\Renderer2D\SubTexture2D.h" />
-    <ClInclude Include="src\VEGA\Renderer3D\Renderer3D.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Platform\OpenGL\FrameBufferOpenGL.cpp">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClCompile>
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp">
       <Filter>src\Platform\OpenGL</Filter>
     </ClCompile>
@@ -1470,13 +1496,10 @@
     <ClCompile Include="src\VEGA\Log.cpp">
       <Filter>src\VEGA</Filter>
     </ClCompile>
-    <ClCompile Include="src\VEGA\Renderer2D\OrthograpicCameraContoroller.cpp">
-      <Filter>src\VEGA</Filter>
-    </ClCompile>
     <ClCompile Include="src\VEGA\Renderer\Buffer.cpp">
       <Filter>src\VEGA\Renderer</Filter>
     </ClCompile>
-    <ClCompile Include="src\VEGA\Renderer2D\OrthographicCamera.cpp">
+    <ClCompile Include="src\VEGA\Renderer\FrameBuffer.cpp">
       <Filter>src\VEGA\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\VEGA\Renderer\RenderCommand.cpp">
@@ -1497,14 +1520,26 @@
     <ClCompile Include="src\VEGA\Renderer\VertexArray.cpp">
       <Filter>src\VEGA\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="src\VEGA\Renderer2D\OrthographicCamera.cpp">
+      <Filter>src\VEGA\Renderer2D</Filter>
+    </ClCompile>
+    <ClCompile Include="src\VEGA\Renderer2D\OrthograpicCameraContoroller.cpp">
+      <Filter>src\VEGA\Renderer2D</Filter>
+    </ClCompile>
+    <ClCompile Include="src\VEGA\Renderer2D\Renderer2D.cpp">
+      <Filter>src\VEGA\Renderer2D</Filter>
+    </ClCompile>
+    <ClCompile Include="src\VEGA\Renderer2D\SubTexture2D.cpp">
+      <Filter>src\VEGA\Renderer2D</Filter>
+    </ClCompile>
+    <ClCompile Include="src\VEGA\Renderer3D\Renderer3D.cpp">
+      <Filter>src\VEGA\Renderer3D</Filter>
+    </ClCompile>
     <ClCompile Include="src\vgpch.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
-    <ClCompile Include="src\VEGA\Renderer2D\Renderer2D.cpp" />
-    <ClCompile Include="src\VEGA\Renderer2D\SubTexture2D.cpp" />
-    <ClCompile Include="src\VEGA\Renderer3D\Renderer3D.cpp" />
   </ItemGroup>
 </Project>

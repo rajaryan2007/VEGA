@@ -25,17 +25,25 @@ namespace VEGA {
 	class OrthographicCameraContoroller
 	{
 	public:
-		OrthographicCameraContoroller( float aspectRatio, bool rotation = false);
+		OrthographicCameraContoroller(f32 aspectRatio, bool rotation = false);
 		void OnUpdate(Timestep ts);
 		void OnEvent(Event& e);
 
+
+		void OnResize(f32 width, u32 height);
+
 		OrthographicCamera& GetCamera() { return m_Camera; } // Moved to public access
 		OrthographicCameraBounds GetBounds() const { return m_Bounds; } // Moved to public access
+		void SetZoomLevel(f32 level) { m_ZoomLevel = level; CalculateView(); }
 
 	private:
-		void Resize(float width, float height);
-		float GetZoomLevel() const { return m_ZoomLevel; }
+		
+		f32 GetZoomLevel() const { return m_ZoomLevel; }
+
+
 	private:
+		void CalculateView();
+
 		bool OnMouseScrolled(MouseScrolledEvent& e);
 		bool OnWindowResized(WindowResizeEvent& e);
 	
@@ -43,16 +51,16 @@ namespace VEGA {
 	
 	private:
 	
-		float m_AspectRatio;
+		f32 m_AspectRatio;
 		bool m_Rotation;
-		float m_ZoomLevel = 1.0f;
+		f32 m_ZoomLevel = 1.0f;
 		
 		OrthographicCameraBounds m_Bounds;
 		OrthographicCamera m_Camera;
 		glm::vec3 m_CameraPosition = { 0.0f, 0.0f, 0.0f };
-		float m_CameraRotation = 0.0f;
-		float m_CameraTranslationSpeed = 5.0f;
-		float m_CameraRotationSpeed = 180.0f;
+		f32 m_CameraRotation = 0.0f;
+		f32 m_CameraTranslationSpeed = 5.0f;
+		f32 m_CameraRotationSpeed = 180.0f;
 
 		
 

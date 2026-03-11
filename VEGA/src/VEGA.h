@@ -22,6 +22,7 @@
 #include "VEGA\Renderer\VertexArray.h"
 #include "VEGA\Renderer\Shader.h"
 #include "VEGA\Renderer\Texture.h"
+#include "VEGA\Renderer\FrameBuffer.h"
 
 #include "VEGA\Renderer2D\OrthographicCamera.h"
 #include "VEGA\Renderer2D\Renderer2D.h"

@@ -6,7 +6,7 @@
 #include "VEGA/Input.h"
 
 // Fix constructor initialization for m_Camera and m_Bounds
-VEGA::OrthographicCameraContoroller::OrthographicCameraContoroller(float aspectRatio, bool rotation /*= false*/)
+VEGA::OrthographicCameraContoroller::OrthographicCameraContoroller(f32 aspectRatio, bool rotation /*= false*/)
 	: m_AspectRatio(aspectRatio), m_Rotation(rotation), m_ZoomLevel(1.0f),
 	m_Bounds{ -aspectRatio * m_ZoomLevel, aspectRatio * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel },
 	m_Camera(m_Bounds.Left, m_Bounds.Right, m_Bounds.Bottom, m_Bounds.Top)
@@ -16,8 +16,7 @@ VEGA::OrthographicCameraContoroller::OrthographicCameraContoroller(float aspectR
 
 void VEGA::OrthographicCameraContoroller::OnUpdate(Timestep ts)
 {
-
-
+	m_CameraTranslationSpeed = m_ZoomLevel;
 	if (Input::IsKeyPressed(VG_KEY_LEFT))
 	{
 		m_CameraPosition.x += m_CameraTranslationSpeed * ts;
@@ -77,9 +76,17 @@ void VEGA::OrthographicCameraContoroller::OnEvent(Event& e)
 	dispatcher.Dispatch<WindowResizeEvent>(VG_BIND_EVENT_FN(OrthographicCameraContoroller::OnWindowResized));
 }
 
-void VEGA::OrthographicCameraContoroller::Resize(float width, float height)
+void VEGA::OrthographicCameraContoroller::OnResize(f32 width, u32 height)
 {
+	m_AspectRatio = width / (f32)height;
+	CalculateView();
+}
 
+
+void VEGA::OrthographicCameraContoroller::CalculateView()
+{
+	m_Bounds = { -m_AspectRatio * m_ZoomLevel, m_AspectRatio * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel };
+	m_Camera.SetProjection(m_Bounds.Left, m_Bounds.Right, m_Bounds.Bottom, m_Bounds.Top);
 }
 
 bool VEGA::OrthographicCameraContoroller::OnMouseScrolled(MouseScrolledEvent& e)
@@ -87,17 +94,14 @@ bool VEGA::OrthographicCameraContoroller::OnMouseScrolled(MouseScrolledEvent& e)
 	m_ZoomLevel -= e.GetYOffset() * 0.25f;
 	m_ZoomLevel = std::max(m_ZoomLevel, 0.25f);
 	//m_Camera.SetProjection(-m_AspectRatio * m_ZoomLevel, m_AspectRatio * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel);
-	m_Camera.SetProjection(m_Bounds.Left, m_Bounds.Right, m_Bounds.Bottom, m_Bounds.Top);
-	
-	m_Bounds = { -m_AspectRatio * m_ZoomLevel, m_AspectRatio * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel };
+	CalculateView();
 	return false;
 }
 
 bool VEGA::OrthographicCameraContoroller::OnWindowResized(WindowResizeEvent& e)
 {
-	m_AspectRatio = (float)e.GetWidth() / (float)e.GetHeight();
-	m_Bounds = { -m_AspectRatio * m_ZoomLevel, m_AspectRatio * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel };
-	m_Camera.SetProjection(m_Bounds.Left, m_Bounds.Right, m_Bounds.Bottom, m_Bounds.Top);
+	m_AspectRatio = (f32)e.GetWidth() / (f32)e.GetHeight();
+	CalculateView();
 
 	//m_Camera.SetProjection(-m_AspectRatio * m_ZoomLevel, m_AspectRatio * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel);
 	return false;

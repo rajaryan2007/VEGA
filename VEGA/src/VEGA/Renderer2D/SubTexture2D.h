@@ -15,7 +15,11 @@ namespace VEGA{
 		const glm::vec2* GetTexCoords() const { return m_TexCoords; }
 	   
 		static Ref<SubTexture2D> CreateFromCoords(const Ref<Texture2D>& texture, const glm::vec2& coords, const glm::vec2 cellsize, const glm::vec2& spriteSizes = { 1,1 });
-
+		static Ref<SubTexture2D> CreateFromPixels(
+			const Ref<Texture2D>& texture,
+			glm::vec2 pixelPos,
+			glm::vec2 pixelSize
+		);
 	private:
 		Ref<Texture2D> m_Texture;
 		
