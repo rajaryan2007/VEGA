@@ -11,6 +11,7 @@ IncludeDir["Glad"] = "VEGA/vendor/Glad/include"
 IncludeDir["ImGui"] = "VEGA/vendor/imgui"
 IncludeDir["glm"] = "VEGA/vendor/glm"
 IncludeDir["stb"] = "VEGA/vendor/stb_image"
+IncludeDir["entt"] = "VEGA/vendor/entt/include"
 
 include "VEGA/vendor/GLFW"
 include "VEGA/vendor/Glad"
@@ -52,7 +53,8 @@ project "VEGA"
         "%{IncludeDir.Glad}",
         "%{IncludeDir.ImGui}",
         "%{IncludeDir.glm}",
-        "%{IncludeDir.stb}"
+        "%{IncludeDir.stb}",
+        "%{IncludeDir.entt}"
     }
     links
     {
@@ -117,7 +119,8 @@ project "Sandbox"
         "VEGA/vendor/spdlog/include",
         "VEGA/src",
         "VEGA/vendor",
-        "%{IncludeDir.glm}"
+        "%{IncludeDir.glm}",
+        "%{IncludeDir.entt}"
     }
 
     links
@@ -136,7 +139,22 @@ project "Sandbox"
         {
             "VG_PLATFORM_WINDOWS"
         }
+    filter "configurations:Debug" 
+        defines "VG_DEBUG"
+        buildoptions"/MDd"
+        symbols "On"
 
+    filter "configurations:Release"
+        defines "VG_RELEASE"
+        buildoptions"/MD"
+        optimize "On"
+
+    filter "configurations:Dist"
+        defines "VG_DIST"
+        buildoptions"/MD"
+        optimize "On"
+
+        
 project "VEGA_EDITOR"
     location "VEGA_EDITOR"
     kind "ConsoleApp"
@@ -161,7 +179,8 @@ project "VEGA_EDITOR"
         "VEGA/vendor/spdlog/include",
         "VEGA/src",
         "VEGA/vendor",
-        "%{IncludeDir.glm}"
+        "%{IncludeDir.glm}",
+        "%{IncludeDir.entt}"
     }
 
     links
@@ -180,6 +199,8 @@ project "VEGA_EDITOR"
         {
             "VG_PLATFORM_WINDOWS"
         }
+
+
 
  filter "configurations:Debug"
     defines "VG_DEBUG"

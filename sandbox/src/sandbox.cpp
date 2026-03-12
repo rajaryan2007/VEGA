@@ -3,6 +3,7 @@
 
 #include <imgui/imgui.h>
 
+#include "VEGA/EntryPoint.h"
 
 #include "Sandbox2d.h"
 

@@ -3,6 +3,8 @@
 
 #include "ParticleSystem.h"
 
+#include <imgui/imgui.h>
+
 class Sandbox2D : public VEGA::Layer
 {
 public:

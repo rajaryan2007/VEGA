@@ -62,6 +62,10 @@ namespace VEGA
         fbspec.Height = 720;
         m_FrameBuffer = VEGA::FrameBuffer::Create(fbspec);
 
+        m_ActiveScene = CreateRef<Scene>();
+
+       // auto square = m_ActiveScene->CreateEntity();
+
         std::shared_ptr<VEGA::VertexBuffer> squareVB;
         squareVB.reset(VEGA::VertexBuffer::Create(vertiecsSquare, sizeof(vertiecsSquare)));
 
@@ -85,28 +89,31 @@ namespace VEGA
 
 
 
-        textureShader = VEGA::Shader::Create("assests/shaders/flatSquare.glsl");
-        m_TextureLOGO = VEGA::Texture2D::Create("assests/textures/Lily.jpg");
-        m_TestTexture = VEGA::Texture2D::Create("assests/textures/bmw.jpg");
-        m_TestSprite = VEGA::Texture2D::Create("assests/textures/water.png");
+        textureShader = Shader::Create("assests/shaders/flatSquare.glsl");
+        m_TextureLOGO = Texture2D::Create("assests/textures/Lily.jpg");
+        m_TestTexture = Texture2D::Create("assests/textures/bmw.jpg");
+        m_TestSprite = Texture2D::Create("assests/textures/water.png");
 
         m_mapWidth = s_mapWidth;
         m_mapHeight = strlen(s_MapTIles) / s_mapWidth;
 
-        m_Test = VEGA::SubTexture2D::CreateFromCoords(m_TextureLOGO, { 1080,1920 }, { 1280,1280 });
-        Land['W'] = VEGA::SubTexture2D::CreateFromPixels(
+        m_Test = SubTexture2D::CreateFromCoords(m_TextureLOGO, { 1080,1920 }, { 1280,1280 });
+        Land['W'] = SubTexture2D::CreateFromPixels(
             m_TestSprite,
             { 900, 51 },   // flipped Y
             { 87, 99 }
         );
-        Land['G'] = VEGA::SubTexture2D::CreateFromPixels(
+        Land['G'] = SubTexture2D::CreateFromPixels(
             m_TestSprite,
             { 98, 479 },     // pixel position
             { 164, 127 }     // pixel size
         );
-        dirt = VEGA::SubTexture2D::CreateFromCoords(m_TestSprite, { 2,3 }, { 32,32 });
+        dirt = SubTexture2D::CreateFromCoords(m_TestSprite, { 2,3 }, { 32,32 });
 
         // Init here
+        auto square = m_ActiveScene->CreateEntity();
+        m_ActiveScene->Getregistry().emplace<TramsformComponent>(square);
+        m_ActiveScene->Getregistry().emplace<TramsformComponent>(square, glm::vec4{ 0.0f,1.0f,0.0f,1.0f });
 
 
     }
@@ -115,16 +122,17 @@ namespace VEGA
     {
 
     }
-
+   
     void Editor::OnUpdate(VEGA::Timestep ts)
     {
 
         VG_PROFILE_FUNCTION();
 
-        {
-            // PROFILE_SCOPE("Camera contorller")
-            m_CameraController.OnUpdate(ts);
-        }
+        // PROFILE_SCOPE("Camera contorller")
+        m_CameraController.OnUpdate(ts);
+        
+        m_ActiveScene->OnUpdate(ts);
+
         VEGA::Renderer2D::ResetStats();
         {
             // PROFILE_SCOPE("reder prep")
@@ -132,9 +140,10 @@ namespace VEGA
             VEGA::RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
             VEGA::RenderCommand::Clear();
         }
-
+        m_ActiveScene->OnUpdate(ts);
 
         {
+            
             // PROFILE_SCOPE("Renderer2D::Scene");
             VEGA::Renderer2D::BeginScene(m_CameraController.GetCamera());
             {
@@ -143,50 +152,12 @@ namespace VEGA
 
                 //PROFILE_SCOPE("DrawQuad");
                  //VEGA::Renderer2D::DrawQuad(glm::vec3(-0.5f, -00.5f, 0.0f), { 1.0f, 1.0f }, m_TextureLOGO);
+             
                 VEGA::Renderer2D::DrawQuad(glm::vec3(0.0f, 0.0f, -0.1f), { 5.0f, 5.0f }, blueColor);
 
 
-                //VEGA::Renderer2D::DrawRotatedQuad({ 2.0f,0.20f }, { 1.0f, 1.0f }, rotation, redColor);
-                //VEGA::Renderer2D::DrawRotatedQuad({ 0.0f,0.0f }, { 1.0f, 1.0f }, rotation, m_TextureLOGO);
-                //VEGA::Renderer2D::DrawQuad({ 0.5f,-0.5f,0.0f }, { 0.5f, 1.0f }, redColor);
-               // VEGA::Renderer2D::DrawQuad({ 0.0f,0.0f }, { 1.0f, 1.0f }, m_TestSubSprite);
-               // VEGA::Renderer2D::DrawQuad({ 0.5f,0.0f }, { 1.0f, 1.0f }, grass);
-               // VEGA::Renderer2D::DrawQuad({ 0.0f,0.5f }, { 1.0f, 1.0f }, water);
-                //VEGA::Renderer2D::DrawQuad({ 0.5f,0.5f }, { 1.0f, 1.0f }, dirt);
-
-
-                for (u32 y = 0; y < m_mapHeight; y++) {
-                    for (u32 x = 0; x < m_mapWidth; x++) {
-
-                        char tileType = s_MapTIles[x + y * m_mapWidth];
-                        VEGA::Ref<VEGA::SubTexture2D> texture;
-
-                        if (Land.find(tileType) != Land.end())
-                        {
-                            texture = Land[tileType];
-                        }
-                        else
-                        {
-                            texture = dirt;
-                        }
-                        VEGA::Renderer2D::DrawQuad({ x - m_mapWidth / 2.0f,y - m_mapHeight / 2.0f }, { 1.0f, 1.0f }, texture);
-
-                    }
-                }
-
-
-
-
-
-                for (f32 y = -5.0f; y < 5.0f; y += 0.5f)
-                {
-                    for (f32 x = -5.0f; x < 5.0f; x += 0.5f)
-                    {
-                        glm::vec4 color = { (x + 5.0f) / 10.0f, 0.4f, (y + 5.0f) / 10.0f, 0.5f };
-                        VEGA::Renderer2D::DrawQuad({ x,y,-0.2f }, { 0.45f, 0.45f }, color);
-                    }
-                }
-
+              
+            
 
             }
         }
@@ -275,6 +246,10 @@ namespace VEGA
 
         ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0,0 });
         ImGui::Begin("Viewport");
+        m_ViewPortFocused = ImGui::IsWindowFocused();
+        m_ViewPortHover = ImGui::IsWindowHovered();
+    	Application::Get().GetImguiLayer()->SetBlockEvent(!m_ViewPortFocused || !m_ViewPortHover);
+        
         ImVec2 viewPortSize = ImGui::GetContentRegionAvail();
         if ( m_ViewPortSize != *((glm::vec2*)&viewPortSize) && viewPortSize.x > 0.0f && viewPortSize.y > 0.0f)
         {

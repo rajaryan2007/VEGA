@@ -5,6 +5,8 @@
 
 namespace VEGA
 {
+    static const u32 MaxFrameBufferSize = 8132;
+
     OpenGLFrameBuffer::OpenGLFrameBuffer(const FrameBufferSpecification& spec)
         : m_Specification(spec)
     {
@@ -95,6 +97,12 @@ namespace VEGA
 
     void OpenGLFrameBuffer::Resize(u32 width, u32 height)
     {
+        if (width == 0 || height == 0 || width == MaxFrameBufferSize || height == MaxFrameBufferSize)
+        {
+            VG_CORE_WARN("Your Trying to Renderer viewport at {0}, {1}", height, width);
+            return;
+        }
+
         m_Specification.Width = width;
         m_Specification.Height = height;
 

@@ -22,7 +22,9 @@ namespace VEGA {
 		static void DrawQuad(const glm::vec2& position, const glm::vec2& size, const Ref<Texture2D>& texture,f32 tiling_factor = 1.0f, const glm::vec4& tintColor = glm::vec4(1.0f));
 		static void DrawQuad(const glm::vec3& position, const glm::vec2& size, const Ref<SubTexture2D>& texture,f32 tiling_factor = 1.0f, const glm::vec4& tintColor = glm::vec4(1.0f));
 		static void DrawQuad(const glm::vec2& position, const glm::vec2& size, const Ref<SubTexture2D>& texture,f32 tiling_factor = 1.0f, const glm::vec4& tintColor = glm::vec4(1.0f));
-		
+		static void DrawQuad(const glm::mat4& transform, const glm::vec4& color);
+		static void DrawQuad(const glm::mat4& transform, const Ref<SubTexture2D>& texture, f32 tiling_factor = 1.0f, const glm::vec4& tintColor = glm::vec4(1.0f));
+
 		static void DrawRotatedQuad(const glm::vec2& position, const glm::vec2& size, f32 rotation, const glm::vec4& color);
 		static void DrawRotatedQuad(const glm::vec3& position, const glm::vec2& size, f32 rotation, const glm::vec4& color);
 		static void DrawRotatedQuad(const glm::vec3& position, const glm::vec2& size, f32 rotation, Ref<Texture2D>& texture,f32 tiling_factor = 1.0f,const glm::vec4& tintColor = glm::vec4(1.0f));

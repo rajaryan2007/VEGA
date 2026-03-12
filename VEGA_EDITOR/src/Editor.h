@@ -1,6 +1,8 @@
 #pragma once
 #include "VEGA.h"
 
+
+
 namespace VEGA
 {
 	class Editor : public Layer
@@ -36,11 +38,12 @@ namespace VEGA
 		Ref<SubTexture2D> water;
 		Ref<SubTexture2D> dirt;
 
-
+		bool m_ViewPortFocused = false;
+		bool m_ViewPortHover = false;
 		OrthographicCameraContoroller m_CameraController;
 
 
-
+		Ref<Scene> m_ActiveScene;
 
 		glm::vec4 blueColor = { 0.2f, 0.3f, 0.8f, 1.0f };
 		glm::vec3 m_Transform;

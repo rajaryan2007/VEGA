@@ -63,14 +63,13 @@ namespace VEGA
 
 	void ImGuiLayer::OnEvent(Event& e)
 	{
-	   // if (!m_BlockEvents)
-	   //     return;
-		//
-	   // ImGuiIO& io = ImGui::GetIO();
-	   // if (e.IsInCategory(EventCategoryMouse) && io.WantCaptureMouse)
-	   //     e.Handled = true;
-	   // if (e.IsInCategory(EventCategoryKeyboard) && io.WantCaptureKeyboard)
-	   //     e.Handled = true;
+
+		if (m_BlockEvents)
+		{
+			ImGuiIO& io = ImGui::GetIO();
+		    e.Handled |= e.IsInCategory(EventCategoryMouse) & io.WantCaptureMouse;
+		    e.Handled |= e.IsInCategory(EventCategoryKeyboard) & io.WantCaptureKeyboard;
+	  }
 	}
 
 	/*void ImGuiLayer::OnImGuiRender()

@@ -37,6 +37,9 @@
     <Filter Include="src\VEGA\Renderer3D">
       <UniqueIdentifier>{1CE56C3D-8846-4A4B-11B4-90FD7D14810A}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\VEGA\Scene">
+      <UniqueIdentifier>{DC964FB3-C864-43B9-B1F8-B3DF9D651F1E}</UniqueIdentifier>
+    </Filter>
     <Filter Include="vendor">
       <UniqueIdentifier>{B3738122-9F15-ACF8-88D0-BF4C74113349}</UniqueIdentifier>
     </Filter>
@@ -83,9 +86,6 @@
     </ClInclude>
     <ClInclude Include="src\Platform\OpenGL\OpenGLVertexArray.h">
       <Filter>src\Platform\OpenGL</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Platform\Windows\WindowInput.h">
-      <Filter>src\Platform\Windows</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h">
       <Filter>src\Platform\Windows</Filter>
@@ -173,6 +173,9 @@
     </ClInclude>
     <ClInclude Include="src\VEGA\Renderer3D\Renderer3D.h">
       <Filter>src\VEGA\Renderer3D</Filter>
+    </ClInclude>
+    <ClInclude Include="src\VEGA\Scene\Scene.h">
+      <Filter>src\VEGA\Scene</Filter>
     </ClInclude>
     <ClInclude Include="src\VEGA\Window.h">
       <Filter>src\VEGA</Filter>
@@ -1535,11 +1538,15 @@
     <ClCompile Include="src\VEGA\Renderer3D\Renderer3D.cpp">
       <Filter>src\VEGA\Renderer3D</Filter>
     </ClCompile>
+    <ClCompile Include="src\VEGA\Scene\Scene.cpp">
+      <Filter>src\VEGA\Scene</Filter>
+    </ClCompile>
     <ClCompile Include="src\vgpch.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
+    <ClCompile Include="src\VEGA\Scene\Components.h" />
   </ItemGroup>
 </Project>

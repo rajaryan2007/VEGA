@@ -24,6 +24,8 @@ namespace VEGA {
 		void PushLayer(Layer* layer);
 		void PushOverlay(Layer* layer);
 
+		ImGuiLayer* GetImguiLayer() { return m_ImGuiLayer; };
+
 		void Close();
 		//bool OnWindowResize(WindowResizeEvent& e);
 
