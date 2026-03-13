@@ -182,7 +182,9 @@
     <ClInclude Include="src\VEGA\Renderer2D\Renderer2D.h" />
     <ClInclude Include="src\VEGA\Renderer2D\SubTexture2D.h" />
     <ClInclude Include="src\VEGA\Renderer3D\Renderer3D.h" />
+    <ClInclude Include="src\VEGA\Scene\Camera.h" />
     <ClInclude Include="src\VEGA\Scene\Scene.h" />
+    <ClInclude Include="src\VEGA\Scene\SceneCamera.h" />
     <ClInclude Include="src\VEGA\Window.h" />
     <ClInclude Include="src\VEGA\input.h" />
     <ClInclude Include="src\VEGA\keyCodes.h" />
@@ -639,7 +641,10 @@
     <ClCompile Include="src\VEGA\Renderer2D\SubTexture2D.cpp" />
     <ClCompile Include="src\VEGA\Renderer3D\Renderer3D.cpp" />
     <ClCompile Include="src\VEGA\Scene\Components.h" />
+    <ClCompile Include="src\VEGA\Scene\Entity.cpp" />
+    <ClCompile Include="src\VEGA\Scene\Entity.h" />
     <ClCompile Include="src\VEGA\Scene\Scene.cpp" />
+    <ClCompile Include="src\VEGA\Scene\SceneCamera.cpp" />
     <ClCompile Include="src\vgpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>

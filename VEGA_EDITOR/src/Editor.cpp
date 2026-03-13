@@ -64,7 +64,7 @@ namespace VEGA
 
         m_ActiveScene = CreateRef<Scene>();
 
-       // auto square = m_ActiveScene->CreateEntity();
+        // auto square = m_ActiveScene->CreateEntity();
 
         std::shared_ptr<VEGA::VertexBuffer> squareVB;
         squareVB.reset(VEGA::VertexBuffer::Create(vertiecsSquare, sizeof(vertiecsSquare)));
@@ -111,18 +111,25 @@ namespace VEGA
         dirt = SubTexture2D::CreateFromCoords(m_TestSprite, { 2,3 }, { 32,32 });
 
         // Init here
-        auto square = m_ActiveScene->CreateEntity();
-        m_ActiveScene->Getregistry().emplace<TramsformComponent>(square);
-        m_ActiveScene->Getregistry().emplace<TramsformComponent>(square, glm::vec4{ 0.0f,1.0f,0.0f,1.0f });
+        auto square = m_ActiveScene->CreateEntity("square");
+        square.AddComponent<SpriteRendererComponent>(glm::vec4{ 0.0f,1.0f,-.0f,1.0f });
 
 
+        m_Square = square;
+
+        m_CameraEntity = m_ActiveScene->CreateEntity("Camera");
+        m_CameraEntity.AddComponent<CameraComponent>();
+
+        m_SecondCamera = m_ActiveScene->CreateEntity("Camerasecond");
+        auto& cc = m_SecondCamera.AddComponent<CameraComponent>();
+        cc.Primary = false;
     }
 
     void Editor::OnDetach()
     {
 
     }
-   
+
     void Editor::OnUpdate(VEGA::Timestep ts)
     {
 
@@ -130,9 +137,9 @@ namespace VEGA
 
         // PROFILE_SCOPE("Camera contorller")
         m_CameraController.OnUpdate(ts);
-        
-        m_ActiveScene->OnUpdate(ts);
 
+
+       
         VEGA::Renderer2D::ResetStats();
         {
             // PROFILE_SCOPE("reder prep")
@@ -140,29 +147,28 @@ namespace VEGA
             VEGA::RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
             VEGA::RenderCommand::Clear();
         }
-        m_ActiveScene->OnUpdate(ts);
+      
 
-        {
+        
             
             // PROFILE_SCOPE("Renderer2D::Scene");
-            VEGA::Renderer2D::BeginScene(m_CameraController.GetCamera());
-            {
+            
                 static float rotation = 0.0f;
                 rotation += 1.0f * ts;
 
                 //PROFILE_SCOPE("DrawQuad");
                  //VEGA::Renderer2D::DrawQuad(glm::vec3(-0.5f, -00.5f, 0.0f), { 1.0f, 1.0f }, m_TextureLOGO);
              
-                VEGA::Renderer2D::DrawQuad(glm::vec3(0.0f, 0.0f, -0.1f), { 5.0f, 5.0f }, blueColor);
-
+                //VEGA::Renderer2D::DrawQuad(glm::vec3(0.0f, 0.0f, -0.1f), { 5.0f, 5.0f }, blueColor);
+                m_ActiveScene->OnUpdate(ts);
 
               
             
 
-            }
-        }
+            
+        
 
-        VEGA::Renderer2D::EndScene();
+        
         m_FrameBuffer->UnBind();
         //VEGA::Renderer::EndScene();
 
@@ -236,10 +242,32 @@ namespace VEGA
         ImGui::Text("Vertices: %d", stats.GetTotalVertexCount());
         ImGui::Text("Index: %d", stats.GetTotalIndexCount());
 
-        ImGui::Text("Square Position: (%.2f, %.2f, %.2f)",
-            m_Transform.x, m_Transform.y, m_Transform.z);
+        if (m_Square) {
+            auto& tag = m_Square.GetComponent<TagComponent>().Tag;
+            ImGui::Text("%s", tag.c_str());
+			auto& m_Color = m_Square.GetComponent<SpriteRendererComponent>().Color;
+			ImGui::ColorEdit3("Square Color", glm::value_ptr(m_Color));
+            ImGui::Spacing();
 
-        ImGui::ColorEdit3("Square Color", glm::value_ptr(blueColor));
+        }
+
+        ImGui::DragFloat3("Camera Transform", glm::value_ptr(m_CameraEntity.GetComponent<TransformComponent>().Transform[3]));
+       
+        if (ImGui::Checkbox("Camera A", &primaryCamera))
+        {
+            m_SecondCamera.GetComponent<CameraComponent>().Primary = primaryCamera;
+            m_SecondCamera.GetComponent<CameraComponent>().Primary = !primaryCamera;
+        }
+        
+        {
+           auto& camera =  m_SecondCamera.GetComponent<CameraComponent>().Camera;
+           float orthosize = camera.GetOrthographicSize();
+           if (ImGui::DragFloat("Second", &orthosize))
+               camera.SetOrthographicSize(orthosize);
+
+        }
+
+        
        
 
         ImGui::End();
@@ -251,13 +279,15 @@ namespace VEGA
     	Application::Get().GetImguiLayer()->SetBlockEvent(!m_ViewPortFocused || !m_ViewPortHover);
         
         ImVec2 viewPortSize = ImGui::GetContentRegionAvail();
-        if ( m_ViewPortSize != *((glm::vec2*)&viewPortSize) && viewPortSize.x > 0.0f && viewPortSize.y > 0.0f)
+        m_CameraController.OnResize(viewPortSize.x, viewPortSize.y);
+        m_ActiveScene->OnViewportResize((u32)viewPortSize.x, (u32)viewPortSize.y);
+        if (FrameBufferSpecification spec = m_FrameBuffer->GetSpecification();
+            viewPortSize.x > 0.0f && viewPortSize.y > 0.0f &&
+            (spec.Width != viewPortSize.x || spec.Height != viewPortSize.y))
         {
-            
             m_FrameBuffer->Resize((u32)viewPortSize.x, (u32)viewPortSize.y);
-            m_ViewPortSize = { viewPortSize.x,viewPortSize.y };
-       
-            m_CameraController.OnResize(viewPortSize.x, viewPortSize.y);
+            m_ViewPortSize = { viewPortSize.x, viewPortSize.y };
+
         }
         m_ViewPortSize = { viewPortSize.x,viewPortSize.y };
     	u32 textureId = m_FrameBuffer->GetColorAttacmentRendererID();

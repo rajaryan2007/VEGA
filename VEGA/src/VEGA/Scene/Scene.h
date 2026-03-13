@@ -6,19 +6,25 @@
 
 
 namespace VEGA
-{
+{    
+	class Entity;
 	 class Scene
 	 {
 	 public:
 		 Scene();
 		 ~Scene();
 
-		 entt::entity CreateEntity();
+		 Entity CreateEntity(const std::string& name = std::string());
 
-		 entt::registry& Getregistry()   { return m_registry; }
+		 void OnViewportResize(u32 width,u32 height);
 
 		 void OnUpdate(Timestep ts);
 	 private:
 		 entt::registry m_registry;
+		 u32 m_ViewportWidth = 0, m_ViewportHeight = 0;
+
+
+
+		 friend class Entity;
 	 };
 }

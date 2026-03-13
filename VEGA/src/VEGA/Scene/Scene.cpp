@@ -4,26 +4,12 @@
 
 #include "Components.h"
 #include "VEGA/Renderer2D/Renderer2D.h"
+#include "Entity.h"
 
 namespace VEGA
 {
 
-    struct TransformComponent
-    {
-        glm::mat4 Transform;
 
-        TransformComponent() = default;
-        TransformComponent(const glm::mat4& transform)
-            : Transform(transform) {
-        }
-
-        operator const glm::mat4& () const { return Transform; }
-    };
-
-    struct MeshComponent
-    {
-        u32 textureId;
-    };
 
     Scene::Scene()
     {
@@ -55,23 +41,68 @@ namespace VEGA
     {
     }
 
-    entt::entity Scene::CreateEntity()
+   
+
+	VEGA::Entity Scene::CreateEntity(const std::string& name /*= std::string()*/)
+	{
+		Entity entity = { m_registry.create(),this };
+		entity.AddComponent<TransformComponent>();
+		auto& tag = entity.AddComponent<TagComponent>();
+        tag.Tag = name.empty() ? "Entity" : name;
+        
+		return entity;
+	}
+
+    
+    
+
+    void Scene::OnViewportResize(u32 width, u32 height)
     {
-        return m_registry.create();
+        m_ViewportWidth = width;
+        m_ViewportHeight = height;
+
+        auto view = m_registry.view<CameraComponent>();
+        for (auto entity : view) {
+            auto& cameraComponent = view.get<CameraComponent>(entity);
+            if (!cameraComponent.FixedAspectRatio)
+            {
+                cameraComponent.Camera.SetViewportSize(width, height);
+            }
+        }
     }
 
 	void Scene::OnUpdate(Timestep ts)
 	{
-		auto group = m_registry.group<TransformComponent>(entt::get<SpriteRendererComponent>);
-
-		for (auto entity : group)
-		{
-			auto& [transform, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
-            Renderer2D::DrawQuad(transform, sprite.Color);
-		}
-
+        Camera* mainCamera = nullptr;
+        glm::mat4* cameraTransform = nullptr;
         
+        auto view = m_registry.view<TransformComponent, CameraComponent>();
+        for (auto entity : view)
+        {
+            auto [transform, camera] = view.get<TransformComponent, CameraComponent>(entity);
 
-	}
+            if (camera.Primary)
+            {
+                mainCamera = &camera.Camera;
+                cameraTransform = &transform.Transform;
+                break;
+            }
+        }
+
+        if (mainCamera)
+        {
+            Renderer2D::BeginScene(*mainCamera, *cameraTransform);
+
+            auto group = m_registry.group<TransformComponent>(entt::get<SpriteRendererComponent>);
+            for (auto entity : group)
+            {
+                auto [transform, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
+                Renderer2D::DrawQuad(transform.Transform, sprite.Color);
+            }
+
+            Renderer2D::EndScene();
+        }
+
+	}      
 
 }

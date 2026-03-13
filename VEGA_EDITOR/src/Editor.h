@@ -38,6 +38,12 @@ namespace VEGA
 		Ref<SubTexture2D> water;
 		Ref<SubTexture2D> dirt;
 
+		Entity m_Square;
+		Entity m_CameraEntity;
+		Entity m_SecondCamera;
+
+		bool primaryCamera = false;
+
 		bool m_ViewPortFocused = false;
 		bool m_ViewPortHover = false;
 		OrthographicCameraContoroller m_CameraController;

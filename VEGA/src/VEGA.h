@@ -14,8 +14,10 @@
 #include "VEGA\Log.h"
 #include "VEGA\ImGui\ImGuiLayer.h"
 
+
 #include "VEGA\Scene\Scene.h"
 #include "VEGA\Scene\Components.h"
+#include "VEGA\Scene\Entity.h"
 
 #include "VEGA\Renderer\Renderer.h"
 #include "VEGA\Renderer\RenderCommand.h"

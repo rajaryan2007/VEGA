@@ -5,12 +5,15 @@
 #include "SubTexture2D.h"
 
 namespace VEGA {
+	class Camera;
 	class Renderer2D
 	{
 	public:
 		
+		
 		static void Init();
 		static void Shutdown();
+		static void BeginScene(const Camera& camera,const glm::mat4& transform);
 		static void BeginScene(const OrthographicCamera& camera);
 		static void flush();
 		static void EndScene();
