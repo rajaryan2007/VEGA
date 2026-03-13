@@ -121,8 +121,39 @@ namespace VEGA
         m_CameraEntity.AddComponent<CameraComponent>();
 
         m_SecondCamera = m_ActiveScene->CreateEntity("Camerasecond");
-        auto& cc = m_SecondCamera.AddComponent<CameraComponent>();
-        cc.Primary = false;
+		auto& cc = m_SecondCamera.AddComponent<CameraComponent>();
+		cc.Primary = false;
+        class CameraController : public ScriptableEntity
+        {
+        public:
+            void OnCreate()
+            {
+                std::cout << "OnCreateFunction";
+            }
+            void OnDestroy()
+            {
+
+            }
+            void OnUpdate(Timestep ts)
+            {
+                auto& transform = GetComponent<TransformComponent>().Transform;
+                f32 speed = 5.0f;
+
+
+                if (Input::IsKeyPressed(Key::A))
+                    transform[3][0] -= speed * ts;
+                if (Input::IsKeyPressed(Key::D))
+                    transform[3][0] += speed * ts;
+                if (Input::IsKeyPressed(Key::W))
+                    transform[3][1] -= speed * ts;
+				if (Input::IsKeyPressed(Key::S))
+					transform[3][1] += speed * ts;
+
+            }
+        };
+
+        m_CameraEntity.AddComponent<NativeScriptComponent>().Bind<CameraController>();
+        
     }
 
     void Editor::OnDetach()

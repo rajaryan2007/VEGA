@@ -155,6 +155,7 @@
     <ClInclude Include="src\Platform\OpenGL\OpenGLVertexArray.h" />
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
     <ClInclude Include="src\VEGA.h" />
+    <ClInclude Include="src\VEGA\Animation\Animation2D\SpriteAnimation.h" />
     <ClInclude Include="src\VEGA\Application.h" />
     <ClInclude Include="src\VEGA\Core.h" />
     <ClInclude Include="src\VEGA\Core\Timestep.h" />
@@ -185,6 +186,7 @@
     <ClInclude Include="src\VEGA\Scene\Camera.h" />
     <ClInclude Include="src\VEGA\Scene\Scene.h" />
     <ClInclude Include="src\VEGA\Scene\SceneCamera.h" />
+    <ClInclude Include="src\VEGA\Scene\ScriptableEntity.h" />
     <ClInclude Include="src\VEGA\Window.h" />
     <ClInclude Include="src\VEGA\input.h" />
     <ClInclude Include="src\VEGA\keyCodes.h" />
@@ -621,6 +623,7 @@
     <ClCompile Include="src\Platform\OpenGL\OpenGLVertexArray.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowInput.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />
+    <ClCompile Include="src\VEGA\Animation\Animation2D\SpriteAnimation.cpp" />
     <ClCompile Include="src\VEGA\Application.cpp" />
     <ClCompile Include="src\VEGA\ImGui\ImGuiBuild.cpp" />
     <ClCompile Include="src\VEGA\ImGui\ImGuiLayer.cpp" />

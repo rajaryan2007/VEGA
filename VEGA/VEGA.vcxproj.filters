@@ -1454,6 +1454,8 @@
     </ClInclude>
     <ClInclude Include="src\VEGA\Scene\Camera.h" />
     <ClInclude Include="src\VEGA\Scene\SceneCamera.h" />
+    <ClInclude Include="src\VEGA\Animation\Animation2D\SpriteAnimation.h" />
+    <ClInclude Include="src\VEGA\Scene\ScriptableEntity.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Platform\OpenGL\FrameBufferOpenGL.cpp">
@@ -1553,5 +1555,6 @@
     <ClCompile Include="src\VEGA\Scene\Entity.h" />
     <ClCompile Include="src\VEGA\Scene\Entity.cpp" />
     <ClCompile Include="src\VEGA\Scene\SceneCamera.cpp" />
+    <ClCompile Include="src\VEGA\Animation\Animation2D\SpriteAnimation.cpp" />
   </ItemGroup>
 </Project>
