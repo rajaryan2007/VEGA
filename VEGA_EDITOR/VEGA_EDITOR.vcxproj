@@ -138,10 +138,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\Editor.h" />
+    <ClInclude Include="src\Panel\SceneHierachyPanel.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Editor.cpp" />
     <ClCompile Include="src\app.cpp" />
+    <ClCompile Include="src\Panel\SceneHierachyPanel.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\VEGA\VEGA.vcxproj">

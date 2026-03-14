@@ -53,8 +53,6 @@ namespace VEGA
 		return entity;
 	}
 
-    
-    
 
     void Scene::OnViewportResize(u32 width, u32 height)
     {
@@ -75,18 +73,18 @@ namespace VEGA
 	{   
 
 		{
-			m_registry.view<NativeScriptComponent>().each([=](auto entity, auto& nsc)
-				{
-					if (!nsc.Instance)
-					{
-						nsc.Instance = nsc.InstantiateFunction();
-                        nsc.Instance->m_Entity = Entity{ entity,this };
-						nsc.OnCreateFunction(nsc.Instance);
-					}
-					nsc.OnUpdateFunction(nsc.Instance, ts);
-				});
-		}
+            m_registry.view<NativeScriptComponent>().each([=](auto entity, auto& nsc)
+                {
+                    if (!nsc.Instance)
+                    {
+                        nsc.Instance = nsc.InstantiateScript();
+                        nsc.Instance->m_Entity = Entity{ entity, this };
+                        nsc.Instance->OnCreate();
+                    }
+                    nsc.Instance->OnUpdate(ts);
+                });
 
+		}
 
         Camera* mainCamera = nullptr;
         glm::mat4* cameraTransform = nullptr;

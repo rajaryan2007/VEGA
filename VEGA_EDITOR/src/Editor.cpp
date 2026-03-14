@@ -36,7 +36,7 @@ namespace VEGA
 
 
     Editor::Editor()
-        : Layer("Editor"), m_CameraController(1280.0f / 720.0f), m_Transform(0.0f, 0.0f, 0.0f)
+        : Layer("Editor"), m_CameraController(1280.0f / 720.0f), m_Transform(0.0f, 0.0f, 0.0f),m_SceneHireacyPanel(m_ActiveScene)
     {
 
     }
@@ -153,7 +153,8 @@ namespace VEGA
         };
 
         m_CameraEntity.AddComponent<NativeScriptComponent>().Bind<CameraController>();
-        
+       // m_SceneHireacyPanel(m_ActiveScene);
+        m_SceneHireacyPanel.SetContext(m_ActiveScene);
     }
 
     void Editor::OnDetach()
@@ -260,6 +261,7 @@ namespace VEGA
 
 
         // ----- YOUR SETTINGS WINDOW -----
+        m_SceneHireacyPanel.OnImGuiRender();
 
         ImGui::Begin("Settings");
 

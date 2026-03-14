@@ -1,6 +1,6 @@
 #pragma once
 #include "VEGA.h"
-
+#include "Panel/SceneHierachyPanel.h"
 
 
 namespace VEGA
@@ -60,8 +60,8 @@ namespace VEGA
 		glm::vec2 m_ViewPortSize;
 
 		std::unordered_map<char, Ref<SubTexture2D>> Land;
-
-
+		SceneHierarchyPanel m_SceneHireacyPanel;
+        
 	};
 }
 

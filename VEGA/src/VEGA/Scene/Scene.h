@@ -23,8 +23,7 @@ namespace VEGA
 		 entt::registry m_registry;
 		 u32 m_ViewportWidth = 0, m_ViewportHeight = 0;
 
-
-
 		 friend class Entity;
+		 friend class SceneHierarchyPanel;
 	 };
 }
