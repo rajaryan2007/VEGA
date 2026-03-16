@@ -16,6 +16,12 @@
     <Filter Include="src\VEGA">
       <UniqueIdentifier>{7F8626CF-6B53-81DA-946C-6F828098B668}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\VEGA\Animation">
+      <UniqueIdentifier>{2EAA5894-1A8E-19EA-83EE-133D6FF1036C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\VEGA\Animation\Animation2D">
+      <UniqueIdentifier>{9316A26D-7F3C-6CD4-6882-F19F544791A0}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\VEGA\Core">
       <UniqueIdentifier>{3792E2F5-A352-5E2C-6C8D-A7A9D80CA308}</UniqueIdentifier>
     </Filter>
@@ -92,6 +98,9 @@
     </ClInclude>
     <ClInclude Include="src\VEGA.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\VEGA\Animation\Animation2D\SpriteAnimation.h">
+      <Filter>src\VEGA\Animation\Animation2D</Filter>
     </ClInclude>
     <ClInclude Include="src\VEGA\Application.h">
       <Filter>src\VEGA</Filter>
@@ -174,7 +183,22 @@
     <ClInclude Include="src\VEGA\Renderer3D\Renderer3D.h">
       <Filter>src\VEGA\Renderer3D</Filter>
     </ClInclude>
+    <ClInclude Include="src\VEGA\Scene\Camera.h">
+      <Filter>src\VEGA\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\VEGA\Scene\Components.h">
+      <Filter>src\VEGA\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\VEGA\Scene\Entity.h">
+      <Filter>src\VEGA\Scene</Filter>
+    </ClInclude>
     <ClInclude Include="src\VEGA\Scene\Scene.h">
+      <Filter>src\VEGA\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\VEGA\Scene\SceneCamera.h">
+      <Filter>src\VEGA\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\VEGA\Scene\ScriptableEntity.h">
       <Filter>src\VEGA\Scene</Filter>
     </ClInclude>
     <ClInclude Include="src\VEGA\Window.h">
@@ -1452,10 +1476,6 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="src\VEGA\Scene\Camera.h" />
-    <ClInclude Include="src\VEGA\Scene\SceneCamera.h" />
-    <ClInclude Include="src\VEGA\Animation\Animation2D\SpriteAnimation.h" />
-    <ClInclude Include="src\VEGA\Scene\ScriptableEntity.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Platform\OpenGL\FrameBufferOpenGL.cpp">
@@ -1484,6 +1504,9 @@
     </ClCompile>
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp">
       <Filter>src\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="src\VEGA\Animation\Animation2D\SpriteAnimation.cpp">
+      <Filter>src\VEGA\Animation\Animation2D</Filter>
     </ClCompile>
     <ClCompile Include="src\VEGA\Application.cpp">
       <Filter>src\VEGA</Filter>
@@ -1542,7 +1565,13 @@
     <ClCompile Include="src\VEGA\Renderer3D\Renderer3D.cpp">
       <Filter>src\VEGA\Renderer3D</Filter>
     </ClCompile>
+    <ClCompile Include="src\VEGA\Scene\Entity.cpp">
+      <Filter>src\VEGA\Scene</Filter>
+    </ClCompile>
     <ClCompile Include="src\VEGA\Scene\Scene.cpp">
+      <Filter>src\VEGA\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\VEGA\Scene\SceneCamera.cpp">
       <Filter>src\VEGA\Scene</Filter>
     </ClCompile>
     <ClCompile Include="src\vgpch.cpp">
@@ -1551,10 +1580,5 @@
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
-    <ClCompile Include="src\VEGA\Scene\Components.h" />
-    <ClCompile Include="src\VEGA\Scene\Entity.h" />
-    <ClCompile Include="src\VEGA\Scene\Entity.cpp" />
-    <ClCompile Include="src\VEGA\Scene\SceneCamera.cpp" />
-    <ClCompile Include="src\VEGA\Animation\Animation2D\SpriteAnimation.cpp" />
   </ItemGroup>
 </Project>

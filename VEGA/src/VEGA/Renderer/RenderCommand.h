@@ -3,7 +3,7 @@
 #include "RendererAPI.h"
 
 namespace VEGA {
-	class RenderCommand
+	class VEGA_API RenderCommand
 	{
 	public:
 		inline static void Init() {

@@ -6,7 +6,7 @@ namespace VEGA
 
 
 {
-	class Camera
+	class VEGA_API Camera
 	{
 	public:
 		Camera() = default;

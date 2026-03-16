@@ -8,7 +8,7 @@ namespace VEGA {
 	
 	
 	
-	class OrthographicCamera
+	class VEGA_API OrthographicCamera
 	{
 	public:
 		OrthographicCamera(f32 left, f32 right, f32 bottom, f32 top);

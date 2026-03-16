@@ -5,7 +5,7 @@
 
 namespace VEGA {
 
-	class Entity
+	class VEGA_API Entity
 	{
 	public:
 		Entity() = default;

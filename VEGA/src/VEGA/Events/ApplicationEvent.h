@@ -8,7 +8,7 @@
 
 namespace VEGA {
 
-	class  WindowResizeEvent : public Event
+	class VEGA_API WindowResizeEvent : public Event
 	{
 
 
@@ -35,7 +35,7 @@ namespace VEGA {
 	private:
 		unsigned int m_Width, m_Height;
 	};
-	class  WindowCloseEvent : public Event
+	class VEGA_API WindowCloseEvent : public Event
 	{
 	public:
 		WindowCloseEvent() {}
@@ -44,7 +44,7 @@ namespace VEGA {
         EVENT_CLASS_CATEGORY(EventCategoryApplication)
 	};
 
-	class AppTickEvent : public Event
+	class VEGA_API AppTickEvent : public Event
 	{
 	public:
 		AppTickEvent() {};
@@ -54,7 +54,7 @@ namespace VEGA {
 		EVENT_CLASS_CATEGORY(EventCategoryApplication)
 
 	};
-	class AppUpdateEvent : public Event
+	class VEGA_API AppUpdateEvent : public Event
 	{
 	public:
 		AppUpdateEvent() {}
@@ -63,7 +63,7 @@ namespace VEGA {
 		EVENT_CLASS_CATEGORY(EventCategoryApplication)
 	};
 
-	class  AppRenderEvent : public Event
+	class VEGA_API AppRenderEvent : public Event
 	{
 	public:
 		AppRenderEvent() {}

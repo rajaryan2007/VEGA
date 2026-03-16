@@ -1,13 +1,12 @@
-#pragma once 
-#include "vgpch.h"
+#pragma once
 #include "SceneCamera.h"
 #include "ScriptableEntity.h"
 #include "VEGA/Core/Timestep.h"
 #include "glm/glm.hpp"
-
+#include "vgpch.h"
 
 namespace VEGA {
-struct TransformComponent {
+struct VEGA_API TransformComponent {
   glm::mat4 Transform{1.0f};
 
   TransformComponent() = default;
@@ -18,14 +17,14 @@ struct TransformComponent {
   operator glm::mat4 &() { return Transform; }
   operator const glm::mat4 &() const { return Transform; }
 };
-struct SpriteRendererComponent {
+struct VEGA_API SpriteRendererComponent {
   glm::vec4 Color{1.0f};
 
   SpriteRendererComponent() = default;
   SpriteRendererComponent(const SpriteRendererComponent &) = default;
   SpriteRendererComponent(const glm::vec4 &color) : Color(color) {}
 };
-struct TagComponent {
+struct VEGA_API TagComponent {
   std::string Tag;
 
   TagComponent() = default;
@@ -33,7 +32,7 @@ struct TagComponent {
   TagComponent(const std::string &tag) : Tag(tag) {}
 };
 
-struct CameraComponent {
+struct VEGA_API CameraComponent {
   SceneCamera Camera;
   bool Primary = true;
   bool FixedAspectRatio = false;
@@ -42,20 +41,21 @@ struct CameraComponent {
   CameraComponent(const CameraComponent &) = default;
 };
 
-	struct NativeScriptComponent
-	{
-		ScriptableEntity* Instance  = nullptr;
+struct VEGA_API NativeScriptComponent {
+  ScriptableEntity *Instance = nullptr;
 
-		
-		ScriptableEntity* (*InstantiateScript)();
-		 void (*DestroyScript)(NativeScriptComponent*);
+  ScriptableEntity *(*InstantiateScript)();
+  void (*DestroyScript)(NativeScriptComponent *);
 
-		template<typename T>
-		void Bind()
-		{
-			InstantiateScript = []() { return static_cast<ScriptableEntity*>(new T()); };
-			DestroyScript = [](NativeScriptComponent* nsc) { delete nsc->Instance; nsc->Instance = nullptr; };
-		}
-	};
+  template <typename T> void Bind() {
+    InstantiateScript = []() {
+      return static_cast<ScriptableEntity *>(new T());
+    };
+    DestroyScript = [](NativeScriptComponent *nsc) {
+      delete nsc->Instance;
+      nsc->Instance = nullptr;
+    };
+  }
+};
 
 } // namespace VEGA

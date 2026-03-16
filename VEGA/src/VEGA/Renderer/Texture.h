@@ -6,7 +6,7 @@
 
 
 namespace VEGA {
-	class Texture {
+	class VEGA_API Texture {
 	public:
 		virtual ~Texture() = default;
 		virtual unsigned int GetWidth() const = 0;
@@ -22,7 +22,7 @@ namespace VEGA {
 		virtual bool operator==(const Texture& other) const = 0;
 	};
 
-	class Texture2D : public Texture {
+	class VEGA_API Texture2D : public Texture {
 	 public:
 		 static Ref<Texture2D> Create(const std::string& path);
 		 static Ref<Texture2D> Create(unsigned int width, unsigned int height);

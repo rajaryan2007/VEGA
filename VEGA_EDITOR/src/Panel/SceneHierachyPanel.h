@@ -14,7 +14,9 @@ namespace VEGA {
 
 		void OnImGuiRender();
 	private:
-		void DrawEntityNode(Entity entity);
+ 		void DrawEntityNode(Entity entity);
+
+		void DrawComponents(Entity entity);
 
 		Ref<Scene> m_Context;
 		Entity m_SelectionContext;

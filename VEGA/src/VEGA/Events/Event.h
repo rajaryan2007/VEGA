@@ -35,9 +35,9 @@ namespace VEGA
 
 #define EVENT_CLASS_CATEGORY(category) virtual int GetCategoryFlags() const override { return category; }
 
-    class EventDispatcher;
+    class VEGA_API EventDispatcher;
 
-    class Event
+    class VEGA_API Event
     {
         friend class EventDispatcher;
 

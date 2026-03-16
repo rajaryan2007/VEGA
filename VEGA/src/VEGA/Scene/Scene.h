@@ -8,7 +8,7 @@
 namespace VEGA
 {    
 	class Entity;
-	 class Scene
+	 class VEGA_API Scene
 	 {
 	 public:
 		 Scene();

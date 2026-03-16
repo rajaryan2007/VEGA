@@ -6,7 +6,7 @@
 
 namespace VEGA {
 	class Camera;
-	class Renderer2D
+	class VEGA_API Renderer2D
 	{
 	public:
 		

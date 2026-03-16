@@ -3,7 +3,7 @@
 #include "Entity.h"
 
 namespace VEGA {
-class ScriptableEntity {
+class VEGA_API ScriptableEntity {
 public:
   virtual ~ScriptableEntity() {}
 

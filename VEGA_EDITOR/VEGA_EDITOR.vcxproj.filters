@@ -1,12 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="src\app.cpp" />
-    <ClCompile Include="src\Editor.cpp" />
-    <ClCompile Include="src\Panel\SceneHierachyPanel.cpp" />
+    <Filter Include="Panel">
+      <UniqueIdentifier>{95BADD0D-01CF-05BF-CA50-A91E362402F0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Editor.h" />
-    <ClInclude Include="src\Panel\SceneHierachyPanel.h" />
+    <ClInclude Include="src\Panel\SceneHierachyPanel.h">
+      <Filter>Panel</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Editor.cpp" />
+    <ClCompile Include="src\Panel\SceneHierachyPanel.cpp">
+      <Filter>Panel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\app.cpp" />
   </ItemGroup>
 </Project>

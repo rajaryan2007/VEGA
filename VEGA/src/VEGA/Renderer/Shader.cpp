@@ -49,19 +49,26 @@ namespace VEGA
 		m_Shaders[name] = shader;
 	}
 
-	VEGA::Ref<VEGA::Shader> ShaderLibrary::Load(const std::string& filepath)
-	{
-		auto& shader = Shader::Create(filepath);
-		Add(shader);
-		return shader;
-	}
+    VEGA::Ref<VEGA::Shader> ShaderLibrary::Load(const std::string& filepath)
+    {
+					auto shader = Shader::Create(filepath);
+					Add(shader);
+					return shader;
+    }
 
-	VEGA::Ref<VEGA::Shader> ShaderLibrary::Load(const std::string& name, const std::string& filepath)
-	{
-		auto& shader = Shader::Create(filepath);
-		Add(name,shader);
-		return shader;
-	}
+    VEGA::Ref<VEGA::Shader> ShaderLibrary::Load(const std::string& name, const std::string& filepath)
+    {
+					auto shader = Shader::Create(filepath);
+					Add(name, shader);
+					return shader;
+    }
+
+	//VEGA::Ref<VEGA::Shader> ShaderLibrary::Load(const std::string& name, const std::string& filepath)
+	//{
+	//	auto shader = Shader::Create(filepath);
+	//	Add(name,shader);
+	//	return shader;
+	//}
 	
 	VEGA::Ref<VEGA::Shader> ShaderLibrary::Get(const std::string& name)
 	{

@@ -142,8 +142,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Editor.cpp" />
-    <ClCompile Include="src\app.cpp" />
     <ClCompile Include="src\Panel\SceneHierachyPanel.cpp" />
+    <ClCompile Include="src\app.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\VEGA\VEGA.vcxproj">

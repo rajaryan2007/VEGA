@@ -3,7 +3,7 @@
 #include "VEGA/Scene/Camera.h"
 
 namespace VEGA {
-class SceneCamera : public Camera {
+class VEGA_API SceneCamera : public Camera {
 public:
   SceneCamera() = default;
   virtual ~SceneCamera();

@@ -4,7 +4,7 @@
 
 namespace VEGA
 {
-	class GraphicsContext 
+	class VEGA_API GraphicsContext 
 	{
 	public:
 		virtual void Init() = 0;

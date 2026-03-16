@@ -10,7 +10,7 @@
 namespace VEGA
 {   
 	class Shader;
-	class Renderer
+	class VEGA_API Renderer
 	{
 	public:
 

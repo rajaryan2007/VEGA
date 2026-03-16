@@ -5,7 +5,7 @@
 
 namespace VEGA {
 
-	class VEGA_API  Log
+	class VEGA_API Log
 	{
 	public:
 		static void Init();
