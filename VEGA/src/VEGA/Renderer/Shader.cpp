@@ -38,7 +38,7 @@ namespace VEGA
 	void ShaderLibrary::Add(const Ref<Shader>& shader)
 	{
 		auto& name = shader->GetName();
-		VG_CORE_ASSERT(!m_Shaders.contains(name), "Shader already exists!");
+		VG_CORE_ASSERT(m_Shaders.find(name) == m_Shaders.end(), "Shader already exists!");
 		m_Shaders[name] = shader;
 
 	}

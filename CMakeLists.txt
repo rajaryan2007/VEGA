@@ -1,10 +1,10 @@
 cmake_minimum_required(VERSION 3.16)
 project(VEGA)
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-
-# This is what Premake uses to allow folder nesting
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+# --- Allow Visual Studio folder nesting ---
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 # --- Output Directory Logic (Premake Style) ---
@@ -26,8 +26,19 @@ foreach(CONFIG ${CMAKE_CONFIGURATION_TYPES})
     set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_${CONFIG_UPPER} ${CMAKE_SOURCE_DIR}/bin/${CONFIG}-windows-${ARCH})
 endforeach()
 
+# --- Helper function for automatic Visual Studio folder grouping ---
+function(auto_group target)
+    get_target_property(files ${target} SOURCES)
+    foreach(file ${files})
+        file(RELATIVE_PATH rel ${CMAKE_SOURCE_DIR} ${file})
+        get_filename_component(dir ${rel} PATH)
+        string(REPLACE "/" "\\" group ${dir})
+        source_group("${group}" FILES ${file})
+    endforeach()
+endfunction()
+
 # --- Subdirectories ---
-# Vendor libs
+# Vendor libraries
 add_subdirectory(VEGA/vendor/GLFW)
 add_subdirectory(VEGA/vendor/Glad)
 add_subdirectory(VEGA/vendor/imgui)
@@ -37,4 +48,9 @@ add_subdirectory(VEGA)
 add_subdirectory(Sandbox)
 add_subdirectory(VEGA_EDITOR)
 
-# REMOVED: The source_group call from here (It doesn't work at the root level)
+# --- Apply automatic folder grouping ---
+# Automatically group all targets
+get_property(all_targets DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY BUILDSYSTEM_TARGETS)
+foreach(t ${all_targets})
+    auto_group(${t})
+endforeach()

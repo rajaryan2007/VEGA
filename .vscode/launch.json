@@ -1,0 +1,14 @@
+{
+ "version": "0.2.0",
+ "configurations": [
+  {
+   "name": "Debug VEGA",
+   "type": "lldb",
+   "request": "launch",
+   "program": "${workspaceFolder}/bin/Debug-windows-x64/VEGA_EDITOR.exe",
+   "cwd": "${workspaceFolder}",
+   "args": [],
+   "stopAtEntry": false
+  }
+ ]
+}

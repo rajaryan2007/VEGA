@@ -1,1 +1,0 @@
-{ "otherData": {}, "traceEvents": [{"cat": "function", "dur": 9, "name": "__cdecl VEGA::OpenGLShader::~OpenGLShader(void)", "ph": "X", "pid": "shutdown", "tid": 2991467738278995098, "ts": 12325892893}, {"cat": "function", "dur": 19283, "name": "void __cdecl VEGA::WindowsWindow::Shutdown(void)", "ph": "X", "pid": "shutdown", "tid": 2991467738278995098, "ts": 12325892939}]}

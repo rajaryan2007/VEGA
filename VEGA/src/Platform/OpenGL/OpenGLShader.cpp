@@ -46,7 +46,7 @@ void VEGA::OpenGLShader::Compile(const std::unordered_map<GLenum, std::string>& 
 
 			glDeleteShader(shader);
 			VG_CORE_ERROR("Shader compile error: {0}", log.data());
-			VG_CORE_ASSERT(false);
+			VG_CORE_ASSERT(false,"Error");
 			return;
 		}
 
@@ -71,7 +71,7 @@ void VEGA::OpenGLShader::Compile(const std::unordered_map<GLenum, std::string>& 
 			glDeleteShader(id);
 
 		VG_CORE_ERROR("Shader link error: {0}", log.data());
-		VG_CORE_ASSERT(false);
+		VG_CORE_ASSERT(false,"Error");
 		return;
 	}
 

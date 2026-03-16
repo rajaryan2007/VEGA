@@ -20,9 +20,8 @@ set(ALL_VEGA_FILES ${VEGA_SOURCES} ${GLM_FILES})
 # 2. Add the library
 add_library(VEGA SHARED ${ALL_VEGA_FILES})
 
-# 3. THE FIX: Use the VEGA folder as the root for EVERYTHING in this target
-# This matches the folder structure on disk 1:1 in Visual Studio
-source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" FILES ${ALL_VEGA_FILES})
+# 3. THE FIX: Use prefix to mirror project structure starting from root
+source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "" FILES ${ALL_VEGA_FILES})
 
 # 4. Include Directories
 target_include_directories(VEGA PUBLIC

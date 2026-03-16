@@ -15,7 +15,7 @@ namespace VEGA {
 		unsigned char* data = nullptr;
 		stbi_set_flip_vertically_on_load(1);
 		{
-			VG_PROFILE_FUNCTION("OpenGL Texture::OpenGL");
+			VG_PROFILE_SCOPE("OpenGL Texture::OpenGL");
 			data = stbi_load(path.c_str(), &width, &height, &channels, 0);
 		}
 		VG_CORE_ASSERT(data, "Failed to load image!");
@@ -66,7 +66,7 @@ namespace VEGA {
 		m_InternalFormat = GL_RGBA8, m_DataFormat = GL_RGBA;
 		
 		
-		VG_CORE_ASSERT(internalFormat & dataFormat, "Format not supported!");
+		VG_CORE_ASSERT(m_InternalFormat & m_DataFormat, "Format not supported!");
 
 		glCreateTextures(GL_TEXTURE_2D, 1, &m_RendererID);
 		glTextureStorage2D(m_RendererID, 1, m_InternalFormat, m_Width, m_Height);
