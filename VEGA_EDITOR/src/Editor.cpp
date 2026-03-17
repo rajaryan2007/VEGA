@@ -112,8 +112,10 @@ namespace VEGA
 
         // Init here
         auto square = m_ActiveScene->CreateEntity("square");
-        square.AddComponent<SpriteRendererComponent>(glm::vec4{ 0.0f,1.0f,-.0f,1.0f });
+        square.AddComponent<SpriteRendererComponent>(glm::vec4{ 0.0f,1.0f,1.0f,1.0f });
 
+        auto redSqaure = m_ActiveScene->CreateEntity("redSquare");
+        redSqaure.AddComponent<SpriteRendererComponent>(glm::vec4{0.1f,1.0f,0.5f,1.0f});
 
         m_Square = square;
 
@@ -128,7 +130,7 @@ namespace VEGA
         public:
             void OnCreate()
             {
-                std::cout << "OnCreateFunction";
+               
             }
             void OnDestroy()
             {
@@ -136,18 +138,18 @@ namespace VEGA
             }
             void OnUpdate(Timestep ts)
             {
-                auto& transform = GetComponent<TransformComponent>().Transform;
+                auto& transform = GetComponent<TransformComponent>().Translation;
                 f32 speed = 5.0f;
-
+                
 
                 if (Input::IsKeyPressed(Key::A))
-                    transform[3][0] -= speed * ts;
+                    transform.x -= speed * ts;
                 if (Input::IsKeyPressed(Key::D))
-                    transform[3][0] += speed * ts;
+                    transform.x += speed * ts;
                 if (Input::IsKeyPressed(Key::W))
-                    transform[3][1] -= speed * ts;
+                    transform.y -= speed * ts;
 				if (Input::IsKeyPressed(Key::S))
-					transform[3][1] += speed * ts;
+					transform.y += speed * ts;
 
             }
         };
@@ -274,34 +276,6 @@ namespace VEGA
         ImGui::Text("Quads: %d", stats.QuadCount);
         ImGui::Text("Vertices: %d", stats.GetTotalVertexCount());
         ImGui::Text("Index: %d", stats.GetTotalIndexCount());
-
-        if (m_Square) {
-            auto& tag = m_Square.GetComponent<TagComponent>().Tag;
-            ImGui::Text("%s", tag.c_str());
-			auto& m_Color = m_Square.GetComponent<SpriteRendererComponent>().Color;
-			ImGui::ColorEdit3("Square Color", glm::value_ptr(m_Color));
-            ImGui::Spacing();
-
-        }
-
-        ImGui::DragFloat3("Camera Transform", glm::value_ptr(m_CameraEntity.GetComponent<TransformComponent>().Transform[3]));
-       
-        if (ImGui::Checkbox("Camera A", &primaryCamera))
-        {
-            m_SecondCamera.GetComponent<CameraComponent>().Primary = primaryCamera;
-            m_SecondCamera.GetComponent<CameraComponent>().Primary = !primaryCamera;
-        }
-        
-        {
-           auto& camera =  m_SecondCamera.GetComponent<CameraComponent>().Camera;
-           float orthosize = camera.GetOrthographicSize();
-           if (ImGui::DragFloat("Second", &orthosize))
-               camera.SetOrthographicSize(orthosize);
-
-        }
-
-        
-       
 
         ImGui::End();
 
