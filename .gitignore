@@ -3,6 +3,42 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+# Build folders
+build/
+bin/
+out/
+cmake-build-*/
+
+# CMake
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+install_manifest.txt
+compile_commands.json
+
+
+*.sln
+*.vcxproj*
+*.filters
+*.user
+*.suo
+
+# Binaries
+*.exe
+*.dll
+*.so
+*.a
+*.lib
+*.o
+*.obj
+
+# IDEs
+.vscode/
+.idea/
+
+# Logs
+*.log
+
 # User-specific files
 *.rsuser
 *.suo
