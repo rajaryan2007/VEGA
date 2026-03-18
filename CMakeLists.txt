@@ -42,10 +42,11 @@ endfunction()
 add_subdirectory(VEGA/vendor/GLFW)
 add_subdirectory(VEGA/vendor/Glad)
 add_subdirectory(VEGA/vendor/imgui)
-
+add_subdirectory(VEGA/vendor/volk)
+add_subdirectory(VEGA/vendor/VulkanMemoryAllocator)
 # Projects
 add_subdirectory(VEGA)
-add_subdirectory(Sandbox)
+
 add_subdirectory(VEGA_EDITOR)
 
 # --- Apply automatic folder grouping ---

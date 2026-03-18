@@ -1,5 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+  </PropertyGroup>
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|x64">
       <Configuration>Debug</Configuration>
@@ -9,145 +12,387 @@
       <Configuration>Release</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="Dist|x64">
-      <Configuration>Dist</Configuration>
+    <ProjectConfiguration Include="MinSizeRel|x64">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|x64">
+      <Configuration>RelWithDebInfo</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{CEA66A51-3A5C-E346-C350-DD1D2F05DA4A}</ProjectGuid>
-    <IgnoreWarnCompileDuplicatedFilename>true</IgnoreWarnCompileDuplicatedFilename>
+    <ProjectGuid>{2F8EE6BF-6CC6-32B9-99BE-CC6DF806BE2B}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>VEGA_EDITOR</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.26100.0</WindowsTargetPlatformVersion>
+    <Platform>x64</Platform>
+    <ProjectName>VEGA_EDITOR</ProjectName>
+    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
-    <UseDebugLibraries>true</UseDebugLibraries>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
     <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
-    <UseDebugLibraries>false</UseDebugLibraries>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
     <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'" Label="Configuration">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
-    <UseDebugLibraries>false</UseDebugLibraries>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
     <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
+  <ImportGroup Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(ProjectDir)..\bin\Debug-windows-x86_64\VEGA_EDITOR\</OutDir>
-    <IntDir>$(ProjectDir)..\bin-int\Debug-windows-x86_64\VEGA_EDITOR\</IntDir>
-    <TargetName>VEGA_EDITOR</TargetName>
-    <TargetExt>.exe</TargetExt>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(ProjectDir)..\bin\Release-windows-x86_64\VEGA_EDITOR\</OutDir>
-    <IntDir>$(ProjectDir)..\bin-int\Release-windows-x86_64\VEGA_EDITOR\</IntDir>
-    <TargetName>VEGA_EDITOR</TargetName>
-    <TargetExt>.exe</TargetExt>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
-    <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(ProjectDir)..\bin\Dist-windows-x86_64\VEGA_EDITOR\</OutDir>
-    <IntDir>$(ProjectDir)..\bin-int\Dist-windows-x86_64\VEGA_EDITOR\</IntDir>
-    <TargetName>VEGA_EDITOR</TargetName>
-    <TargetExt>.exe</TargetExt>
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\rion\source\repos\VEGA\bin\Debug-windows-x64\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">VEGA_EDITOR.dir\Debug\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">VEGA_EDITOR</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.exe</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</GenerateManifest>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Users\rion\source\repos\VEGA\bin\Release-windows-x64\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">VEGA_EDITOR.dir\Release\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">VEGA_EDITOR</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.exe</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</GenerateManifest>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Users\rion\source\repos\VEGA\bin\MinSizeRel-windows-x64\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">VEGA_EDITOR.dir\MinSizeRel\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">VEGA_EDITOR</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">.exe</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">true</GenerateManifest>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Users\rion\source\repos\VEGA\bin\RelWithDebInfo-windows-x64\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">VEGA_EDITOR.dir\RelWithDebInfo\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">VEGA_EDITOR</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">.exe</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">true</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">true</GenerateManifest>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>VG_PLATFORM_WINDOWS;VG_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\VEGA\vendor\spdlog\include;..\VEGA\src;..\VEGA\vendor;..\VEGA\vendor\glm;..\VEGA\vendor\entt\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <AdditionalIncludeDirectories>C:\Users\rion\source\repos\VEGA\VEGA_EDITOR\src;C:\Users\rion\source\repos\VEGA\VEGA\src;C:\Users\rion\source\repos\VEGA\VEGA\vendor;C:\Users\rion\source\repos\VEGA\VEGA\vendor\glm;C:\Users\rion\source\repos\VEGA\VEGA\vendor\entt\include;C:\Users\rion\source\repos\VEGA\VEGA\vendor\spdlog\include;C:\Users\rion\source\repos\VEGA\VEGA\vendor\GLFW\include;C:\Users\rion\source\repos\VEGA\VEGA\vendor\Glad\include;C:\Users\rion\source\repos\VEGA\VEGA\vendor\imgui;C:\Users\rion\source\repos\VEGA\VEGA\vendor\stb_image;C:\Users\rion\source\repos\VEGA\VEGA\vendor\volk;C:\Users\rion\source\repos\VEGA\VEGA\vendor\VulkanMemoryAllocator\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /external:I "C:/VulkanSDK/1.4.341.1/include" /utf-8</AdditionalOptions>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <ExternalWarningLevel>TurnOffAllWarnings</ExternalWarningLevel>
+      <ForceConformanceInForLoopScope></ForceConformanceInForLoopScope>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <MinimalRebuild></MinimalRebuild>
       <Optimization>Disabled</Optimization>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <AdditionalOptions>/utf-8 /MDd %(AdditionalOptions)</AdditionalOptions>
-      <LanguageStandard>stdcpp17</LanguageStandard>
-      <ExternalWarningLevel>Level3</ExternalWarningLevel>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RemoveUnreferencedCodeData></RemoveUnreferencedCodeData>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <SupportJustMyCode></SupportJustMyCode>
+      <TreatWChar_tAsBuiltInType></TreatWChar_tAsBuiltInType>
+      <UseFullPaths>false</UseFullPaths>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;VG_PLATFORM_WINDOWS;VG_DYNAMIC_LINK;VG_PROJECT_DIR="C:/Users/rion/source/repos/VEGA/VEGA_EDITOR";WINDLL;GLFW_INCLUDE_NONE;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR="Debug"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
     </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_DEBUG;_WINDOWS;VG_PLATFORM_WINDOWS;VG_DYNAMIC_LINK;VG_PROJECT_DIR=\"C:/Users/rion/source/repos/VEGA/VEGA_EDITOR\";WINDLL;GLFW_INCLUDE_NONE;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR=\"Debug\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\rion\source\repos\VEGA\VEGA_EDITOR\src;C:\Users\rion\source\repos\VEGA\VEGA\src;C:\Users\rion\source\repos\VEGA\VEGA\vendor;C:\Users\rion\source\repos\VEGA\VEGA\vendor\glm;C:\Users\rion\source\repos\VEGA\VEGA\vendor\entt\include;C:\Users\rion\source\repos\VEGA\VEGA\vendor\spdlog\include;C:\Users\rion\source\repos\VEGA\VEGA\vendor\GLFW\include;C:\Users\rion\source\repos\VEGA\VEGA\vendor\Glad\include;C:\Users\rion\source\repos\VEGA\VEGA\vendor\imgui;C:\Users\rion\source\repos\VEGA\VEGA\vendor\stb_image;C:\Users\rion\source\repos\VEGA\VEGA\vendor\volk;C:\Users\rion\source\repos\VEGA\VEGA\vendor\VulkanMemoryAllocator\include;C:\VulkanSDK\1.4.341.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\rion\source\repos\VEGA\VEGA_EDITOR\src;C:\Users\rion\source\repos\VEGA\VEGA\src;C:\Users\rion\source\repos\VEGA\VEGA\vendor;C:\Users\rion\source\repos\VEGA\VEGA\vendor\glm;C:\Users\rion\source\repos\VEGA\VEGA\vendor\entt\include;C:\Users\rion\source\repos\VEGA\VEGA\vendor\spdlog\include;C:\Users\rion\source\repos\VEGA\VEGA\vendor\GLFW\include;C:\Users\rion\source\repos\VEGA\VEGA\vendor\Glad\include;C:\Users\rion\source\repos\VEGA\VEGA\vendor\imgui;C:\Users\rion\source\repos\VEGA\VEGA\vendor\stb_image;C:\Users\rion\source\repos\VEGA\VEGA\vendor\volk;C:\Users\rion\source\repos\VEGA\VEGA\vendor\VulkanMemoryAllocator\include;C:\VulkanSDK\1.4.341.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <AdditionalDependencies>..\bin\Debug-windows-x64\VEGAd.lib;..\bin\Debug-windows-x64\glfw3.lib;..\bin\Debug-windows-x64\Glad.lib;C:\VulkanSDK\1.4.341.1\Lib\vulkan-1.lib;..\bin\Debug-windows-x64\ImGui.lib;opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+      <DataExecutionPrevention></DataExecutionPrevention>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImageHasSafeExceptionHandlers></ImageHasSafeExceptionHandlers>
+      <ImportLibrary>C:/Users/rion/source/repos/VEGA/bin/Debug-windows-x64/VEGA_EDITOR.lib</ImportLibrary>
+      <LinkErrorReporting></LinkErrorReporting>
+      <ProgramDataBaseFile>C:/Users/rion/source/repos/VEGA/bin/Debug-windows-x64/VEGA_EDITOR.pdb</ProgramDataBaseFile>
+      <RandomizedBaseAddress></RandomizedBaseAddress>
+      <SubSystem>Console</SubSystem>
     </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
+      <AdditionalIncludeDirectories>C:\Users\rion\source\repos\VEGA\VEGA_EDITOR\src;C:\Users\rion\source\repos\VEGA\VEGA\src;C:\Users\rion\source\repos\VEGA\VEGA\vendor;C:\Users\rion\source\repos\VEGA\VEGA\vendor\glm;C:\Users\rion\source\repos\VEGA\VEGA\vendor\entt\include;C:\Users\rion\source\repos\VEGA\VEGA\vendor\spdlog\include;C:\Users\rion\source\repos\VEGA\VEGA\vendor\GLFW\include;C:\Users\rion\source\repos\VEGA\VEGA\vendor\Glad\include;C:\Users\rion\source\repos\VEGA\VEGA\vendor\imgui;C:\Users\rion\source\repos\VEGA\VEGA\vendor\stb_image;C:\Users\rion\source\repos\VEGA\VEGA\vendor\volk;C:\Users\rion\source\repos\VEGA\VEGA\vendor\VulkanMemoryAllocator\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /external:I "C:/VulkanSDK/1.4.341.1/include" /utf-8</AdditionalOptions>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <ExternalWarningLevel>TurnOffAllWarnings</ExternalWarningLevel>
+      <ForceConformanceInForLoopScope></ForceConformanceInForLoopScope>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <MinimalRebuild></MinimalRebuild>
+      <Optimization>MaxSpeed</Optimization>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>VG_PLATFORM_WINDOWS;VG_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\VEGA\vendor\spdlog\include;..\VEGA\src;..\VEGA\vendor;..\VEGA\vendor\glm;..\VEGA\vendor\entt\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <Optimization>Full</Optimization>
-      <FunctionLevelLinking>true</FunctionLevelLinking>
-      <IntrinsicFunctions>true</IntrinsicFunctions>
-      <MinimalRebuild>false</MinimalRebuild>
-      <StringPooling>true</StringPooling>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalOptions>/utf-8 /MD %(AdditionalOptions)</AdditionalOptions>
-      <LanguageStandard>stdcpp17</LanguageStandard>
-      <ExternalWarningLevel>Level3</ExternalWarningLevel>
+      <RemoveUnreferencedCodeData></RemoveUnreferencedCodeData>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <SupportJustMyCode></SupportJustMyCode>
+      <TreatWChar_tAsBuiltInType></TreatWChar_tAsBuiltInType>
+      <UseFullPaths>false</UseFullPaths>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;VG_PLATFORM_WINDOWS;VG_DYNAMIC_LINK;VG_PROJECT_DIR="C:/Users/rion/source/repos/VEGA/VEGA_EDITOR";WINDLL;GLFW_INCLUDE_NONE;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR="Release"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
     </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;VG_PLATFORM_WINDOWS;VG_DYNAMIC_LINK;VG_PROJECT_DIR=\"C:/Users/rion/source/repos/VEGA/VEGA_EDITOR\";WINDLL;GLFW_INCLUDE_NONE;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR=\"Release\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\rion\source\repos\VEGA\VEGA_EDITOR\src;C:\Users\rion\source\repos\VEGA\VEGA\src;C:\Users\rion\source\repos\VEGA\VEGA\vendor;C:\Users\rion\source\repos\VEGA\VEGA\vendor\glm;C:\Users\rion\source\repos\VEGA\VEGA\vendor\entt\include;C:\Users\rion\source\repos\VEGA\VEGA\vendor\spdlog\include;C:\Users\rion\source\repos\VEGA\VEGA\vendor\GLFW\include;C:\Users\rion\source\repos\VEGA\VEGA\vendor\Glad\include;C:\Users\rion\source\repos\VEGA\VEGA\vendor\imgui;C:\Users\rion\source\repos\VEGA\VEGA\vendor\stb_image;C:\Users\rion\source\repos\VEGA\VEGA\vendor\volk;C:\Users\rion\source\repos\VEGA\VEGA\vendor\VulkanMemoryAllocator\include;C:\VulkanSDK\1.4.341.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\rion\source\repos\VEGA\VEGA_EDITOR\src;C:\Users\rion\source\repos\VEGA\VEGA\src;C:\Users\rion\source\repos\VEGA\VEGA\vendor;C:\Users\rion\source\repos\VEGA\VEGA\vendor\glm;C:\Users\rion\source\repos\VEGA\VEGA\vendor\entt\include;C:\Users\rion\source\repos\VEGA\VEGA\vendor\spdlog\include;C:\Users\rion\source\repos\VEGA\VEGA\vendor\GLFW\include;C:\Users\rion\source\repos\VEGA\VEGA\vendor\Glad\include;C:\Users\rion\source\repos\VEGA\VEGA\vendor\imgui;C:\Users\rion\source\repos\VEGA\VEGA\vendor\stb_image;C:\Users\rion\source\repos\VEGA\VEGA\vendor\volk;C:\Users\rion\source\repos\VEGA\VEGA\vendor\VulkanMemoryAllocator\include;C:\VulkanSDK\1.4.341.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
     <Link>
+      <AdditionalDependencies>..\bin\Release-windows-x64\VEGA.lib;..\bin\Release-windows-x64\glfw3.lib;..\bin\Release-windows-x64\Glad.lib;C:\VulkanSDK\1.4.341.1\Lib\vulkan-1.lib;..\bin\Release-windows-x64\ImGui.lib;opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+      <DataExecutionPrevention></DataExecutionPrevention>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImageHasSafeExceptionHandlers></ImageHasSafeExceptionHandlers>
+      <ImportLibrary>C:/Users/rion/source/repos/VEGA/bin/Release-windows-x64/VEGA_EDITOR.lib</ImportLibrary>
+      <LinkErrorReporting></LinkErrorReporting>
+      <ProgramDataBaseFile>C:/Users/rion/source/repos/VEGA/bin/Release-windows-x64/VEGA_EDITOR.pdb</ProgramDataBaseFile>
+      <RandomizedBaseAddress></RandomizedBaseAddress>
       <SubSystem>Console</SubSystem>
-      <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <OptimizeReferences>true</OptimizeReferences>
     </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
     <ClCompile>
+      <AdditionalIncludeDirectories>C:\Users\rion\source\repos\VEGA\VEGA_EDITOR\src;C:\Users\rion\source\repos\VEGA\VEGA\src;C:\Users\rion\source\repos\VEGA\VEGA\vendor;C:\Users\rion\source\repos\VEGA\VEGA\vendor\glm;C:\Users\rion\source\repos\VEGA\VEGA\vendor\entt\include;C:\Users\rion\source\repos\VEGA\VEGA\vendor\spdlog\include;C:\Users\rion\source\repos\VEGA\VEGA\vendor\GLFW\include;C:\Users\rion\source\repos\VEGA\VEGA\vendor\Glad\include;C:\Users\rion\source\repos\VEGA\VEGA\vendor\imgui;C:\Users\rion\source\repos\VEGA\VEGA\vendor\stb_image;C:\Users\rion\source\repos\VEGA\VEGA\vendor\volk;C:\Users\rion\source\repos\VEGA\VEGA\vendor\VulkanMemoryAllocator\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /external:I "C:/VulkanSDK/1.4.341.1/include" /utf-8</AdditionalOptions>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <ExternalWarningLevel>TurnOffAllWarnings</ExternalWarningLevel>
+      <ForceConformanceInForLoopScope></ForceConformanceInForLoopScope>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <MinimalRebuild></MinimalRebuild>
+      <Optimization>MinSpace</Optimization>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>VG_PLATFORM_WINDOWS;VG_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\VEGA\vendor\spdlog\include;..\VEGA\src;..\VEGA\vendor;..\VEGA\vendor\glm;..\VEGA\vendor\entt\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <Optimization>Full</Optimization>
-      <FunctionLevelLinking>true</FunctionLevelLinking>
-      <IntrinsicFunctions>true</IntrinsicFunctions>
-      <MinimalRebuild>false</MinimalRebuild>
-      <StringPooling>true</StringPooling>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalOptions>/utf-8 /MD %(AdditionalOptions)</AdditionalOptions>
-      <LanguageStandard>stdcpp17</LanguageStandard>
-      <ExternalWarningLevel>Level3</ExternalWarningLevel>
+      <RemoveUnreferencedCodeData></RemoveUnreferencedCodeData>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <SupportJustMyCode></SupportJustMyCode>
+      <TreatWChar_tAsBuiltInType></TreatWChar_tAsBuiltInType>
+      <UseFullPaths>false</UseFullPaths>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;VG_PLATFORM_WINDOWS;VG_DYNAMIC_LINK;VG_PROJECT_DIR="C:/Users/rion/source/repos/VEGA/VEGA_EDITOR";WINDLL;GLFW_INCLUDE_NONE;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR="MinSizeRel"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
     </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;VG_PLATFORM_WINDOWS;VG_DYNAMIC_LINK;VG_PROJECT_DIR=\"C:/Users/rion/source/repos/VEGA/VEGA_EDITOR\";WINDLL;GLFW_INCLUDE_NONE;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR=\"MinSizeRel\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\rion\source\repos\VEGA\VEGA_EDITOR\src;C:\Users\rion\source\repos\VEGA\VEGA\src;C:\Users\rion\source\repos\VEGA\VEGA\vendor;C:\Users\rion\source\repos\VEGA\VEGA\vendor\glm;C:\Users\rion\source\repos\VEGA\VEGA\vendor\entt\include;C:\Users\rion\source\repos\VEGA\VEGA\vendor\spdlog\include;C:\Users\rion\source\repos\VEGA\VEGA\vendor\GLFW\include;C:\Users\rion\source\repos\VEGA\VEGA\vendor\Glad\include;C:\Users\rion\source\repos\VEGA\VEGA\vendor\imgui;C:\Users\rion\source\repos\VEGA\VEGA\vendor\stb_image;C:\Users\rion\source\repos\VEGA\VEGA\vendor\volk;C:\Users\rion\source\repos\VEGA\VEGA\vendor\VulkanMemoryAllocator\include;C:\VulkanSDK\1.4.341.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\rion\source\repos\VEGA\VEGA_EDITOR\src;C:\Users\rion\source\repos\VEGA\VEGA\src;C:\Users\rion\source\repos\VEGA\VEGA\vendor;C:\Users\rion\source\repos\VEGA\VEGA\vendor\glm;C:\Users\rion\source\repos\VEGA\VEGA\vendor\entt\include;C:\Users\rion\source\repos\VEGA\VEGA\vendor\spdlog\include;C:\Users\rion\source\repos\VEGA\VEGA\vendor\GLFW\include;C:\Users\rion\source\repos\VEGA\VEGA\vendor\Glad\include;C:\Users\rion\source\repos\VEGA\VEGA\vendor\imgui;C:\Users\rion\source\repos\VEGA\VEGA\vendor\stb_image;C:\Users\rion\source\repos\VEGA\VEGA\vendor\volk;C:\Users\rion\source\repos\VEGA\VEGA\vendor\VulkanMemoryAllocator\include;C:\VulkanSDK\1.4.341.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
     <Link>
+      <AdditionalDependencies>..\bin\MinSizeRel-windows-x64\VEGA.lib;..\bin\MinSizeRel-windows-x64\glfw3.lib;..\bin\MinSizeRel-windows-x64\Glad.lib;C:\VulkanSDK\1.4.341.1\Lib\vulkan-1.lib;..\bin\MinSizeRel-windows-x64\ImGui.lib;opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+      <DataExecutionPrevention></DataExecutionPrevention>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImageHasSafeExceptionHandlers></ImageHasSafeExceptionHandlers>
+      <ImportLibrary>C:/Users/rion/source/repos/VEGA/bin/MinSizeRel-windows-x64/VEGA_EDITOR.lib</ImportLibrary>
+      <LinkErrorReporting></LinkErrorReporting>
+      <ProgramDataBaseFile>C:/Users/rion/source/repos/VEGA/bin/MinSizeRel-windows-x64/VEGA_EDITOR.pdb</ProgramDataBaseFile>
+      <RandomizedBaseAddress></RandomizedBaseAddress>
       <SubSystem>Console</SubSystem>
-      <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <OptimizeReferences>true</OptimizeReferences>
     </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Users\rion\source\repos\VEGA\VEGA_EDITOR\src;C:\Users\rion\source\repos\VEGA\VEGA\src;C:\Users\rion\source\repos\VEGA\VEGA\vendor;C:\Users\rion\source\repos\VEGA\VEGA\vendor\glm;C:\Users\rion\source\repos\VEGA\VEGA\vendor\entt\include;C:\Users\rion\source\repos\VEGA\VEGA\vendor\spdlog\include;C:\Users\rion\source\repos\VEGA\VEGA\vendor\GLFW\include;C:\Users\rion\source\repos\VEGA\VEGA\vendor\Glad\include;C:\Users\rion\source\repos\VEGA\VEGA\vendor\imgui;C:\Users\rion\source\repos\VEGA\VEGA\vendor\stb_image;C:\Users\rion\source\repos\VEGA\VEGA\vendor\volk;C:\Users\rion\source\repos\VEGA\VEGA\vendor\VulkanMemoryAllocator\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /external:I "C:/VulkanSDK/1.4.341.1/include" /utf-8</AdditionalOptions>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <ExternalWarningLevel>TurnOffAllWarnings</ExternalWarningLevel>
+      <ForceConformanceInForLoopScope></ForceConformanceInForLoopScope>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <MinimalRebuild></MinimalRebuild>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RemoveUnreferencedCodeData></RemoveUnreferencedCodeData>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <SupportJustMyCode></SupportJustMyCode>
+      <TreatWChar_tAsBuiltInType></TreatWChar_tAsBuiltInType>
+      <UseFullPaths>false</UseFullPaths>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;VG_PLATFORM_WINDOWS;VG_DYNAMIC_LINK;VG_PROJECT_DIR="C:/Users/rion/source/repos/VEGA/VEGA_EDITOR";WINDLL;GLFW_INCLUDE_NONE;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR="RelWithDebInfo"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;VG_PLATFORM_WINDOWS;VG_DYNAMIC_LINK;VG_PROJECT_DIR=\"C:/Users/rion/source/repos/VEGA/VEGA_EDITOR\";WINDLL;GLFW_INCLUDE_NONE;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR=\"RelWithDebInfo\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\rion\source\repos\VEGA\VEGA_EDITOR\src;C:\Users\rion\source\repos\VEGA\VEGA\src;C:\Users\rion\source\repos\VEGA\VEGA\vendor;C:\Users\rion\source\repos\VEGA\VEGA\vendor\glm;C:\Users\rion\source\repos\VEGA\VEGA\vendor\entt\include;C:\Users\rion\source\repos\VEGA\VEGA\vendor\spdlog\include;C:\Users\rion\source\repos\VEGA\VEGA\vendor\GLFW\include;C:\Users\rion\source\repos\VEGA\VEGA\vendor\Glad\include;C:\Users\rion\source\repos\VEGA\VEGA\vendor\imgui;C:\Users\rion\source\repos\VEGA\VEGA\vendor\stb_image;C:\Users\rion\source\repos\VEGA\VEGA\vendor\volk;C:\Users\rion\source\repos\VEGA\VEGA\vendor\VulkanMemoryAllocator\include;C:\VulkanSDK\1.4.341.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\rion\source\repos\VEGA\VEGA_EDITOR\src;C:\Users\rion\source\repos\VEGA\VEGA\src;C:\Users\rion\source\repos\VEGA\VEGA\vendor;C:\Users\rion\source\repos\VEGA\VEGA\vendor\glm;C:\Users\rion\source\repos\VEGA\VEGA\vendor\entt\include;C:\Users\rion\source\repos\VEGA\VEGA\vendor\spdlog\include;C:\Users\rion\source\repos\VEGA\VEGA\vendor\GLFW\include;C:\Users\rion\source\repos\VEGA\VEGA\vendor\Glad\include;C:\Users\rion\source\repos\VEGA\VEGA\vendor\imgui;C:\Users\rion\source\repos\VEGA\VEGA\vendor\stb_image;C:\Users\rion\source\repos\VEGA\VEGA\vendor\volk;C:\Users\rion\source\repos\VEGA\VEGA\vendor\VulkanMemoryAllocator\include;C:\VulkanSDK\1.4.341.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Link>
+      <AdditionalDependencies>..\bin\RelWithDebInfo-windows-x64\VEGA.lib;..\bin\RelWithDebInfo-windows-x64\glfw3.lib;..\bin\RelWithDebInfo-windows-x64\Glad.lib;C:\VulkanSDK\1.4.341.1\Lib\vulkan-1.lib;..\bin\RelWithDebInfo-windows-x64\ImGui.lib;opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+      <DataExecutionPrevention></DataExecutionPrevention>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImageHasSafeExceptionHandlers></ImageHasSafeExceptionHandlers>
+      <ImportLibrary>C:/Users/rion/source/repos/VEGA/bin/RelWithDebInfo-windows-x64/VEGA_EDITOR.lib</ImportLibrary>
+      <LinkErrorReporting></LinkErrorReporting>
+      <ProgramDataBaseFile>C:/Users/rion/source/repos/VEGA/bin/RelWithDebInfo-windows-x64/VEGA_EDITOR.pdb</ProgramDataBaseFile>
+      <RandomizedBaseAddress></RandomizedBaseAddress>
+      <SubSystem>Console</SubSystem>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="src\Editor.h" />
-    <ClInclude Include="src\Panel\SceneHierachyPanel.h" />
+    <CustomBuild Include="C:\Users\rion\source\repos\VEGA\VEGA_EDITOR\CMakeLists.txt">
+      <UseUtf8Encoding>Always</UseUtf8Encoding>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule C:/Users/rion/source/repos/VEGA/VEGA_EDITOR/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/rion/source/repos/VEGA -BC:/Users/rion/source/repos/VEGA --check-stamp-file C:/Users/rion/source/repos/VEGA/VEGA_EDITOR/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\rion\source\repos\VEGA\VEGA_EDITOR\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule C:/Users/rion/source/repos/VEGA/VEGA_EDITOR/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/rion/source/repos/VEGA -BC:/Users/rion/source/repos/VEGA --check-stamp-file C:/Users/rion/source/repos/VEGA/VEGA_EDITOR/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Users\rion\source\repos\VEGA\VEGA_EDITOR\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building Custom Rule C:/Users/rion/source/repos/VEGA/VEGA_EDITOR/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/rion/source/repos/VEGA -BC:/Users/rion/source/repos/VEGA --check-stamp-file C:/Users/rion/source/repos/VEGA/VEGA_EDITOR/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Users\rion\source\repos\VEGA\VEGA_EDITOR\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Building Custom Rule C:/Users/rion/source/repos/VEGA/VEGA_EDITOR/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/rion/source/repos/VEGA -BC:/Users/rion/source/repos/VEGA --check-stamp-file C:/Users/rion/source/repos/VEGA/VEGA_EDITOR/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Users\rion\source\repos\VEGA\VEGA_EDITOR\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Editor.cpp" />
-    <ClCompile Include="src\Panel\SceneHierachyPanel.cpp" />
-    <ClCompile Include="src\app.cpp" />
+    <ClCompile Include="C:\Users\rion\source\repos\VEGA\VEGA_EDITOR\src\Editor.cpp" />
+    <ClInclude Include="C:\Users\rion\source\repos\VEGA\VEGA_EDITOR\src\Editor.h" />
+    <ClCompile Include="C:\Users\rion\source\repos\VEGA\VEGA_EDITOR\src\Panel\SceneHierachyPanel.cpp" />
+    <ClInclude Include="C:\Users\rion\source\repos\VEGA\VEGA_EDITOR\src\Panel\SceneHierachyPanel.h" />
+    <ClCompile Include="C:\Users\rion\source\repos\VEGA\VEGA_EDITOR\src\app.cpp" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <ProjectReference Include="..\VEGA\VEGA.vcxproj">
-      <Project>{08678D7C-F49D-8E0D-9D8A-741089A00A0F}</Project>
+    <ProjectReference Include="C:\Users\rion\source\repos\VEGA\ZERO_CHECK.vcxproj">
+      <Project>{471C2953-503E-3DE8-A90E-D4EA495B93D2}</Project>
+      <Name>ZERO_CHECK</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\rion\source\repos\VEGA\VEGA\vendor\Glad\Glad.vcxproj">
+      <Project>{2737BD8E-601B-323B-BF21-DA960348491E}</Project>
+      <Name>Glad</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\rion\source\repos\VEGA\VEGA\vendor\imgui\ImGui.vcxproj">
+      <Project>{C103B4D8-CC61-301D-BCDA-55D9AF30727C}</Project>
+      <Name>ImGui</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\rion\source\repos\VEGA\VEGA\VEGA.vcxproj">
+      <Project>{AEC4A91F-DDE4-33EC-8077-48C34069DEED}</Project>
+      <Name>VEGA</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\rion\source\repos\VEGA\VEGA\vendor\GLFW\src\glfw.vcxproj">
+      <Project>{0CA2B6BC-64D3-3A8A-85DF-8446C51B129F}</Project>
+      <Name>glfw</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

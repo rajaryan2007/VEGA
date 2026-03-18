@@ -87,7 +87,7 @@ namespace VEGA
 		}
 
         Camera* mainCamera = nullptr;
-        glm::mat4* cameraTransform;
+        glm::mat4 cameraTransform;
         
         auto view = m_registry.view<TransformComponent, CameraComponent>();
         for (auto entity : view)
@@ -97,14 +97,14 @@ namespace VEGA
             if (camera.Primary)
             {
                 mainCamera = &camera.Camera;
-                cameraTransform = &transform.GetTransform();
+                cameraTransform = transform.GetTransform();
                 break;
             }
         }
 
         if (mainCamera)
         {
-            Renderer2D::BeginScene(*mainCamera, *cameraTransform);
+            Renderer2D::BeginScene(*mainCamera, cameraTransform);
 
             auto group = m_registry.group<TransformComponent>(entt::get<SpriteRendererComponent>);
             for (auto entity : group)

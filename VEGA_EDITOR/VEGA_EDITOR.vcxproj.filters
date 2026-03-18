@@ -1,21 +1,33 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Panel">
-      <UniqueIdentifier>{95BADD0D-01CF-05BF-CA50-A91E362402F0}</UniqueIdentifier>
-    </Filter>
+    <ClCompile Include="C:\Users\rion\source\repos\VEGA\VEGA_EDITOR\src\Editor.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\rion\source\repos\VEGA\VEGA_EDITOR\src\Panel\SceneHierachyPanel.cpp">
+      <Filter>src\Panel</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\rion\source\repos\VEGA\VEGA_EDITOR\src\app.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Editor.h" />
-    <ClInclude Include="src\Panel\SceneHierachyPanel.h">
-      <Filter>Panel</Filter>
+    <ClInclude Include="C:\Users\rion\source\repos\VEGA\VEGA_EDITOR\src\Editor.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\rion\source\repos\VEGA\VEGA_EDITOR\src\Panel\SceneHierachyPanel.h">
+      <Filter>src\Panel</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Editor.cpp" />
-    <ClCompile Include="src\Panel\SceneHierachyPanel.cpp">
-      <Filter>Panel</Filter>
-    </ClCompile>
-    <ClCompile Include="src\app.cpp" />
+    <CustomBuild Include="C:\Users\rion\source\repos\VEGA\VEGA_EDITOR\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="src">
+      <UniqueIdentifier>{4F52EF99-1426-35F5-927E-130A81E08980}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Panel">
+      <UniqueIdentifier>{ED74A2DD-39FD-3D99-888A-DF86447A24B2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

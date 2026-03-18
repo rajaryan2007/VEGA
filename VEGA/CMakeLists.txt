@@ -1,7 +1,6 @@
 # VEGA Shared Library
 project(VEGA)
 
-# 1. Collect all files with absolute paths to ensure the TREE logic works
 file(GLOB_RECURSE VEGA_SOURCES
     "${CMAKE_CURRENT_SOURCE_DIR}/src/*.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp"
@@ -9,21 +8,22 @@ file(GLOB_RECURSE VEGA_SOURCES
     "${CMAKE_CURRENT_SOURCE_DIR}/vendor/stb_image/*.cpp"
 )
 
+find_package(VULKAN REQUIRED)
+
 file(GLOB_RECURSE GLM_FILES
     "${CMAKE_CURRENT_SOURCE_DIR}/vendor/glm/glm/*.hpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/vendor/glm/glm/*.inl"
 )
 
-# Combine the lists
 set(ALL_VEGA_FILES ${VEGA_SOURCES} ${GLM_FILES})
 
-# 2. Add the library
+
 add_library(VEGA SHARED ${ALL_VEGA_FILES})
 
-# 3. THE FIX: Use prefix to mirror project structure starting from root
+
 source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "" FILES ${ALL_VEGA_FILES})
 
-# 4. Include Directories
+
 target_include_directories(VEGA PUBLIC
     "src"
     "vendor/spdlog/include"
@@ -33,9 +33,11 @@ target_include_directories(VEGA PUBLIC
     "vendor/glm"
     "vendor/stb_image"
     "vendor/entt/include"
+    "vendor/volk"
+    "vendor/VulkanMemoryAllocator/include"
 )
 
-# 5. Definitions
+
 target_compile_definitions(VEGA PUBLIC
     VG_PLATFORM_WINDOWS
     VG_DYNAMIC_LINK
@@ -46,13 +48,15 @@ target_compile_definitions(VEGA PUBLIC
 
 target_compile_definitions(VEGA PRIVATE VG_BUILD_DLL)
 
-# 6. Precompiled Header
+
 if(MSVC)
     target_precompile_headers(VEGA PRIVATE src/vgpch.h)
     target_compile_options(VEGA PRIVATE /utf-8)
 endif()
 
-# 7. Links
-target_link_libraries(VEGA PUBLIC glfw Glad ImGui opengl32.lib)
-
+target_link_libraries(VEGA PUBLIC 
+glfw Glad Vulkan::Vulkan ImGui opengl32.lib
+PRIVATE
+VulkanMemoryAllocator volk
+)
 set_target_properties(VEGA PROPERTIES DEBUG_POSTFIX d)
