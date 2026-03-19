@@ -4,7 +4,7 @@
 #include <GLFW/glfw3.h>
 #include <Glad/glad.h>
 
-namespace VEGA {\
+namespace VEGA {
 
 	static u32 s_GLFWWindowCount = 0;
 	OpenGLContext::OpenGLContext(GLFWwindow* windowHandle)

@@ -4,10 +4,10 @@ project(VEGA)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
-# --- Allow Visual Studio folder nesting ---
+
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
-# --- Output Directory Logic (Premake Style) ---
+
 set(ARCH x64)
 if(CMAKE_BUILD_TYPE)
     set(OUTPUT_DIR "${CMAKE_BUILD_TYPE}-windows-${ARCH}")
@@ -26,7 +26,7 @@ foreach(CONFIG ${CMAKE_CONFIGURATION_TYPES})
     set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_${CONFIG_UPPER} ${CMAKE_SOURCE_DIR}/bin/${CONFIG}-windows-${ARCH})
 endforeach()
 
-# --- Helper function for automatic Visual Studio folder grouping ---
+
 function(auto_group target)
     get_target_property(files ${target} SOURCES)
     foreach(file ${files})
@@ -37,20 +37,17 @@ function(auto_group target)
     endforeach()
 endfunction()
 
-# --- Subdirectories ---
-# Vendor libraries
 add_subdirectory(VEGA/vendor/GLFW)
 add_subdirectory(VEGA/vendor/Glad)
 add_subdirectory(VEGA/vendor/imgui)
 add_subdirectory(VEGA/vendor/volk)
 add_subdirectory(VEGA/vendor/VulkanMemoryAllocator)
-# Projects
-add_subdirectory(VEGA)
 
+add_subdirectory(VEGA)
+add_subdirectory(sandbox)
 add_subdirectory(VEGA_EDITOR)
 
-# --- Apply automatic folder grouping ---
-# Automatically group all targets
+
 get_property(all_targets DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY BUILDSYSTEM_TARGETS)
 foreach(t ${all_targets})
     auto_group(${t})

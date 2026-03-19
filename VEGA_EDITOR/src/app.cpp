@@ -23,6 +23,7 @@ namespace VEGA
 
 		~VEGAEditor() override
 		{
+			
 		}
 	};
 

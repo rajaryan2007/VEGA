@@ -32,7 +32,9 @@ namespace VEGA {
 		T& AddComponent(Args&&... args)
 		{
 			VG_CORE_ASSERT(!HasComponent<T>(), "Entity already has component!");
-			return m_Scene->m_registry.emplace<T>(m_EntityHandle, std::forward<Args>(args)...);
+			T& component = m_Scene->m_registry.emplace<T>(m_EntityHandle, std::forward<Args>(args)...);
+			m_Scene->OnComponentAdded<T>(*this, component);
+			return component;
 		}
 
 		template<typename T>
@@ -44,6 +46,7 @@ namespace VEGA {
 
 		operator bool() const { return m_EntityHandle != entt::null; }
 		operator u32() const { return (u32)m_EntityHandle; }
+		operator entt::entity() const { return m_EntityHandle; }
 
 		bool operator==(const Entity& other) const
 		{
