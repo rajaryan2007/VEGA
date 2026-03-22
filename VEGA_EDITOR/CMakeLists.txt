@@ -31,6 +31,7 @@ target_include_directories(VEGA_EDITOR PRIVATE
     "${CMAKE_SOURCE_DIR}/VEGA/vendor/glm"
     "${CMAKE_SOURCE_DIR}/VEGA/vendor/entt/include"
     "${CMAKE_SOURCE_DIR}/VEGA/vendor/spdlog/include"
+    "${CMAKE_SOURCE_DIR}/VEGA/vendor/yaml-cpp/include"
 )
 
 
@@ -39,7 +40,7 @@ target_link_libraries(VEGA_EDITOR PRIVATE VEGA)
 target_compile_definitions(VEGA_EDITOR PRIVATE
     VG_PLATFORM_WINDOWS
     VG_DYNAMIC_LINK
-     VG_PROJECT_DIR="${CMAKE_CURRENT_SOURCE_DIR}"
+    VG_PROJECT_DIR="${CMAKE_CURRENT_SOURCE_DIR}"
 )
 
 

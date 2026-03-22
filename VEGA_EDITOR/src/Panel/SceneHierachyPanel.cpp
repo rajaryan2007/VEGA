@@ -7,6 +7,9 @@
 
 #include "imgui/imgui_internal.h"
 
+//TODO divide them in other file as usage after 3d support
+
+
 namespace VEGA {
     SceneHierarchyPanel::SceneHierarchyPanel(const Ref<Scene>& context) {
         SetContext(context);
@@ -14,6 +17,7 @@ namespace VEGA {
 
     void SceneHierarchyPanel::SetContext(const Ref<Scene>& context) {
         m_Context = context;
+		m_SelectionContext = {};
     }
 
     void SceneHierarchyPanel::OnImGuiRender() {
@@ -25,18 +29,18 @@ namespace VEGA {
             DrawEntityNode(entity);
         }
 
-        if (ImGui::IsMouseDown(0) && ImGui::IsWindowHovered())
-            m_SelectionContext = {};
-        
-        if (ImGui::BeginPopupContextWindow(0, ImGuiPopupFlags_NoOpenOverItems))
-        {
-            if (ImGui::MenuItem("Create Empty Entity"))
-                m_Context->CreateEntity("Empty Entity");
+		if (ImGui::IsMouseDown(0) && ImGui::IsWindowHovered() && !ImGui::IsAnyItemHovered())
+			m_SelectionContext = {};
 
-            ImGui::EndPopup();
-        }
+		if (ImGui::BeginPopupContextWindow(nullptr, ImGuiPopupFlags_NoOpenOverItems))
+		{
+			if (ImGui::MenuItem("Create Empty Entity"))
+				m_Context->CreateEntity("Empty Entity");
 
-        ImGui::End();
+			ImGui::EndPopup();
+		}
+
+		ImGui::End();
 
 
 
@@ -45,24 +49,6 @@ namespace VEGA {
         if (m_SelectionContext) {
             DrawComponents(m_SelectionContext);
         
-            if (ImGui::Button("Add Components"))
-                ImGui::OpenPopup("AddComponents");
-
-            if (ImGui::BeginPopup("AddComponents"))
-            {
-                if (ImGui::MenuItem("Camera"))
-                {
-                    m_SelectionContext.AddComponent<CameraComponent>();
-                    ImGui::CloseCurrentPopup();
-                }
-
-                if (ImGui::MenuItem("Sprite Renderer"))
-                {
-                    m_SelectionContext.AddComponent<SpriteRendererComponent>();
-                    ImGui::CloseCurrentPopup();
-                }
-                ImGui::EndPopup();
-            }
         
         }
         ImGui::End();
@@ -76,6 +62,7 @@ namespace VEGA {
 		ImGuiTreeNodeFlags flags =
 			((m_SelectionContext == entity) ? ImGuiTreeNodeFlags_Selected : 0) |
 			ImGuiTreeNodeFlags_OpenOnArrow;
+        flags |= ImGuiTreeNodeFlags_SpanFullWidth;
 
 		bool opened = ImGui::TreeNodeEx(tc.Tag.c_str(), flags);
 
@@ -165,94 +152,138 @@ namespace VEGA {
         ImGui::PopID();
     }
 
-    void SceneHierarchyPanel::DrawComponents(Entity entity)
-    {
-        if (entity.HasComponent<TagComponent>())
-        {
-            auto& tag = entity.GetComponent<TagComponent>().Tag;
 
-            static char buffer[256];
-            memset(buffer, 0, sizeof(buffer));
-            strcpy_s(buffer, sizeof(buffer), tag.c_str());
-            if (ImGui::InputText("Tag", buffer, sizeof(buffer)))
-            {
-                tag = std::string(buffer);
-            }
-        }
+	const ImGuiTreeNodeFlags TreeNodeFlag = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_AllowOverlap | ImGuiTreeNodeFlags_FramePadding;
 
-        const ImGuiTreeNodeFlags treeNodeFlags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_AllowOverlap;
+	template<typename T, typename UIFunction>
+	static void DrawComponents(const std::string& name, Entity entity, UIFunction function)
+	{
+		if (entity.HasComponent<T>())
+		{
+			auto& components = entity.GetComponent<T>();
+			ImVec2 contentRegionAvailable = ImGui::GetContentRegionAvail();
 
-        if (entity.HasComponent<TransformComponent>())
-        {
-          
-			ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2{ 4,4, });
-			bool open = ImGui::TreeNodeEx((void*)typeid(SpriteRendererComponent).hash_code(), ImGuiTreeNodeFlags_DefaultOpen, "Tranform Renderer");
-			ImGui::SameLine(ImGui::GetWindowWidth() - 25.f);
+			ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2{ 4, 4 });
+			float lineHeight = ImGui::GetFontSize() + ImGui::GetStyle().FramePadding.y * 2.0f;
 
-			if (ImGui::Button("+", ImVec2{ 20, 20 }))
-			{
-				ImGui::OpenPopup("ComponentsSettings");
-			}
+			
+			ImGui::SetCursorPosY(ImGui::GetCursorPosY() + 3.0f);
+			ImGui::Separator();
+
+			bool open = ImGui::TreeNodeEx((void*)typeid(T).hash_code(), TreeNodeFlag, name.c_str());
 			ImGui::PopStyleVar();
 
-			bool removeComponets = false;
-			if (ImGui::BeginPopup("ComponentsSettings"))
-			{
-				if (ImGui::MenuItem("Remove Components"))
-					removeComponets = true;
+			
+			ImGui::SameLine(contentRegionAvailable.x - lineHeight * 0.5f);
 
-				ImGui::EndPopup();
+			ImGui::PushID(name.c_str());
+			if (ImGui::Button("+", ImVec2{ lineHeight, lineHeight }))
+			{
+				ImGui::OpenPopup("ComponentSettings");
 			}
 
-            if (open)
+			bool removeComponent = false;
+			if (ImGui::BeginPopup("ComponentSettings"))
+			{
+				if (ImGui::MenuItem("Remove Component"))
+					removeComponent = true;
+				ImGui::EndPopup();
+			}
+			ImGui::PopID(); 
+
+			if (open)
+			{
+				function(components);
+				ImGui::TreePop();
+			}
+
+			if (removeComponent)
+				entity.RemoveComponent<T>();
+		}
+	}
+
+
+    void SceneHierarchyPanel::DrawComponents(Entity entity)
+    {
+		if (entity.HasComponent<TagComponent>())
+		{
+			auto& tag = entity.GetComponent<TagComponent>().Tag;
+
+			char buffer[256];
+			memset(buffer, 0, sizeof(buffer));
+			strncpy_s(buffer, tag.c_str(), sizeof(buffer));
+
+			if (ImGui::InputText("##Tag", buffer, sizeof(buffer)))
+			{
+				tag = std::string(buffer);
+			}
+		}
+		ImGui::SameLine();
+		ImGui::PushItemWidth(-1);
+
+
+		if (ImGui::Button("Add Components"))
+			ImGui::OpenPopup("AddComponents");
+
+		if (ImGui::BeginPopup("AddComponents"))
+		{
+			if (ImGui::MenuItem("Camera"))
+			{
+				m_SelectionContext.AddComponent<CameraComponent>();
+				ImGui::CloseCurrentPopup();
+			}
+
+			if (ImGui::MenuItem("Sprite Renderer"))
+			{
+				m_SelectionContext.AddComponent<SpriteRendererComponent>();
+				ImGui::CloseCurrentPopup();
+			}
+			ImGui::EndPopup();
+		}
+
+		ImGui::PopItemWidth();
+        
+        ::VEGA::DrawComponents<TransformComponent>("Transfrom ", entity,
+            [](auto& components)
             {
-                auto& tc = entity.GetComponent<TransformComponent>();
-                DrawVec3Control("Traslation",tc.Translation);
-                glm::vec3 rotation = glm::degrees(tc.Rotation);
-                DrawVec3Control("Rotation",rotation);
-                tc.Rotation = glm::radians(rotation);
-                DrawVec3Control("Scale",tc.Scale,1.0f);
-                
-                ImGui::TreePop();
-            }
+				
+				DrawVec3Control("Traslation", components.Translation);
+				glm::vec3 rotation = glm::degrees(components.Rotation);
+				DrawVec3Control("Rotation", rotation);
+                components.Rotation = glm::radians(rotation);
+				DrawVec3Control("Scale", components.Scale, 1.0f);
+            });
+		::VEGA::DrawComponents<CameraComponent>("Camera Renderer", entity,
+			[](auto& components)
+			{
+				
+				auto& camera = components.Camera;
 
-            if (removeComponets)
-            {
-                entity.RemoveComponent<TransformComponent>();
-            }
-        }
+				ImGui::Checkbox("Primary", &components.Primary);
 
-        if (entity.HasComponent<CameraComponent>())
-        {
-            if (ImGui::TreeNodeEx((void*)typeid(CameraComponent).hash_code(), treeNodeFlags, "Camera")){
-                auto& cameraComponent = entity.GetComponent<CameraComponent>();
-                auto& camera = cameraComponent.Camera;
+				const char* projectionTypeString[] = { "Projection","Orthographic" };
+				const char* currnetProjectionTypeString = projectionTypeString[(int)camera.GetProjectionType()];
+				if (ImGui::BeginCombo("Projection", currnetProjectionTypeString))
+				{
+					for (int i{ 0 }; i < 2; i++) {
+						bool isSelected = currnetProjectionTypeString == projectionTypeString[i];
 
-                ImGui::Checkbox("Primary", &cameraComponent.Primary);
+						if (ImGui::Selectable(projectionTypeString[i], isSelected))
+						{
+							currnetProjectionTypeString = projectionTypeString[i];
+							camera.SetProjectionType((SceneCamera::ProjectionType)i);
+						}
+						if (isSelected)
+							ImGui::SetItemDefaultFocus();
+					}
+					ImGui::EndCombo();
+				}
 
-                const char* projectionTypeString[] = { "Projection","Orthographic" };
-                const char* currnetProjectionTypeString = projectionTypeString[(int)camera.GetProjectionType()];
-                if (ImGui::BeginCombo("Projection", currnetProjectionTypeString))
-                {
-                    for (int i{ 0 }; i < 2; i++) {
-                        bool isSelected = currnetProjectionTypeString == projectionTypeString[i];
-
-                        if (ImGui::Selectable(projectionTypeString[i], isSelected))
-                        {
-                            currnetProjectionTypeString = projectionTypeString[i];
-                            camera.SetProjectionType((SceneCamera::ProjectionType)i);
-                        }
-                        if (isSelected)
-                            ImGui::SetItemDefaultFocus();
-                    }
-                    ImGui::EndCombo();
-                }
-
-                if (camera.GetProjectionType() == SceneCamera::ProjectionType::Perpective)
-                {
+				if (camera.GetProjectionType() == SceneCamera::ProjectionType::Perpective)
+				{
 
 					f32 ProjFOV = glm::degrees(camera.GetProjectionFOV());
-                    //f32 ProjFOV = camera.GetProjectionFOV();
+					
 					if (ImGui::DragFloat("FOV", &ProjFOV))
 					{
 						camera.SetPerspectiveFOV(glm::radians(ProjFOV));
@@ -267,10 +298,10 @@ namespace VEGA {
 					{
 						camera.SetPerspecstiveFar(ProjFar);
 					}
-                }
+				}
 
-                if (camera.GetProjectionType() == SceneCamera::ProjectionType::Orhtographic)
-                {
+				if (camera.GetProjectionType() == SceneCamera::ProjectionType::Orhtographic)
+				{
 					f32 orthoSize = camera.GetOrthographicSize();
 					if (ImGui::DragFloat("Size", &orthoSize))
 					{
@@ -287,44 +318,17 @@ namespace VEGA {
 						camera.SetOrthoGraphicFarClip(orthoFar);
 					}
 
-                    ImGui::Checkbox("Fixed aspect ratio", &cameraComponent.FixedAspectRatio);
-                }
+					ImGui::Checkbox("Fixed aspect ratio", &components.FixedAspectRatio);
+				}
 
-                ImGui::TreePop();
+			});
 
-        }
+
+		::VEGA::DrawComponents<SpriteRendererComponent>("Sprite Renderer", entity,
+			[](SpriteRendererComponent& src)
+			{
+				ImGui::ColorEdit4("Color", glm::value_ptr(src.Color));
+			});
     }
-        if (entity.HasComponent<SpriteRendererComponent>())
-        {   
-            ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2{ 4,4, });
-            bool open = ImGui::TreeNodeEx((void*)typeid(SpriteRendererComponent).hash_code(), ImGuiTreeNodeFlags_DefaultOpen, "Sprite Renderer");
-            ImGui::SameLine(ImGui::GetWindowWidth() - 25.f);
-			
-			if (ImGui::Button("+",ImVec2{ 20, 20 }))
-			{
-				ImGui::OpenPopup("ComponentsSettings");
-			}
-            ImGui::PopStyleVar();
-
-			bool removeComponets = false;
-			if (ImGui::BeginPopup("ComponentsSettings"))
-			{
-				if (ImGui::MenuItem("Remove Components"))
-					removeComponets = true;
-
-				ImGui::EndPopup();
-			}
-
-            if (open)
-            {
-                auto& src = entity.GetComponent<SpriteRendererComponent>();
-                ImGui::ColorEdit4("Color",glm::value_ptr(src.Color));
-                ImGui::TreePop();
-            }
-			if (removeComponets)
-			{
-				entity.RemoveComponent<SpriteRendererComponent>();
-			}
-        }
-  }
+	
 } // namespace VEGA

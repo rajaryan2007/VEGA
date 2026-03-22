@@ -42,6 +42,7 @@ add_subdirectory(VEGA/vendor/Glad)
 add_subdirectory(VEGA/vendor/imgui)
 add_subdirectory(VEGA/vendor/volk)
 add_subdirectory(VEGA/vendor/VulkanMemoryAllocator)
+add_subdirectory(VEGA/vendor/yaml-cpp)
 
 add_subdirectory(VEGA)
 add_subdirectory(sandbox)

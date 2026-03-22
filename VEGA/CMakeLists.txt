@@ -18,7 +18,7 @@ file(GLOB_RECURSE GLM_FILES
 set(ALL_VEGA_FILES ${VEGA_SOURCES} ${GLM_FILES})
 
 
-add_library(VEGA SHARED ${ALL_VEGA_FILES})
+add_library(VEGA SHARED ${ALL_VEGA_FILES} )
 
 
 source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "" FILES ${ALL_VEGA_FILES})
@@ -35,6 +35,7 @@ target_include_directories(VEGA PUBLIC
     "vendor/entt/include"
     "vendor/volk"
     "vendor/VulkanMemoryAllocator/include"
+    "vendor/yaml-cpp/include"
 )
 
 
@@ -58,5 +59,6 @@ target_link_libraries(VEGA PUBLIC
 glfw Glad Vulkan::Vulkan ImGui opengl32.lib
 PRIVATE
 VulkanMemoryAllocator volk
+yaml-cpp
 )
 set_target_properties(VEGA PROPERTIES DEBUG_POSTFIX d)

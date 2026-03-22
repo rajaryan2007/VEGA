@@ -7,6 +7,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+
 static const u32 s_mapWidth = 25;
 
 static const char* s_MapTIles =
@@ -65,7 +66,7 @@ namespace VEGA
         m_ActiveScene = CreateRef<Scene>();
 
         // auto square = m_ActiveScene->CreateEntity();
-
+#if 0
         std::shared_ptr<VEGA::VertexBuffer> squareVB;
         squareVB.reset(VEGA::VertexBuffer::Create(vertiecsSquare, sizeof(vertiecsSquare)));
 
@@ -155,9 +156,15 @@ namespace VEGA
         };
 
         m_CameraEntity.AddComponent<NativeScriptComponent>().Bind<CameraController>();
-       // m_SceneHireacyPanel(m_ActiveScene);
+ 
+#endif       
+        // m_SceneHireacyPanel(m_ActiveScene);
         m_SceneHireacyPanel.SetContext(m_ActiveScene);
+
+
+   
     }
+
 
     void Editor::OnDetach()
     {
@@ -211,9 +218,82 @@ namespace VEGA
     void Editor::OnEvent(VEGA::Event& event)
     {
         m_CameraController.OnEvent(event);
+
+        EventDispatcher dispatcher(event);
+        dispatcher.Dispatch<KeyPressedEvent>([this](KeyPressedEvent& e) {
+            return onKeyPressed(e);
+            });
     }
 
-    void Editor::OnImGuiRender()
+    bool Editor::onKeyPressed(KeyPressedEvent& e)
+    {
+        if (e.GetRepeatCount() > 0)
+            return false;
+
+        bool controlPressed = (Input::IsKeyPressed(Key::LeftControl) || Input::IsKeyPressed(Key::RightControl));
+        bool shift = (Input::IsKeyPressed(Key::LeftShift) || Input::IsKeyPressed(Key::RightShift));
+        switch (e.GetKeyCode())
+        {
+        case Key::N:
+        {
+            if (controlPressed)
+            {
+                NewScene();
+            }
+            break;
+        }
+        case Key::O:
+        {
+            if (controlPressed)
+                OpenScene();
+
+            break;
+        }
+        case Key::S:
+        {
+            if (controlPressed)
+                SaveSceneAs();
+
+            break;
+        }
+
+      }
+       
+    }
+
+	void Editor::NewScene()
+	{
+        m_ActiveScene = CreateRef<Scene>();
+        m_ActiveScene->OnViewportResize((u32)m_ViewPortSize.x, (u32)m_ViewPortSize.y);
+        m_SceneHireacyPanel.SetContext(m_ActiveScene);
+	}
+
+	void Editor::OpenScene()
+	{
+		std::string filepath = FileDialogs::OpenFile("VEGA Scene (*.vega)\0*.vega\0");
+		if (!filepath.empty())
+		{
+			m_ActiveScene = CreateRef<Scene>();
+			m_ActiveScene->OnViewportResize((u32)m_ViewPortSize.x, (u32)m_ViewPortSize.y);
+			m_SceneHireacyPanel.SetContext(m_ActiveScene);
+
+			SceneSerializer serializer(m_ActiveScene);
+			serializer.Deserialize(filepath);
+		}
+	}
+
+	void Editor::SaveSceneAs()
+	{
+		std::string filepath = FileDialogs::SaveFile("VEGA Scene (*.vega)\0.vega\0");
+
+		if (!filepath.empty())
+		{
+			SceneSerializer serializer(m_ActiveScene);
+			serializer.Serialize(filepath);
+		}
+	}
+
+	void Editor::OnImGuiRender()
     {
         VG_PROFILE_FUNCTION();
 
@@ -243,9 +323,27 @@ namespace VEGA
 
         if (ImGui::BeginMenuBar()) {
             if (ImGui::BeginMenu("file")) {
+
+                if (ImGui::MenuItem("NEW", "Ctrl + N"))
+                {
+                    NewScene();
+                }
+
+                if (ImGui::MenuItem("Open...","Ctrl+O"))
+                {
+                    OpenScene();
+
+					
+                }
+
+                if (ImGui::MenuItem("Save As..","Ctrl + O"))
+                {
+                    SaveSceneAs();
+					
+                }
+
                 if (ImGui::MenuItem("exit")) VEGA::Application::Get().Close();
                 ImGui::EndMenu();
-
             }
         }
         ImGui::EndMenuBar();
@@ -253,11 +351,16 @@ namespace VEGA
         ImGui::PopStyleVar(2);
 
         ImGuiIO& io = ImGui::GetIO();
+        ImGuiStyle& style = ImGui::GetStyle();
+        f32 minWinSizeX = style.WindowMinSize.x;
+        style.WindowMinSize.x = 370.0f;
         if (io.ConfigFlags & ImGuiConfigFlags_DockingEnable)
         {
             ImGuiID dockspace_id = ImGui::GetID("MyDockSpace");
             ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), dockspace_flags);
         }
+
+        style.WindowMinSize.x = minWinSizeX;
 
         ImGui::End();
 

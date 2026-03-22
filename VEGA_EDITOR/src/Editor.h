@@ -18,6 +18,12 @@ namespace VEGA
 		void OnEvent(Event& event) override;
 
 		virtual void OnImGuiRender() override;
+	private:
+
+		bool onKeyPressed(KeyPressedEvent& e);
+		void NewScene();
+		void OpenScene();
+		void SaveSceneAs();
 
 	private:
 		ShaderLibrary m_ShaderLibrary;

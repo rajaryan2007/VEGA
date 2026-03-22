@@ -94,11 +94,10 @@ void Scene::OnUpdate(Timestep ts) {
   if (mainCamera) {
     Renderer2D::BeginScene(*mainCamera, cameraTransform);
 
-    auto group = m_registry.group<TransformComponent>(
-        entt::get<SpriteRendererComponent>);
-    for (auto entity : group) {
+    auto view = m_registry.view<TransformComponent, SpriteRendererComponent>();
+    for (auto entity : view) {
       auto [transform, sprite] =
-          group.get<TransformComponent, SpriteRendererComponent>(entity);
+          view.get<TransformComponent, SpriteRendererComponent>(entity);
       Renderer2D::DrawQuad(transform.GetTransform(), sprite.Color);
     }
 
@@ -131,4 +130,11 @@ void Scene::OnComponentAdded<SpriteRendererComponent>(
 template <>
 void Scene::OnComponentAdded<NativeScriptComponent>(
     Entity entity, NativeScriptComponent &components) {}
+
+template void Scene::OnComponentAdded<TransformComponent>(Entity entity, TransformComponent& components);
+template void Scene::OnComponentAdded<CameraComponent>(Entity entity, CameraComponent& components);
+template void Scene::OnComponentAdded<TagComponent>(Entity entity, TagComponent& components);
+template void Scene::OnComponentAdded<SpriteRendererComponent>(Entity entity, SpriteRendererComponent& components);
+template void Scene::OnComponentAdded<NativeScriptComponent>(Entity entity, NativeScriptComponent& components);
+
 } // namespace VEGA

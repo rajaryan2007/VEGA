@@ -198,6 +198,10 @@ namespace VEGA {
 	void Renderer2D::EndScene()
 	{
 		VG_PROFILE_FUNCTION();
+
+		if (s_Data.QuadIndexCount == 0)
+			return;
+
 		u32 dataSize = (u32)((uint8_t*)s_Data.QuadVertexBufferPtr - (uint8_t*)s_Data.QuadVertexBufferBase);
 		s_Data.VertexBuffer->SetData(s_Data.QuadVertexBufferBase, dataSize);
 		flush();
@@ -291,8 +295,6 @@ namespace VEGA {
 
 		if (textureIndex == 0)
 		{
-
-
 			textureIndex = s_Data.TextureSlotIndex;
 			s_Data.TextureSlots[s_Data.TextureSlotIndex] = texture;
 			++s_Data.TextureSlotIndex;

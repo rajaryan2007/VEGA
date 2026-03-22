@@ -18,7 +18,7 @@ namespace VEGA
 
 		const glm::mat4& GetProjection() const { return m_Projection; }
 
-		// Add this method to fix the error
+		// add this method to fix the error
 		
 
 	protected:
