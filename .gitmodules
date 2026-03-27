@@ -21,3 +21,6 @@
 [submodule "VEGA/vendor/yaml-cpp"]
 	path = VEGA/vendor/yaml-cpp
 	url = https://github.com/rajaryan2007/yaml-cpp.git
+[submodule "VEGA/vendor/imGuizmo"]
+	path = VEGA/vendor/imGuizmo
+	url = https://github.com/rajaryan2007/ImGuizmo.git
