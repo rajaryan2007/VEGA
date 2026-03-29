@@ -61,3 +61,29 @@
 #*.PDF   diff=astextplain
 #*.rtf   diff=astextplain
 #*.RTF   diff=astextplain
+
+# Assets
+*.fbx
+*.blend
+*.blend1
+*.glb
+*.png
+*.jpg
+*.jpeg
+
+# Engine junk
+*.db
+*.log
+
+# Build
+build/
+bin/
+out/
+
+# CMake
+CMakeFiles/
+CMakeCache.txt
+
+# OS
+.DS_Store
+Thumbs.db
