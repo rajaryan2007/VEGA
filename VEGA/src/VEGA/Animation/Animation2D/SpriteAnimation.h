@@ -1,18 +1,31 @@
 #pragma once
-#include "entt.hpp"
+#include "VEGA/Renderer/Texture.h"
 #include "VEGA/Renderer2D/SubTexture2D.h"
+#include <glm/glm.hpp>
+
 
 namespace VEGA {
-	class SpriteAnimation {
-	public:
-		SpriteAnimation();
-		void StartAnimation(std::vector<SubTexture2D> spriteTextureArr);
-		void StopAnimation();
+class SpriteAnimation {
+public:
+  SpriteAnimation() = default;
 
-	private:
-		u32 FrameTime;
-		u32 LastFrame;
-		std::vector<SubTexture2D> SpriteTextureArr;
-	};
-}
+  void StartAnimation();
+  void StopAnimation();
 
+  void Tick(float deltaTime);
+
+  Ref<SubTexture2D> GetCurrentFrame() const;
+
+  // Data payload
+  Ref<Texture2D> SpriteSheet;
+  glm::vec2 FrameSize = {1.0f, 1.0f};
+  int FrameCount = 1;
+  float FrameDuration = 0.1f;
+
+  bool Loop = true;
+  bool Playing = false;
+
+  int CurrentFrameIndex = 0;
+  float Timer = 0.0f;
+};
+} // namespace VEGA

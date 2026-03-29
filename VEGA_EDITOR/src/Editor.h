@@ -1,7 +1,7 @@
 #pragma once
 #include "VEGA.h"
 #include "Panel/SceneHierachyPanel.h"
-
+#include "VEGA/Renderer/EditorCamera.h"
 
 namespace VEGA
 {
@@ -49,13 +49,16 @@ namespace VEGA
 		Entity m_SecondCamera;
 
 		bool primaryCamera = false;
-
+		EditorCamera m_EditorCamera;
 		bool m_ViewPortFocused = false;
 		bool m_ViewPortHover = false;
+		
 		OrthographicCameraContoroller m_CameraController;
 
 
 		Ref<Scene> m_ActiveScene;
+
+		
 
 		glm::vec4 blueColor = { 0.2f, 0.3f, 0.8f, 1.0f };
 		glm::vec3 m_Transform;
@@ -64,6 +67,8 @@ namespace VEGA
 		u32 m_mapWidth, m_mapHeight;
 
 		glm::vec2 m_ViewPortSize;
+
+		int m_GizmoType = -1;
 
 		std::unordered_map<char, Ref<SubTexture2D>> Land;
 		SceneHierarchyPanel m_SceneHireacyPanel;

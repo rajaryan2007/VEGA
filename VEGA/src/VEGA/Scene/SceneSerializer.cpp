@@ -3,6 +3,7 @@
 #include "Entity.h"
 #include "Components.h"
 #include "VEGA/Utils/YamlUtils.h"
+#include "VEGA/Renderer/Texture.h"
 #include <fstream>
 
 namespace VEGA {
@@ -18,7 +19,7 @@ namespace VEGA {
 
 		out << YAML::Key << "Entity" << YAML::Value << "2323232";//TODO enitity
 
-		// Tag
+	
 		if (entity.HasComponent<TagComponent>())
 		{
 			out << YAML::Key << "TagComponent" << YAML::BeginMap;
@@ -27,7 +28,7 @@ namespace VEGA {
 			out << YAML::EndMap;
 		}
 
-		// Transform
+		
 		if (entity.HasComponent<TransformComponent>())
 		{
 			auto& tc = entity.GetComponent<TransformComponent>();
@@ -69,7 +70,33 @@ namespace VEGA {
 
 			out << YAML::Key << "SpriteRendererComponent" << YAML::BeginMap;
 			out << YAML::Key << "Color" << YAML::Value << src.Color;
+			out << YAML::Key << "TexturePath" << YAML::Value << src.TexturePath;
+			out << YAML::Key << "TilingFactor" << YAML::Value << src.TilingFactor;
+			out << YAML::Key << "UseSubTexture" << YAML::Value << src.UseSubTexture;
+			out << YAML::Key << "SubTextureCoords" << YAML::Value << src.SubTextureCoords;
+			out << YAML::Key << "SubTextureCellSize" << YAML::Value << src.SubTextureCellSize;
+			out << YAML::Key << "SubTextureSpriteSize" << YAML::Value << src.SubTextureSpriteSize;
 			out << YAML::EndMap;
+		}
+
+		// Sprite Animation
+		if (entity.HasComponent<SpriteAnimationComponent>())
+		{
+			out << YAML::Key << "SpriteAnimationComponent";
+			out << YAML::BeginMap;
+
+			auto& animComp = entity.GetComponent<SpriteAnimationComponent>();
+			auto& anim = animComp.Animation;
+
+			out << YAML::Key << "SpriteSheetPath" << YAML::Value << animComp.SpriteSheetPath;
+			out << YAML::Key << "FrameSizeX" << YAML::Value << anim.FrameSize.x;
+			out << YAML::Key << "FrameSizeY" << YAML::Value << anim.FrameSize.y;
+			out << YAML::Key << "FrameCount" << YAML::Value << anim.FrameCount;
+			out << YAML::Key << "FrameDuration" << YAML::Value << anim.FrameDuration;
+			out << YAML::Key << "Loop" << YAML::Value << anim.Loop;
+			out << YAML::Key << "Color" << YAML::Value << animComp.Color;
+
+			out << YAML::EndMap; // SpriteAnimationComponent
 		}
 
 		out << YAML::EndMap;
@@ -136,7 +163,7 @@ namespace VEGA {
 				tc.Scale = transformNode["Scale"].as<glm::vec3>();
 			}
 
-			// Camera
+		
 			auto cameraNode = entityNode["CameraComponent"];
 			if (cameraNode)
 			{
@@ -158,12 +185,47 @@ namespace VEGA {
 				cc.FixedAspectRatio = cameraNode["FixedAspectRatio"].as<bool>();
 			}
 
-			// Sprite
 			auto spriteNode = entityNode["SpriteRendererComponent"];
 			if (spriteNode)
 			{
 				auto& src = entity.AddComponent<SpriteRendererComponent>();
 				src.Color = spriteNode["Color"].as<glm::vec4>();
+
+				if (spriteNode["TexturePath"])
+				{
+					src.TexturePath = spriteNode["TexturePath"].as<std::string>();
+					if (!src.TexturePath.empty())
+						src.Texture = Texture2D::Create(src.TexturePath);
+				}
+
+				if (spriteNode["TilingFactor"])
+					src.TilingFactor = spriteNode["TilingFactor"].as<float>();
+
+				if (spriteNode["UseSubTexture"])
+				{
+					src.UseSubTexture = spriteNode["UseSubTexture"].as<bool>();
+					src.SubTextureCoords = spriteNode["SubTextureCoords"].as<glm::vec2>();
+					src.SubTextureCellSize = spriteNode["SubTextureCellSize"].as<glm::vec2>();
+					src.SubTextureSpriteSize = spriteNode["SubTextureSpriteSize"].as<glm::vec2>();
+				}
+			}
+
+			auto animNode = entityNode["SpriteAnimationComponent"];
+			if (animNode)
+			{
+				auto& animComp = entity.AddComponent<SpriteAnimationComponent>();
+				animComp.SpriteSheetPath = animNode["SpriteSheetPath"].as<std::string>();
+				auto& anim = animComp.Animation;
+				if (!animComp.SpriteSheetPath.empty())
+					anim.SpriteSheet = Texture2D::Create(animComp.SpriteSheetPath);
+
+				anim.FrameSize.x = animNode["FrameSizeX"].as<float>();
+				anim.FrameSize.y = animNode["FrameSizeY"].as<float>();
+				anim.FrameCount = animNode["FrameCount"].as<int>();
+				anim.FrameDuration = animNode["FrameDuration"].as<float>();
+				anim.Loop = animNode["Loop"].as<bool>();
+				if (animNode["Color"])
+					animComp.Color = animNode["Color"].as<glm::vec4>();
 			}
 		}
 

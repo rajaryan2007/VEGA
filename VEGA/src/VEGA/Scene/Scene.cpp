@@ -2,11 +2,10 @@
 #include "vgpch.h"
 #include <glm/glm.hpp>
 
-
 #include "Components.h"
 #include "Entity.h"
 #include "VEGA/Renderer2D/Renderer2D.h"
-
+#include "VEGA/Renderer2D/SubTexture2D.h"
 
 namespace VEGA {
 
@@ -63,9 +62,106 @@ void Scene::OnViewportResize(u32 width, u32 height) {
   }
 }
 
-void Scene::OnUpdate(Timestep ts) {
+void Scene::OnUpdateEditor(Timestep ts, EditorCamera &camera) {
+  m_registry.view<NativeScriptComponent>().each([=](auto entity, auto &nsc) {
+    if (!nsc.Instance) {
+      nsc.Instance = nsc.InstantiateScript();
+      nsc.Instance->m_Entity = Entity{entity, this};
+      nsc.Instance->OnCreate();
+    }
+    nsc.Instance->OnUpdate(ts);
+  });
+
+  Renderer2D::BeginScene(camera);
+  RenderSprites(ts);
+  Renderer2D::EndScene();
+}
+
+void Scene::RenderSprites(Timestep ts) {
+  auto animView = m_registry.view<SpriteAnimationComponent>();
+  for (auto entity : animView) {
+    auto &comp = animView.get<SpriteAnimationComponent>(entity);
+    comp.Animation.Tick(ts);
+  }
+
+  auto spriteView =
+      m_registry.view<TransformComponent, SpriteRendererComponent>();
+  for (auto entityID : spriteView) {
+    auto [transform, sprite] =
+        spriteView.get<TransformComponent, SpriteRendererComponent>(entityID);
+
+    Ref<Texture2D> currentTexture = sprite.Texture;
+    bool isSubTexture = sprite.UseSubTexture;
+    glm::vec2 min = {0.0f, 0.0f};
+    glm::vec2 max = {1.0f, 1.0f};
+    Ref<SubTexture2D> overrideSubTex = nullptr;
+
+    if (m_registry.all_of<SpriteAnimationComponent>(entityID)) {
+      auto &comp = m_registry.get<SpriteAnimationComponent>(entityID);
+      overrideSubTex = comp.Animation.GetCurrentFrame();
+    }
+
+    if (overrideSubTex) {
+      Renderer2D::DrawQuad(transform.GetTransform(), overrideSubTex,
+                           sprite.TilingFactor, sprite.Color);
+    } else if (isSubTexture && currentTexture) {
+      float texWidth = (float)currentTexture->GetWidth();
+      float texHeight = (float)currentTexture->GetHeight();
+
+      float flippedY =
+          texHeight -
+          (sprite.SubTextureCoords.y * sprite.SubTextureCellSize.y) -
+          (sprite.SubTextureSpriteSize.y * sprite.SubTextureCellSize.y);
+
+      min = {(sprite.SubTextureCoords.x * sprite.SubTextureCellSize.x) /
+                 texWidth,
+             flippedY / texHeight};
+      max = {((sprite.SubTextureCoords.x + sprite.SubTextureSpriteSize.x) *
+              sprite.SubTextureCellSize.x) /
+                 texWidth,
+             (flippedY +
+              (sprite.SubTextureSpriteSize.y * sprite.SubTextureCellSize.y)) /
+                 texHeight};
+    }
+
+    if (overrideSubTex) {
+    } else if (currentTexture) {
+      if (isSubTexture) {
+        glm::vec2 texCoords[4] = {
+            {min.x, min.y}, {max.x, min.y}, {max.x, max.y}, {min.x, max.y}};
+        Renderer2D::DrawQuad(transform.GetTransform(), currentTexture,
+                             texCoords, sprite.TilingFactor, sprite.Color);
+      } else {
+        Renderer2D::DrawQuad(transform.GetTransform(), currentTexture,
+                             sprite.TilingFactor, sprite.Color);
+      }
+    } else {
+      Renderer2D::DrawQuad(transform.GetTransform(), sprite.Color);
+    }
+  }
+
+  auto animOnlyView =
+      m_registry.view<TransformComponent, SpriteAnimationComponent>();
+  for (auto entityID : animOnlyView) {
+    if (m_registry.all_of<SpriteRendererComponent>(entityID))
+      continue;
+
+    auto [transform, comp] =
+        animOnlyView.get<TransformComponent, SpriteAnimationComponent>(
+            entityID);
+
+    Ref<SubTexture2D> overrideSubTex = comp.Animation.GetCurrentFrame();
+    if (overrideSubTex) {
+      Renderer2D::DrawQuad(transform.GetTransform(), overrideSubTex, 1.0f,
+                           comp.Color);
+    }
+  }
+}
+
+void Scene::OnUpdateRuntime(Timestep ts) {
 
   {
+
     m_registry.view<NativeScriptComponent>().each([=](auto entity, auto &nsc) {
       if (!nsc.Instance) {
         nsc.Instance = nsc.InstantiateScript();
@@ -93,16 +189,19 @@ void Scene::OnUpdate(Timestep ts) {
 
   if (mainCamera) {
     Renderer2D::BeginScene(*mainCamera, cameraTransform);
-
-    auto view = m_registry.view<TransformComponent, SpriteRendererComponent>();
-    for (auto entity : view) {
-      auto [transform, sprite] =
-          view.get<TransformComponent, SpriteRendererComponent>(entity);
-      Renderer2D::DrawQuad(transform.GetTransform(), sprite.Color);
-    }
-
+    RenderSprites(ts);
     Renderer2D::EndScene();
   }
+}
+
+Entity Scene::GetPrimaryCameraEntity() {
+  auto view = m_registry.view<TransformComponent, CameraComponent>();
+  for (auto entity : view) {
+    const auto &camera = view.get<CameraComponent>(entity);
+    if (camera.Primary)
+      return Entity{entity, this};
+  }
+  return {};
 }
 
 template <typename T>
@@ -128,13 +227,26 @@ void Scene::OnComponentAdded<SpriteRendererComponent>(
     Entity entity, SpriteRendererComponent &components) {}
 
 template <>
+void Scene::OnComponentAdded<SpriteAnimationComponent>(
+    Entity entity, SpriteAnimationComponent &components) {}
+
+template <>
 void Scene::OnComponentAdded<NativeScriptComponent>(
     Entity entity, NativeScriptComponent &components) {}
 
-template void Scene::OnComponentAdded<TransformComponent>(Entity entity, TransformComponent& components);
-template void Scene::OnComponentAdded<CameraComponent>(Entity entity, CameraComponent& components);
-template void Scene::OnComponentAdded<TagComponent>(Entity entity, TagComponent& components);
-template void Scene::OnComponentAdded<SpriteRendererComponent>(Entity entity, SpriteRendererComponent& components);
-template void Scene::OnComponentAdded<NativeScriptComponent>(Entity entity, NativeScriptComponent& components);
+template void
+Scene::OnComponentAdded<TransformComponent>(Entity entity,
+                                            TransformComponent &components);
+template void
+Scene::OnComponentAdded<CameraComponent>(Entity entity,
+                                         CameraComponent &components);
+template void Scene::OnComponentAdded<TagComponent>(Entity entity,
+                                                    TagComponent &components);
+template void Scene::OnComponentAdded<SpriteRendererComponent>(
+    Entity entity, SpriteRendererComponent &components);
+template void Scene::OnComponentAdded<SpriteAnimationComponent>(
+    Entity entity, SpriteAnimationComponent &components);
+template void Scene::OnComponentAdded<NativeScriptComponent>(
+    Entity entity, NativeScriptComponent &components);
 
 } // namespace VEGA

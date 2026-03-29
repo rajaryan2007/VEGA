@@ -2,6 +2,7 @@
 
 #include "VEGA/Core/Timestep.h"
 #include "entt.hpp"
+#include "VEGA/Renderer/EditorCamera.h"
 
 namespace VEGA {
 
@@ -10,6 +11,7 @@ struct TransformComponent;
 struct CameraComponent;
 struct TagComponent;
 struct SpriteRendererComponent;
+struct SpriteAnimationComponent;
 struct NativeScriptComponent;
 
 class VEGA_API Scene {
@@ -23,8 +25,10 @@ public:
 
   void OnViewportResize(u32 width, u32 height);
 
-  void OnUpdate(Timestep ts);
+  void OnUpdateEditor(Timestep ts,EditorCamera& camera);
+  void OnUpdateRuntime(Timestep ts);
 
+  Entity GetPrimaryCameraEntity();
 public:
   template <typename T> void OnComponentAdded(Entity entity, T &components);
 
@@ -40,10 +44,15 @@ public:
   void OnComponentAdded<SpriteRendererComponent>(
       Entity entity, SpriteRendererComponent &components);
   template <>
+  void OnComponentAdded<SpriteAnimationComponent>(
+      Entity entity, SpriteAnimationComponent &components);
+  template <>
   void OnComponentAdded<NativeScriptComponent>(Entity entity,
                                                NativeScriptComponent &components);
 
 private:
+  void RenderSprites(Timestep ts);
+
   entt::registry m_registry;
   u32 m_ViewportWidth = 0, m_ViewportHeight = 0;
 

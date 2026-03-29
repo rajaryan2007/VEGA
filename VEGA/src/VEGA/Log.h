@@ -2,6 +2,7 @@
 
 #include "spdlog/spdlog.h"
 #include "Core.h"
+#include "VEGA/ImGui/ImGuiLogsink.h"
 
 namespace VEGA {
 
@@ -11,6 +12,12 @@ namespace VEGA {
 		static void Init();
 		inline static std::shared_ptr<spdlog::logger>& GetCoreLogger() { return s_CoreLogger; }
 		inline static std::shared_ptr<spdlog::logger>& GetClientLogger() { return s_ClientLogger; }
+
+	public:
+		static std::shared_ptr<ImGuiLogSink<std::mutex>> GetImGuiSink() { return s_ImGuiSink; }
+
+	private:
+		static std::shared_ptr<ImGuiLogSink<std::mutex>> s_ImGuiSink;
 
 	private:
 		static std::shared_ptr<spdlog::logger> s_CoreLogger;

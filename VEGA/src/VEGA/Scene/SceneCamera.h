@@ -1,7 +1,7 @@
 #pragma once
 
 #include "VEGA/Core.h"
-#include "VEGA/Scene/Camera.h"
+#include "VEGA/Renderer/Camera.h"
 
 namespace VEGA {
 class VEGA_API SceneCamera : public Camera {

@@ -22,6 +22,7 @@ namespace VEGA{
 	{   
 		VG_PROFILE_FUNCTION();
 		VG_CORE_ASSERT(!s_instance, "Application already exists!");
+		
 		s_instance = this;
 		m_Window = std::unique_ptr<Window>(Window::Create(WindowProps(name)));
 		m_Window->SetEventCallback(BIND_EVENT_FN(OnEvent));

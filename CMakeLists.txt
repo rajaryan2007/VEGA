@@ -40,6 +40,7 @@ endfunction()
 add_subdirectory(VEGA/vendor/GLFW)
 add_subdirectory(VEGA/vendor/Glad)
 add_subdirectory(VEGA/vendor/imgui)
+add_subdirectory(VEGA/vendor/imGuizmo)
 add_subdirectory(VEGA/vendor/volk)
 add_subdirectory(VEGA/vendor/VulkanMemoryAllocator)
 add_subdirectory(VEGA/vendor/yaml-cpp)
@@ -53,3 +54,4 @@ get_property(all_targets DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY BUILDSYS
 foreach(t ${all_targets})
     auto_group(${t})
 endforeach()
+
