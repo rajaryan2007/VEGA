@@ -45,6 +45,8 @@ void Editor::OnAttach() {
   };
 
   VEGA::FrameBufferSpecification fbspec;
+  fbspec.Attachments = {VEGA::FrameBufferTextureFromat::RGBA8,
+						 VEGA::FrameBufferTextureFromat::Depth };
   fbspec.Width = 1280;
   fbspec.Height = 720;
   m_FrameBuffer = VEGA::FrameBuffer::Create(fbspec);

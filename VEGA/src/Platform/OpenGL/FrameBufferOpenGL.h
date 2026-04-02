@@ -26,5 +26,11 @@ namespace VEGA {
 		u32 m_RendererID = 0;
 		u32 m_ColorAttachment = 0, m_DepthAttachment = 0;
 		FrameBufferSpecification m_Specification;
+
+		std::vector<FrameBufferTextureSpecification> m_ColorAttachmentSpecs;
+		FrameBufferTextureFromat m_DepthAttachmentFormat = FrameBufferTextureFromat::None;
+
+		std::vector<u32> m_colorAttachments;
+		u32 m_DepthAttachmentID = 0;
 	};
 }

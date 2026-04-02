@@ -37,6 +37,7 @@ function(auto_group target)
     endforeach()
 endfunction()
 
+# all libs
 add_subdirectory(VEGA/vendor/GLFW)
 add_subdirectory(VEGA/vendor/Glad)
 add_subdirectory(VEGA/vendor/imgui)
@@ -45,7 +46,9 @@ add_subdirectory(VEGA/vendor/volk)
 add_subdirectory(VEGA/vendor/VulkanMemoryAllocator)
 add_subdirectory(VEGA/vendor/yaml-cpp)
 
+#main engine core
 add_subdirectory(VEGA)
+#sandbox
 add_subdirectory(sandbox)
 add_subdirectory(VEGA_EDITOR)
 
