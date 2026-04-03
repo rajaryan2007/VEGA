@@ -1,0 +1,5 @@
+
+yaml-cppd.lib(scanscalar.cpp.obj) : error LNK2019: unresolved external symbol __std_find_last_not_ch_pos_1 referenced in function "unsigned __int64 __cdecl std::_Find_last_not_ch_pos_vectorized<char>(char const * const,char const * const,char)" (??$_Find_last_not_ch_pos_vectorized@D@std@@YA_KQEBD0D@Z) [C:\Users\rion\source\repos\VEGA\build\VEGA\VEGA.vcxproj]
+yaml-cppd.lib(scanscalar.cpp.obj) : error LNK2019: unresolved external symbol __std_find_last_not_of_trivial_pos_1 referenced in function "unsigned __int64 __cdecl std::_Find_last_not_of_pos_vectorized<char,char>(char const * const,unsigned __int64,char const * const,unsigned __int64)" (??$_Find_last_not_of_pos_vectorized@DD@std@@YA_KQEBD_K01@Z) [C:\Users\rion\source\repos\VEGA\build\VEGA\VEGA.vcxproj]
+C:\Users\rion\source\repos\VEGA\bin\Debug-windows-x64\VEGAd.dll : fatal error LNK1120: 2 unresolved externals [C:\Users\rion\source\repos\VEGA\build\VEGA\VEGA.vcxproj]
+

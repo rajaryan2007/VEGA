@@ -586,7 +586,7 @@ void Renderer2D::DrawQuad(const glm::mat4 &transform,
                           f32 tiling_factor /*= 1.0f*/,
                           const glm::vec4 &tintColor /*= glm::vec4(1.0f)*/) {
   VG_PROFILE_FUNCTION();
-  VG_PROFILE_FUNCTION();
+ 
 
   if (s_Data.QuadIndexCount >= Renderer2DData::MaxIndices) {
     FlushAndReset();

@@ -18,7 +18,7 @@ static const char *s_MapTIles = "GGGGGGGGGGGGGGGGGGGGGGGGG"
                                 "GGGGGGGWWWWWWWGGGGGGGGGGG"
                                 "GGGGGGWWWWWWWWWGGGGGGGGGG"
                                 "GGGGGGWWWWWWWWWGGGGGGGGGG"
-                                "GGGGGGWWWWWWWWWGGGGGGGGGG" 
+                                "GGGGGGWWWWWWWWWGGGGGGGGGG"
                                 "GGGGGGGWWWWWWWGGGGGGGGGGG"
                                 "GGGGGGGGWWWGGGGGGGGGGGGGG"
                                 "GGGGGGGGGGGGGGGGGGGGGGGGG"
@@ -36,6 +36,8 @@ Editor::Editor()
       m_Transform(0.0f, 0.0f, 0.0f), m_SceneHireacyPanel(m_ActiveScene) {}
 
 void Editor::OnAttach() {
+  VG_CORE_INFO("Core logger is working!");
+  VG_INFO("Client logger is working!");
 
   m_SqaureVA = (VEGA::VertexArray::Create());
 
@@ -46,7 +48,7 @@ void Editor::OnAttach() {
 
   VEGA::FrameBufferSpecification fbspec;
   fbspec.Attachments = {VEGA::FrameBufferTextureFromat::RGBA8,
-						 VEGA::FrameBufferTextureFromat::Depth };
+                        VEGA::FrameBufferTextureFromat::Depth};
   fbspec.Width = 1280;
   fbspec.Height = 720;
   m_FrameBuffer = VEGA::FrameBuffer::Create(fbspec);
@@ -147,7 +149,7 @@ void Editor::OnAttach() {
 
 #endif
   // m_SceneHireacyPanel(m_ActiveScene);
-		m_EditorCamera = EditorCamera(45.0f, 1.766f, 0.1f, 1000.0f);
+  m_EditorCamera = EditorCamera(45.0f, 1.766f, 0.1f, 1000.0f);
   m_SceneHireacyPanel.SetContext(m_ActiveScene);
 }
 
@@ -179,11 +181,11 @@ void Editor::OnUpdate(VEGA::Timestep ts) {
   // VEGA::Renderer2D::DrawQuad(glm::vec3(0.0f, 0.0f, -0.1f), { 5.0f, 5.0f },
   // blueColor);
   if (m_ViewPortFocused) {
-      m_CameraController.OnUpdate(ts);
-      m_EditorCamera.OnUpdate(ts);
+    m_CameraController.OnUpdate(ts);
+    m_EditorCamera.OnUpdate(ts);
   }
 
-  m_ActiveScene->OnUpdateEditor(ts,m_EditorCamera);
+  m_ActiveScene->OnUpdateEditor(ts, m_EditorCamera);
 
   m_FrameBuffer->UnBind();
   // VEGA::Renderer::EndScene();

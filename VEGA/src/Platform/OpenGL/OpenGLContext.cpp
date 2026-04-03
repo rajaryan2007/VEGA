@@ -27,11 +27,14 @@ namespace VEGA {
 			reinterpret_cast<const char*>(glGetString(GL_RENDERER))
 		);
 		VG_CORE_INFO("  Version: {0}", reinterpret_cast<const char*>(glGetString(GL_VERSION)));
+		
+		VG_GPU_CONTEXT;
 
 	}
 	void OpenGLContext::SwapBuffers()
 	{
 		VG_PROFILE_FUNCTION();
 		glfwSwapBuffers(m_WindowHandle);
+		VG_GPU_COLLECT;
 	}
 }

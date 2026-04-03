@@ -24,6 +24,10 @@ target_compile_definitions(Sandbox PRIVATE
     VG_DYNAMIC_LINK
 )
 
+if(VG_PROFILE)
+    target_compile_definitions(Sandbox PRIVATE TRACY_ENABLE=1 TRACY_IMPORTS=1)
+endif()
+
 if(MSVC)
     target_compile_options(Sandbox PRIVATE /utf-8)
 endif()

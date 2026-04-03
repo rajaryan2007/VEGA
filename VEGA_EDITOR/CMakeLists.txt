@@ -43,6 +43,9 @@ target_compile_definitions(VEGA_EDITOR PRIVATE
     VG_PROJECT_DIR="${CMAKE_CURRENT_SOURCE_DIR}"
 )
 
+if(VG_PROFILE)
+    target_compile_definitions(VEGA_EDITOR PRIVATE TRACY_ENABLE=1 TRACY_IMPORTS=1)
+endif()
 
 if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/assests")
     add_custom_command(TARGET VEGA_EDITOR POST_BUILD

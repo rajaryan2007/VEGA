@@ -20,7 +20,8 @@ namespace VEGA {
    struct FrameBufferAttachmentSpecification 
    {
        FrameBufferAttachmentSpecification() = default;
-       FrameBufferAttachmentSpecification(std::initializer_list<FrameBufferTextureSpecification> attachments) {};
+       FrameBufferAttachmentSpecification(std::initializer_list<FrameBufferTextureSpecification> attachments)
+		   : Attachments(attachments) {}
 	   std::vector<FrameBufferTextureSpecification> Attachments;
    };
    
@@ -45,7 +46,7 @@ namespace VEGA {
    
      virtual void Resize(u32 width, u32 height) = 0;
    
-     virtual u32 GetColorAttacmentRendererID() const = 0;
+     virtual u32 GetColorAttacmentRendererID(u32 index = 0) const = 0;
    
      static Ref<FrameBuffer> Create(const FrameBufferSpecification &spec);
 };

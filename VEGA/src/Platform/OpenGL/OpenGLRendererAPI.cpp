@@ -25,11 +25,13 @@ namespace VEGA
 
 	void OpenGLRendererAPI::Clear() 
 	{
+		VG_GPU_ZONE("OpenGLRendererAPI::Clear");
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	}
 
 	void OpenGLRendererAPI::DrawIndexed(const std::shared_ptr<VertexArray>& vertexArray, u32 indexCount)
 	{
+		VG_GPU_ZONE("OpenGLRendererAPI::DrawIndexed");
 		if (indexCount == 0)
 			return;
 

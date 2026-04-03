@@ -24,3 +24,6 @@
 [submodule "VEGA/vendor/imGuizmo"]
 	path = VEGA/vendor/imGuizmo
 	url = https://github.com/rajaryan2007/ImGuizmo.git
+[submodule "VEGA/vendor/tracy"]
+	path = VEGA/vendor/tracy
+	url = https://github.com/wolfpld/tracy.git

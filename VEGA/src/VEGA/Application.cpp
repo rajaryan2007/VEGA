@@ -119,7 +119,7 @@ namespace VEGA{
 
 			m_Window->OnUpdate();
 		}
-
+		VG_PROFILE_FRAMEMARK;
 	}
 
 	};

@@ -7,6 +7,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
+option(VG_PROFILE "Enable Tracy profiling" ON)
 
 set(ARCH x64)
 if(CMAKE_BUILD_TYPE)
@@ -45,6 +46,11 @@ add_subdirectory(VEGA/vendor/imGuizmo)
 add_subdirectory(VEGA/vendor/volk)
 add_subdirectory(VEGA/vendor/VulkanMemoryAllocator)
 add_subdirectory(VEGA/vendor/yaml-cpp)
+
+# Tracy Profiler
+set(TRACY_STATIC ON CACHE BOOL "" FORCE)
+set(TRACY_ENABLE ${VG_PROFILE} CACHE BOOL "" FORCE)
+add_subdirectory(VEGA/vendor/tracy)
 
 #main engine core
 add_subdirectory(VEGA)

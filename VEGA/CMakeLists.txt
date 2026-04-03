@@ -39,11 +39,15 @@ target_include_directories(VEGA PUBLIC
     "vendor/volk"
     "vendor/VulkanMemoryAllocator/include"
     "vendor/yaml-cpp/include"
-    
+    "vendor/tracy/public"
 )
 
+target_sources(VEGA PRIVATE
+    vendor/tracy/public/TracyClient.cpp
+)
 
 target_compile_definitions(VEGA PUBLIC
+    
     VG_PLATFORM_WINDOWS
     VG_DYNAMIC_LINK
     WINDLL
@@ -51,8 +55,12 @@ target_compile_definitions(VEGA PUBLIC
     _CRT_SECURE_NO_WARNINGS
 )
 
-target_compile_definitions(VEGA PRIVATE VG_BUILD_DLL)
+target_compile_definitions(VEGA PRIVATE VG_BUILD_DLL TRACY_ENABLE)
 
+if(VG_PROFILE)
+    target_compile_definitions(VEGA PUBLIC VG_PROFILE=1 TRACY_ENABLE=1)
+    target_compile_definitions(VEGA PRIVATE TRACY_EXPORTS=1)
+endif()
 
 if(MSVC)
     target_precompile_headers(VEGA PRIVATE src/vgpch.h)
@@ -63,6 +71,7 @@ target_link_libraries(VEGA PUBLIC
 glfw Glad Vulkan::Vulkan ImGui ImGuizmo opengl32.lib
 PRIVATE
 VulkanMemoryAllocator volk
-yaml-cpp
+    yaml-cpp
+    TracyClient
 )
 set_target_properties(VEGA PROPERTIES DEBUG_POSTFIX d)
