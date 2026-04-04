@@ -36,9 +36,7 @@ Editor::Editor()
       m_Transform(0.0f, 0.0f, 0.0f), m_SceneHireacyPanel(m_ActiveScene) {}
 
 void Editor::OnAttach() {
-  VG_CORE_INFO("Core logger is working!");
-  VG_INFO("Client logger is working!");
-
+  
   m_SqaureVA = (VEGA::VertexArray::Create());
 
   float vertiecsSquare[] = {
@@ -48,8 +46,11 @@ void Editor::OnAttach() {
 
   VEGA::FrameBufferSpecification fbspec;
   fbspec.Attachments = {VEGA::FrameBufferTextureFromat::RGBA8,
-                        VEGA::FrameBufferTextureFromat::Depth};
-  fbspec.Width = 1280;
+						VEGA::FrameBufferTextureFromat::RED_INTEGER,
+                        VEGA::FrameBufferTextureFromat::Depth
+                        
+  };
+  fbspec.Width = 1280; 
   fbspec.Height = 720;
   m_FrameBuffer = VEGA::FrameBuffer::Create(fbspec);
 
@@ -184,8 +185,29 @@ void Editor::OnUpdate(VEGA::Timestep ts) {
     m_CameraController.OnUpdate(ts);
     m_EditorCamera.OnUpdate(ts);
   }
+  
+  m_FrameBuffer->ClearAttachment(1,-1);
 
   m_ActiveScene->OnUpdateEditor(ts, m_EditorCamera);
+
+  auto [mx, my] = ImGui::GetMousePos();
+  mx -= m_ViewPortBounds[0].x;
+  my -= m_ViewPortBounds[1].y;
+  glm::vec2 viewportSize = m_ViewPortBounds[1] - m_ViewPortBounds[0];
+
+  my = viewportSize.y - my;
+
+  i32 mouseX = (i32)mx;
+  i32 mouseY= (i32)my;
+
+  if(mouseX >= 0 && mouseY >= 0 && mouseX < (i32)viewportSize.x && mouseY < (i32)viewportSize.y)
+  {
+	  int PixelData = m_FrameBuffer->ReadPixel(1, mouseX, mouseY);
+	  VG_CORE_WARN("Pixel data at ({0}, {1}): {2}", mouseX, mouseY, PixelData);
+  }
+
+  VG_CORE_ASSERT(mouseX >= 0 && mouseY >= 0 && mouseX < (i32)viewportSize.x mouseY < (i32)viewportSize.y,
+	  "Mouse position is out of bounds!");
 
   m_FrameBuffer->UnBind();
   // VEGA::Renderer::EndScene();
@@ -392,6 +414,10 @@ void Editor::OnImGuiRender() {
 
   ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{0, 0});
   ImGui::Begin("Viewport");
+  auto viewPortOffset = ImGui::GetCursorPos();
+
+
+
   m_ViewPortFocused = ImGui::IsWindowFocused();
   m_ViewPortHover = ImGui::IsWindowHovered();
   Application::Get().GetImguiLayer()->SetBlockEvent(!m_ViewPortFocused &&
@@ -400,18 +426,31 @@ void Editor::OnImGuiRender() {
   ImVec2 viewPortSize = ImGui::GetContentRegionAvail();
   m_CameraController.OnResize(viewPortSize.x, viewPortSize.y);
   m_ActiveScene->OnViewportResize((u32)viewPortSize.x, (u32)viewPortSize.y);
-  if (FrameBufferSpecification spec = m_FrameBuffer->GetSpecification();
-      viewPortSize.x > 0.0f && viewPortSize.y > 0.0f &&
-      (spec.Width != viewPortSize.x || spec.Height != viewPortSize.y)) {
+
+  if (FrameBufferSpecification spec = m_FrameBuffer->GetSpecification();viewPortSize.x > 0.0f && viewPortSize.y > 0.0f &&
+      (spec.Width != viewPortSize.x || spec.Height != viewPortSize.y)) 
+  {
     m_FrameBuffer->Resize((u32)viewPortSize.x, (u32)viewPortSize.y);
     m_EditorCamera.SetViewportSize((u32)viewPortSize.x, (u32)viewPortSize.y);
     m_ViewPortSize = {viewPortSize.x, viewPortSize.y};
   }
+
   m_ViewPortSize = {viewPortSize.x, viewPortSize.y};
   u32 textureId = m_FrameBuffer->GetColorAttacmentRendererID();
 
   ImGui::Image((void *)textureId, ImVec2{m_ViewPortSize.x, m_ViewPortSize.y},
                ImVec2{0, 1}, ImVec2{1, 0});
+
+  auto WindowSize = ImGui::GetWindowPos();
+  ImVec2 minBound = ImGui::GetWindowPos();
+  minBound.x += viewPortOffset.x;
+  minBound.y += viewPortOffset.y ;
+
+  ImVec2 maxBound = { minBound.x + WindowSize.x, minBound.y + WindowSize.y };
+  m_ViewPortBounds[0] = { minBound.x, minBound.y };
+  m_ViewPortBounds[1] = { maxBound.x, maxBound.y }; 
+
+  
 
   // Gizmos
   Entity SelectedEntity = m_SceneHireacyPanel.GetSelectedEntity();

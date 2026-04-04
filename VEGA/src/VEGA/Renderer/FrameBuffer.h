@@ -4,6 +4,7 @@ namespace VEGA {
    enum class FrameBufferTextureFromat {
    		None = 0,
         RGBA8,
+		RED_INTEGER,
    		DEPTH24STENCIL8,
    		Depth = DEPTH24STENCIL8
    	};
@@ -43,9 +44,13 @@ namespace VEGA {
    
      virtual void Bind() = 0;
      virtual void UnBind() = 0;
-   
+    
+	 virtual void ClearAttachment(u32 attachmentIndex,const i32 value) = 0;
+
      virtual void Resize(u32 width, u32 height) = 0;
-   
+     
+	 virtual int ReadPixel(u32 attachmentIndex, i32 x, i32 y) = 0;
+
      virtual u32 GetColorAttacmentRendererID(u32 index = 0) const = 0;
    
      static Ref<FrameBuffer> Create(const FrameBufferSpecification &spec);

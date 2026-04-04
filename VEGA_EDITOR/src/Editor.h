@@ -67,7 +67,7 @@ namespace VEGA
 		u32 m_mapWidth, m_mapHeight;
 
 		glm::vec2 m_ViewPortSize;
-
+		glm::vec2 m_ViewPortBounds[2];
 		int m_GizmoType = -1;
 
 		std::unordered_map<char, Ref<SubTexture2D>> Land;

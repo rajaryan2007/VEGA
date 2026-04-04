@@ -16,7 +16,11 @@ namespace VEGA {
 		   virtual void UnBind() override;
 		   
 		   virtual void Resize(u32 width, u32 height) override;
-		   
+	       
+		   virtual i32 ReadPixel(u32 attachmentIndex, i32 x, i32 y) override;
+
+		   virtual void ClearAttachment(u32 attachmentIndex, const i32 value) override;
+
 		   virtual const FrameBufferSpecification& GetSpecification() const override { return m_Specification; }
 	       
 

@@ -28,6 +28,7 @@ void main()
 #version 330 core
 
 layout(location = 0) out vec4 color;
+layout(location = 1) out int color2;
 
 in vec2 v_TexCoord;
 in vec4 v_Color;
@@ -108,5 +109,6 @@ void main()
     else if(index == 31)
         texColor = texture(u_Texture[31], v_TexCoord * u_TilingFactor);
     color = texColor * u_Color * v_Color;
-
+    
+    color2 = 50;
 }

@@ -15,7 +15,7 @@ namespace VEGA
 
         static void CreateTexture(bool multisampled,u32* outId,u32 count)
         {
-			glCreateTextures(TextureTarget(multisampled), count, outId);
+            glCreateTextures(TextureTarget(multisampled), count, outId);
         }
 
         static void BindTexture(bool multisampled , u32 id)
@@ -71,6 +71,28 @@ namespace VEGA
 			}
 			return false;
 		}
+
+        static GLenum VEGAToGLFrameBufferTextureFormat(FrameBufferTextureFromat format)
+        {
+            switch (format)
+            {
+                case FrameBufferTextureFromat::RGBA8: return GL_RGBA8;
+                case FrameBufferTextureFromat::RED_INTEGER: return GL_R32I;
+            }
+            VG_CORE_ASSERT(false, "Unknown FrameBufferTextureFromat!");
+            return 0;
+		}
+
+        static GLenum VEGAToGLFrameBufferTextureFormatAttachment(FrameBufferTextureFromat format)
+        {
+            switch (format)
+            {
+            case FrameBufferTextureFromat::DEPTH24STENCIL8: return GL_DEPTH_STENCIL_ATTACHMENT;
+            }
+            VG_CORE_ASSERT(false, "Unknown FrameBufferTextureFromat!");
+            return 0;
+
+        }
 
     }
 
@@ -128,6 +150,8 @@ namespace VEGA
                        case FrameBufferTextureFromat::RGBA8:
                            Utils::AttachColorTexture(multisample,m_colorAttachments[i],m_Specification.Sample,GL_RGBA8,GL_RGBA,GL_UNSIGNED_BYTE,m_Specification.Width,m_Specification.Height,i);
 						   break;
+                       case FrameBufferTextureFromat::RED_INTEGER:
+						   Utils::AttachColorTexture(multisample, m_colorAttachments[i], m_Specification.Sample, GL_R32I, GL_RED_INTEGER, GL_INT, m_Specification.Width, m_Specification.Height, i);
 
                     }
                 }
@@ -172,6 +196,9 @@ namespace VEGA
         VG_GPU_ZONE("OpenGLFrameBuffer::Bind");
         glBindFramebuffer(GL_FRAMEBUFFER, m_RendererID);
         glViewport(0, 0, m_Specification.Width, m_Specification.Height);
+        
+        // clearColorAttachment
+       
     }
 
     void OpenGLFrameBuffer::UnBind()
@@ -180,7 +207,30 @@ namespace VEGA
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
     }
 
-    void OpenGLFrameBuffer::Resize(u32 width, u32 height)
+    i32 OpenGLFrameBuffer::ReadPixel(u32 attachmentIndex, i32 x, i32 y)
+    {
+		VG_CORE_ASSERT(attachmentIndex < m_ColorAttachmentSpecs.size(), "Attachment index out of bounds!");
+
+        glReadBuffer(GL_COLOR_ATTACHMENT0 + attachmentIndex);
+		i32 pixelData;
+		glReadPixels(x, y, 1, 1, GL_RED_INTEGER, GL_INT, &pixelData);
+		return pixelData;
+
+	}
+
+	void OpenGLFrameBuffer::ClearAttachment(u32 attachmentIndex, const i32 value)
+	{
+		VG_CORE_ASSERT(attachmentIndex < m_ColorAttachmentSpecs.size(), "Attachment index out of bounds!");
+
+		//int value = -1;
+		//glClearTexImage(m_colorAttachments[1], 0, GL_RED_INTEGER, GL_INT, &value);
+
+		auto& spec = m_ColorAttachmentSpecs[attachmentIndex];
+
+		glClearTexImage(m_colorAttachments[attachmentIndex], 0,Utils::VEGAToGLFrameBufferTextureFormat(spec.TextureFormat),Utils::VEGAToGLFrameBufferTextureFormatAttachment(spec.TextureFormat), &value);
+	}
+
+	void OpenGLFrameBuffer::Resize(u32 width, u32 height)
     {
         if (width == 0 || height == 0 || width == MaxFrameBufferSize || height == MaxFrameBufferSize)
         {
