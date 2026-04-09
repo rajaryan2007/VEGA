@@ -36,7 +36,7 @@ Editor::Editor()
       m_Transform(0.0f, 0.0f, 0.0f), m_SceneHireacyPanel(m_ActiveScene) {}
 
 void Editor::OnAttach() {
-  
+
   m_SqaureVA = (VEGA::VertexArray::Create());
 
   float vertiecsSquare[] = {
@@ -46,11 +46,11 @@ void Editor::OnAttach() {
 
   VEGA::FrameBufferSpecification fbspec;
   fbspec.Attachments = {VEGA::FrameBufferTextureFromat::RGBA8,
-						VEGA::FrameBufferTextureFromat::RED_INTEGER,
+                        VEGA::FrameBufferTextureFromat::RED_INTEGER,
                         VEGA::FrameBufferTextureFromat::Depth
-                        
+
   };
-  fbspec.Width = 1280; 
+  fbspec.Width = 1280;
   fbspec.Height = 720;
   m_FrameBuffer = VEGA::FrameBuffer::Create(fbspec);
 
@@ -185,14 +185,14 @@ void Editor::OnUpdate(VEGA::Timestep ts) {
     m_CameraController.OnUpdate(ts);
     m_EditorCamera.OnUpdate(ts);
   }
-  
-  m_FrameBuffer->ClearAttachment(1,-1);
+
+  m_FrameBuffer->ClearAttachment(1, -1);
 
   m_ActiveScene->OnUpdateEditor(ts, m_EditorCamera);
 
   auto [mx, my] = ImGui::GetMousePos();
   mx -= m_ViewPortBounds[0].x;
-  my -= m_ViewPortBounds[1].y;
+  my -= m_ViewPortBounds[0].y;
   glm::vec2 viewportSize = m_ViewPortBounds[1] - m_ViewPortBounds[0];
 
   my = viewportSize.y - my;
@@ -203,11 +203,11 @@ void Editor::OnUpdate(VEGA::Timestep ts) {
   if(mouseX >= 0 && mouseY >= 0 && mouseX < (i32)viewportSize.x && mouseY < (i32)viewportSize.y)
   {
 	  int PixelData = m_FrameBuffer->ReadPixel(1, mouseX, mouseY);
+      m_HoverdEntity = PixelData == -1 ? Entity() : Entity((entt::entity)PixelData, m_ActiveScene.get());
+
+
 	  VG_CORE_WARN("Pixel data at ({0}, {1}): {2}", mouseX, mouseY, PixelData);
   }
-
-  VG_CORE_ASSERT(mouseX >= 0 && mouseY >= 0 && mouseX < (i32)viewportSize.x mouseY < (i32)viewportSize.y,
-	  "Mouse position is out of bounds!");
 
   m_FrameBuffer->UnBind();
   // VEGA::Renderer::EndScene();
@@ -401,6 +401,12 @@ void Editor::OnImGuiRender() {
 
   ImGui::Begin("Settings");
 
+  std::string name = "None";
+  if (m_HoverdEntity)
+      name = m_HoverdEntity.GetComponent<TagComponent>().Tag;
+
+  ImGui::Text("Hover Entity %s", name.c_str());
+
   auto stats = VEGA::Renderer2D::GetStats();
   ImGui::Text("Application average %.3f ms/frame (%.1f FPS)",
               1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
@@ -416,8 +422,6 @@ void Editor::OnImGuiRender() {
   ImGui::Begin("Viewport");
   auto viewPortOffset = ImGui::GetCursorPos();
 
-
-
   m_ViewPortFocused = ImGui::IsWindowFocused();
   m_ViewPortHover = ImGui::IsWindowHovered();
   Application::Get().GetImguiLayer()->SetBlockEvent(!m_ViewPortFocused &&
@@ -427,9 +431,9 @@ void Editor::OnImGuiRender() {
   m_CameraController.OnResize(viewPortSize.x, viewPortSize.y);
   m_ActiveScene->OnViewportResize((u32)viewPortSize.x, (u32)viewPortSize.y);
 
-  if (FrameBufferSpecification spec = m_FrameBuffer->GetSpecification();viewPortSize.x > 0.0f && viewPortSize.y > 0.0f &&
-      (spec.Width != viewPortSize.x || spec.Height != viewPortSize.y)) 
-  {
+  if (FrameBufferSpecification spec = m_FrameBuffer->GetSpecification();
+      viewPortSize.x > 0.0f && viewPortSize.y > 0.0f &&
+      (spec.Width != viewPortSize.x || spec.Height != viewPortSize.y)) {
     m_FrameBuffer->Resize((u32)viewPortSize.x, (u32)viewPortSize.y);
     m_EditorCamera.SetViewportSize((u32)viewPortSize.x, (u32)viewPortSize.y);
     m_ViewPortSize = {viewPortSize.x, viewPortSize.y};
@@ -441,16 +445,14 @@ void Editor::OnImGuiRender() {
   ImGui::Image((void *)textureId, ImVec2{m_ViewPortSize.x, m_ViewPortSize.y},
                ImVec2{0, 1}, ImVec2{1, 0});
 
-  auto WindowSize = ImGui::GetWindowPos();
-  ImVec2 minBound = ImGui::GetWindowPos();
+  ImVec2 windowPos = ImGui::GetWindowPos();
+  ImVec2 minBound = windowPos;
   minBound.x += viewPortOffset.x;
-  minBound.y += viewPortOffset.y ;
+  minBound.y += viewPortOffset.y;
 
-  ImVec2 maxBound = { minBound.x + WindowSize.x, minBound.y + WindowSize.y };
+  ImVec2 maxBound = { minBound.x + viewPortSize.x, minBound.y + viewPortSize.y };
   m_ViewPortBounds[0] = { minBound.x, minBound.y };
-  m_ViewPortBounds[1] = { maxBound.x, maxBound.y }; 
-
-  
+  m_ViewPortBounds[1] = { maxBound.x, maxBound.y };
 
   // Gizmos
   Entity SelectedEntity = m_SceneHireacyPanel.GetSelectedEntity();
@@ -500,6 +502,6 @@ void Editor::OnImGuiRender() {
   ImGui::PopStyleVar();
 
   DrawConsolePanel();
-}
+  }
 
 } // namespace VEGA

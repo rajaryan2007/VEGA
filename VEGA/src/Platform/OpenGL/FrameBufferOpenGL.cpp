@@ -222,12 +222,27 @@ namespace VEGA
 	{
 		VG_CORE_ASSERT(attachmentIndex < m_ColorAttachmentSpecs.size(), "Attachment index out of bounds!");
 
-		//int value = -1;
-		//glClearTexImage(m_colorAttachments[1], 0, GL_RED_INTEGER, GL_INT, &value);
-
 		auto& spec = m_ColorAttachmentSpecs[attachmentIndex];
 
-		glClearTexImage(m_colorAttachments[attachmentIndex], 0,Utils::VEGAToGLFrameBufferTextureFormat(spec.TextureFormat),Utils::VEGAToGLFrameBufferTextureFormatAttachment(spec.TextureFormat), &value);
+		GLenum format = GL_RED_INTEGER;
+		GLenum type = GL_INT;
+
+		switch (spec.TextureFormat)
+		{
+		case FrameBufferTextureFromat::RGBA8:
+			format = GL_RGBA;
+			type = GL_UNSIGNED_BYTE;
+			break;
+		case FrameBufferTextureFromat::RED_INTEGER:
+			format = GL_RED_INTEGER;
+			type = GL_INT;
+			break;
+		default:
+			VG_CORE_ASSERT(false, "Unknown texture format for ClearAttachment!");
+			break;
+		}
+
+		glClearTexImage(m_colorAttachments[attachmentIndex], 0, format, type, &value);
 	}
 
 	void OpenGLFrameBuffer::Resize(u32 width, u32 height)

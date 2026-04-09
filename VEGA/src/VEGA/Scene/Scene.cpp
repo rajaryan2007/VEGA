@@ -90,54 +90,7 @@ void Scene::RenderSprites(Timestep ts) {
     auto [transform, sprite] =
         spriteView.get<TransformComponent, SpriteRendererComponent>(entityID);
 
-    Ref<Texture2D> currentTexture = sprite.Texture;
-    bool isSubTexture = sprite.UseSubTexture;
-    glm::vec2 min = {0.0f, 0.0f};
-    glm::vec2 max = {1.0f, 1.0f};
-    Ref<SubTexture2D> overrideSubTex = nullptr;
-
-    if (m_registry.all_of<SpriteAnimationComponent>(entityID)) {
-      auto &comp = m_registry.get<SpriteAnimationComponent>(entityID);
-      overrideSubTex = comp.Animation.GetCurrentFrame();
-    }
-
-    if (overrideSubTex) {
-      Renderer2D::DrawQuad(transform.GetTransform(), overrideSubTex,
-                           sprite.TilingFactor, sprite.Color);
-    } else if (isSubTexture && currentTexture) {
-      float texWidth = (float)currentTexture->GetWidth();
-      float texHeight = (float)currentTexture->GetHeight();
-
-      float flippedY =
-          texHeight -
-          (sprite.SubTextureCoords.y * sprite.SubTextureCellSize.y) -
-          (sprite.SubTextureSpriteSize.y * sprite.SubTextureCellSize.y);
-
-      min = {(sprite.SubTextureCoords.x * sprite.SubTextureCellSize.x) /
-                 texWidth,
-             flippedY / texHeight};
-      max = {((sprite.SubTextureCoords.x + sprite.SubTextureSpriteSize.x) *
-              sprite.SubTextureCellSize.x) /
-                 texWidth,
-             (flippedY +
-              (sprite.SubTextureSpriteSize.y * sprite.SubTextureCellSize.y)) /
-                 texHeight};
-    }
-
-    if (overrideSubTex) {
-    } else if (currentTexture) {
-      if (isSubTexture) {
-        glm::vec2 texCoords[4] = {
-            {min.x, min.y}, {max.x, min.y}, {max.x, max.y}, {min.x, max.y}};
-        Renderer2D::DrawQuad(transform.GetTransform(), currentTexture,
-                             texCoords, sprite.TilingFactor, sprite.Color);
-      } else {
-        Renderer2D::DrawQuad(transform.GetTransform(), currentTexture,
-                             sprite.TilingFactor, sprite.Color);
-      }
-    } else {
-      Renderer2D::DrawQuad(transform.GetTransform(), sprite.Color);
-    }
+    Renderer2D::DrawSprite(transform.GetTransform(), sprite, (i32)entityID);
   }
 
   auto animOnlyView =

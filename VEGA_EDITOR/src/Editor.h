@@ -3,6 +3,7 @@
 #include "Panel/SceneHierachyPanel.h"
 #include "VEGA/Renderer/EditorCamera.h"
 
+
 namespace VEGA
 {
 	class Editor : public Layer
@@ -48,6 +49,7 @@ namespace VEGA
 		Entity m_CameraEntity;
 		Entity m_SecondCamera;
 
+		Entity m_HoverdEntity;
 		bool primaryCamera = false;
 		EditorCamera m_EditorCamera;
 		bool m_ViewPortFocused = false;
