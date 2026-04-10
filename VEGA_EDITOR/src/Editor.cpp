@@ -206,7 +206,7 @@ void Editor::OnUpdate(VEGA::Timestep ts) {
       m_HoverdEntity = PixelData == -1 ? Entity() : Entity((entt::entity)PixelData, m_ActiveScene.get());
 
 
-	  VG_CORE_WARN("Pixel data at ({0}, {1}): {2}", mouseX, mouseY, PixelData);
+	//  VG_CORE_WARN("Pixel data at ({0}, {1}): {2}", mouseX, mouseY, PixelData);
   }
 
   m_FrameBuffer->UnBind();

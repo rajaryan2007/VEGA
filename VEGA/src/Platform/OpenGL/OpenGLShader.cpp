@@ -1,5 +1,6 @@
 #include "vgpch.h"
 #include "OpenGLShader.h"
+#include "VEGA/Renderer/SlangCompiler.h"
 
 #include <fstream>
 #include <glad/glad.h>
@@ -86,11 +87,21 @@ void VEGA::OpenGLShader::Compile(const std::unordered_map<GLenum, std::string>& 
 
 
 VEGA::OpenGLShader::OpenGLShader(const std::string& filepath)
-{
+{   
+	
 	VG_PROFILE_FUNCTION();
-	std::string source = ReadFile(filepath);
-	auto shaderSources = preProcess(source);
-	Compile(shaderSources);
+	// If it's a .slang file, compile it to GLSL memory blobs
+	if (filepath.size() >= 6 && filepath.substr(filepath.size() - 6) == ".slang")
+	{
+		auto shaderSources = SlangCompiler::CompileToGLSL(filepath);
+		Compile(shaderSources);
+	}
+	else
+	{
+		std::string source = ReadFile(filepath);
+		auto shaderSources = preProcess(source);
+		Compile(shaderSources);
+	}
 	// Option A: operate on m_Name (simple)
 	auto lastSlash = filepath.find_last_of("/\\");
 	if (lastSlash != std::string::npos)

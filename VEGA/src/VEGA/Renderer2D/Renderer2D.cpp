@@ -114,8 +114,8 @@ void Renderer2D::Init() {
     samplers[i] = i;
   }
 
-  // s_Data->Shader = VEGA::Shader::Create("assests/shaders/flatSquare.glsl");
-  s_Data.TextureShader = VEGA::Shader::Create("assests/shaders/Texture.glsl");
+  // s_Data.TextureShader = VEGA::Shader::Create("assests/shaders/flatSquare.glsl");
+  s_Data.TextureShader = VEGA::Shader::Create("assests/shaders/Texture.slang");
 
   s_Data.TextureShader->Bind();
   // s_Data.TextureShader->SetInt("u_Texture", 0);

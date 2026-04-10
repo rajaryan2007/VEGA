@@ -3,7 +3,7 @@ project(VEGA)
 
 
 
-file(GLOB_RECURSE VEGA_SOURCES
+file(GLOB_RECURSE VEGA_SOURCES CONFIGURE_DEPENDS
     "${CMAKE_CURRENT_SOURCE_DIR}/src/*.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/vendor/stb_image/*.h"
