@@ -11,6 +11,7 @@ file(GLOB_RECURSE VEGA_SOURCES
 )
 
 find_package(VULKAN REQUIRED)
+find_package(slang REQUIRED CONFIG PATHS "${CMAKE_CURRENT_SOURCE_DIR}/vendor/slang" NO_DEFAULT_PATH)
 
 file(GLOB_RECURSE GLM_FILES
     "${CMAKE_CURRENT_SOURCE_DIR}/vendor/glm/glm/*.hpp"
@@ -40,6 +41,7 @@ target_include_directories(VEGA PUBLIC
     "vendor/VulkanMemoryAllocator/include"
     "vendor/yaml-cpp/include"
     "vendor/tracy/public"
+    "vendor/slang/include"
 )
 
 target_sources(VEGA PRIVATE
@@ -73,5 +75,13 @@ PRIVATE
 VulkanMemoryAllocator volk
     yaml-cpp
     TracyClient
+    slang::slang
+)
+
+# Copy Slang DLLs to output directory
+add_custom_command(TARGET VEGA POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+    "${CMAKE_CURRENT_SOURCE_DIR}/vendor/slang/bin"
+    "$<TARGET_FILE_DIR:VEGA>"
 )
 set_target_properties(VEGA PROPERTIES DEBUG_POSTFIX d)

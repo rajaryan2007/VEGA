@@ -107,6 +107,12 @@ void SceneHierarchyPanel::OnImGuiRender() {
   ImGui::PopStyleVar();
 }
 
+
+void SceneHierarchyPanel::SetSelectedEntity(Entity entity)
+{
+    m_SelectionContext = entity;
+}
+
 void SceneHierarchyPanel::DrawEntityNode(Entity entity) {
   auto &tc = entity.GetComponent<TagComponent>();
 
@@ -386,7 +392,7 @@ void SceneHierarchyPanel::DrawComponents(Entity entity) {
 
         const char *projectionTypeString[] = {"Projection", "Orthographic"};
         const char *currnetProjectionTypeString =
-            projectionTypeString[(int)camera.GetProjectionType()];
+            projectionTypeString[(int)(camera).GetProjectionType()];
         if (ImGui::BeginCombo("Projection", currnetProjectionTypeString)) {
           for (int i{0}; i < 2; i++) {
             bool isSelected =
@@ -480,8 +486,8 @@ void SceneHierarchyPanel::DrawComponents(Entity entity) {
           ImGui::DragFloat2("Sprite Size", glm::value_ptr(src.SubTextureSpriteSize), 1.0f);
 
           if (src.Texture) {
-            float texWidth = (float)src.Texture->GetWidth();
-            float texHeight = (float)src.Texture->GetHeight();
+            float texWidth = static_cast<float>(src.Texture->GetWidth());
+            float texHeight = static_cast<float>(src.Texture->GetHeight());
             
             // SubTexture2D::CreateFromCoords math
             glm::vec2 min = { (src.SubTextureCoords.x * src.SubTextureCellSize.x) / texWidth, 

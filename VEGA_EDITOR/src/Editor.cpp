@@ -213,13 +213,13 @@ void Editor::OnUpdate(VEGA::Timestep ts) {
   // VEGA::Renderer::EndScene();
 }
 
-void Editor::OnEvent(VEGA::Event &event) {
-  m_CameraController.OnEvent(event);
-  m_EditorCamera.OnEvent(event);
+void Editor::OnEvent(VEGA::Event &e) {
+  m_CameraController.OnEvent(e);
+  m_EditorCamera.OnEvent(e);
 
-  EventDispatcher dispatcher(event);
-  dispatcher.Dispatch<KeyPressedEvent>(
-      [this](KeyPressedEvent &e) { return onKeyPressed(e); });
+  EventDispatcher dispatcher(e);
+  dispatcher.Dispatch<MouseButtonPressedEvent>(VG_BIND_EVENT_FN(Editor::OnMouseButtonPressedEvent));
+  dispatcher.Dispatch<KeyPressedEvent>(VG_BIND_EVENT_FN(Editor::onKeyPressed));
 }
 
 bool Editor::onKeyPressed(KeyPressedEvent &e) {
@@ -429,13 +429,13 @@ void Editor::OnImGuiRender() {
 
   ImVec2 viewPortSize = ImGui::GetContentRegionAvail();
   m_CameraController.OnResize(viewPortSize.x, viewPortSize.y);
-  m_ActiveScene->OnViewportResize((u32)viewPortSize.x, (u32)viewPortSize.y);
+  m_ActiveScene->OnViewportResize(static_cast<u32>(viewPortSize.x), static_cast<u32>(viewPortSize.y));
 
   if (FrameBufferSpecification spec = m_FrameBuffer->GetSpecification();
       viewPortSize.x > 0.0f && viewPortSize.y > 0.0f &&
       (spec.Width != viewPortSize.x || spec.Height != viewPortSize.y)) {
-    m_FrameBuffer->Resize((u32)viewPortSize.x, (u32)viewPortSize.y);
-    m_EditorCamera.SetViewportSize((u32)viewPortSize.x, (u32)viewPortSize.y);
+    m_FrameBuffer->Resize(static_cast<u32>(viewPortSize.x), static_cast<u32>(viewPortSize.y));
+    m_EditorCamera.SetViewportSize(static_cast<u32>(viewPortSize.x), static_cast<u32>(viewPortSize.y));
     m_ViewPortSize = {viewPortSize.x, viewPortSize.y};
   }
 
@@ -461,8 +461,8 @@ void Editor::OnImGuiRender() {
 
     ImGuizmo::SetOrthographic(false);
     ImGuizmo::SetDrawlist();
-    f32 windowWidth = (f32)ImGui::GetWindowWidth();
-    f32 windowheight = (f32)ImGui::GetWindowHeight();
+    f32 windowWidth = static_cast<f32>(ImGui::GetWindowWidth());
+    f32 windowheight = static_cast<f32>(ImGui::GetWindowHeight());
 
     ImGuizmo::SetRect(ImGui::GetWindowPos().x, ImGui::GetWindowPos().y,
                       windowWidth, windowheight);
@@ -502,6 +502,17 @@ void Editor::OnImGuiRender() {
   ImGui::PopStyleVar();
 
   DrawConsolePanel();
+  }
+
+  bool Editor::OnMouseButtonPressedEvent(MouseButtonPressedEvent& e)
+  {
+      if (e.GetMouseButton() == VG_MOUSE_BUTTON_LEFT)
+      {
+          if (m_ViewPortHover && !ImGuizmo::IsOver() && !Input::IsKeyPressed(Key::LeftAlt)) {
+              m_SceneHireacyPanel.SetSelectedEntity(m_HoverdEntity);
+          }
+      }
+      return false;
   }
 
 } // namespace VEGA

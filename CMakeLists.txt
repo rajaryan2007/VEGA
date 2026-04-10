@@ -47,7 +47,8 @@ add_subdirectory(VEGA/vendor/volk)
 add_subdirectory(VEGA/vendor/VulkanMemoryAllocator)
 add_subdirectory(VEGA/vendor/yaml-cpp)
 
-# Tracy Profiler
+
+#Tracy Profiler
 set(TRACY_STATIC ON CACHE BOOL "" FORCE)
 set(TRACY_ENABLE ${VG_PROFILE} CACHE BOOL "" FORCE)
 add_subdirectory(VEGA/vendor/tracy)

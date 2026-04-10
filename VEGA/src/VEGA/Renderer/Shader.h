@@ -3,16 +3,19 @@
 #include <glm/glm.hpp>
 #include <string>
 #include <unordered_map>
-
+#include "slang-com-ptr.h"
 
 namespace VEGA {
 class VEGA_API Shader {
 public:
   virtual ~Shader() = default;
+  
+  void InitSlang();
+  void compileShader(std::string filepath);
 
   virtual void Bind() const = 0;
   virtual void Unbind() const = 0;
-
+  
   virtual void SetFloat3(const std::string &name, const glm::vec3 &value) = 0;
   virtual void SetIntArray(const std::string &name, int *values, u32 count) = 0;
   virtual void SetFloat4(const std::string &name, const glm::vec4 &value) = 0;
@@ -29,6 +32,8 @@ public:
 
 private:
   u32 m_RendererID;
+  Slang::ComPtr<slang::ISession>session;
+  std::vector<slang::TargetDesc> targets;
 };
 
 class VEGA_API ShaderLibrary {
@@ -40,8 +45,9 @@ public:
   Ref<Shader> Load(const std::string &name, const std::string &filepath);
 
   Ref<Shader> Get(const std::string &name);
-
+ 
 private:
   std::unordered_map<std::string, Ref<Shader>> m_Shaders;
+  
 };
 } // namespace VEGA

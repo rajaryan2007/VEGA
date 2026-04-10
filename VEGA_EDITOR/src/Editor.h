@@ -19,6 +19,7 @@ namespace VEGA
 		void OnEvent(Event& event) override;
 
 		virtual void OnImGuiRender() override;
+		bool OnMouseButtonPressedEvent(MouseButtonPressedEvent& e);
 	private:
 
 		bool onKeyPressed(KeyPressedEvent& e);
