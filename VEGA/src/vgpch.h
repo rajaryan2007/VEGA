@@ -13,7 +13,7 @@
 #include <unordered_map>
 #include <unordered_set>
 #include <sstream>
-#include <VEGA/Log.h>
+#include <VEGA/Core/Log.h>
 
 
 #include "VEGA/Debug/instrumentor.h"

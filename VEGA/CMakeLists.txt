@@ -21,7 +21,7 @@ file(GLOB_RECURSE GLM_FILES
 set(ALL_VEGA_FILES ${VEGA_SOURCES} ${GLM_FILES})
 
 
-add_library(VEGA SHARED ${ALL_VEGA_FILES}  "src/VEGA/Renderer/EditorCamera.cpp")
+add_library(VEGA SHARED ${ALL_VEGA_FILES}  )
 
 
 source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "" FILES ${ALL_VEGA_FILES})

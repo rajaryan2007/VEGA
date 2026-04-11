@@ -33,7 +33,7 @@ namespace VEGA {
 
 Editor::Editor()
     : Layer("Editor"), m_CameraController(1280.0f / 720.0f),
-      m_Transform(0.0f, 0.0f, 0.0f), m_SceneHireacyPanel(m_ActiveScene) {}
+      m_Transform(0.0f, 0.0f, 0.0f), m_SceneHireacyPanel(m_ActiveScene) ,m_ContentBrowserPanel(){}
 
 void Editor::OnAttach() {
 
@@ -398,7 +398,7 @@ void Editor::OnImGuiRender() {
 
   // your setting
   m_SceneHireacyPanel.OnImGuiRender();
-
+  m_ContentBrowserPanel.OnImGuiRender();
   ImGui::Begin("Settings");
 
   std::string name = "None";
@@ -444,6 +444,13 @@ void Editor::OnImGuiRender() {
 
   ImGui::Image((void *)textureId, ImVec2{m_ViewPortSize.x, m_ViewPortSize.y},
                ImVec2{0, 1}, ImVec2{1, 0});
+
+  if (ImGui::BeginDragDropTarget())
+  {   
+      const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("Content_Browser_item");
+      const wchar_t* path = (const wchar_t*)payload->Data;
+      ImGui::EndDragDropTarget();
+  }
 
   ImVec2 windowPos = ImGui::GetWindowPos();
   ImVec2 minBound = windowPos;

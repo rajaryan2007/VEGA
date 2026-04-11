@@ -1,6 +1,6 @@
 #include "vgpch.h"
 #include "WindowsWindow.h"
-#include "VEGA/Log.h"
+#include "VEGA/Core/Log.h"
 #include "VEGA/Events/MouseEvent.h"
 #include "VEGA/Events/ApplicationEvent.h"
 #include "VEGA/Events/KeyEvent.h"

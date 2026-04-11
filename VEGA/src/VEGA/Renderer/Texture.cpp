@@ -1,7 +1,7 @@
 #include "vgpch.h"
 #include "Texture.h"
 
-#include "VEGA/Core.h"
+#include "VEGA/Core/Core.h"
 #include "Renderer.h"
 #include "Platform/OpenGL/OpenGLTexture.h"
 

@@ -1,7 +1,7 @@
 
 #pragma once
 #include <vgpch.h>
-#include "VEGA/Core.h"
+#include "VEGA/Core/Core.h"
 #include <string>
 #include <functional>
 #include <ostream>

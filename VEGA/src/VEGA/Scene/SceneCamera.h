@@ -1,6 +1,6 @@
 #pragma once
 
-#include "VEGA/Core.h"
+#include "VEGA/Core/Core.h"
 #include "VEGA/Renderer/Camera.h"
 
 namespace VEGA {

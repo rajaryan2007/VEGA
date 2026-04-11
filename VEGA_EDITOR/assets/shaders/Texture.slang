@@ -30,16 +30,7 @@ VertexOutput vertexMain(VertexInput input) {
     output.v_TilingFactor = input.a_TilingFactor;
     output.v_EntityID = input.a_EntityID;
     
-    // In slang, due to column_major vs row_major defaults when compiling to GLSL, 
-    // mul(Matrix, Vector) can compile to Vector * Matrix (transposed execution),
-    // which squashes the GLM right-handed projection. To match traditional GLSL
-    // `u_ViewProjection * u_Transform * pos`, we write the mul from left-to-right vector-based!
-    
-    // Equivalent to GLSL: gl_Position = u_ViewProjection * u_Transform * vec4(pos, 1.0);
-    // Because Slang defaults to reversing mul() for GLSL targets, we write mul(vector, matrix)
-    // so that the generated backend code cleanly emits matrix * vector!
-    float4 worldPos = mul(float4(input.a_Position, 1.0), u_Transform);
-    output.location = mul(worldPos, u_ViewProjection);
+    output.location = mul(float4(input.a_Position, 1.0), mul(u_Transform, u_ViewProjection));
     return output;
 }
 

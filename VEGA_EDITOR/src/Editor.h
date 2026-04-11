@@ -2,7 +2,7 @@
 #include "VEGA.h"
 #include "Panel/SceneHierachyPanel.h"
 #include "VEGA/Renderer/EditorCamera.h"
-
+#include "Panel/ContentBrowserPanel.h"
 
 namespace VEGA
 {
@@ -75,7 +75,7 @@ namespace VEGA
 
 		std::unordered_map<char, Ref<SubTexture2D>> Land;
 		SceneHierarchyPanel m_SceneHireacyPanel;
-        
+		ContentBrowserPanel m_ContentBrowserPanel;
 	};
 }
 

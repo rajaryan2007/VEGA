@@ -1,6 +1,6 @@
 #pragma once
 
-#include "VEGA/Window.h"
+#include "VEGA/Core/Window.h"
 #include "VEGA/Renderer/GraphicsContext.h"
 
 #include <GLFW/glfw3.h>

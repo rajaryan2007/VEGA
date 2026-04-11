@@ -1,6 +1,7 @@
 #include "Renderer2D.h"
-#include "VEGA/Log.h"
+#include "VEGA/Core/Log.h"
 #include "VEGA/Renderer/Shader.h"
+#include "VEGA/AssestsManager/VfsSystem.h"
 #include "VEGA/Renderer/VertexArray.h"
 #include "vgpch.h"
 
@@ -114,8 +115,8 @@ void Renderer2D::Init() {
     samplers[i] = i;
   }
 
-  // s_Data.TextureShader = VEGA::Shader::Create("assests/shaders/flatSquare.glsl");
-  s_Data.TextureShader = VEGA::Shader::Create("assests/shaders/Texture.slang");
+  // s_Data.TextureShader = VEGA::Shader::Create(VEGA::FileSystem::Get().Resolve("shaders/flatSquare.glsl"));
+  s_Data.TextureShader = VEGA::Shader::Create(VEGA::FileSystem::Get().Resolve("shaders/Texture.slang"));
 
   s_Data.TextureShader->Bind();
   // s_Data.TextureShader->SetInt("u_Texture", 0);

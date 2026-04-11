@@ -1,7 +1,7 @@
 #pragma once 
 
-#include "VEGA/Core.h"
-#include "VEGA/Layer.h"
+#include "VEGA/Core/Core.h"
+#include "VEGA/Core/Layer.h"
 
 #include <vector>
 

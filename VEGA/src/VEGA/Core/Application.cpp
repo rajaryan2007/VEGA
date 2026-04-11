@@ -3,8 +3,9 @@
 #include "Application.h"
 
 #include "VEGA/Renderer/Renderer.h"
+#include "VEGA/Debug/MemoryProfile.h"
 
-#include "VEGA/Log.h"
+#include "VEGA/Core/Log.h"
 #include "input.h"
 
 #include <GLFW/glfw3.h>
@@ -29,6 +30,8 @@ namespace VEGA{
 		m_Window->SetVSync(false);
 		
 		Renderer::Init();
+		Debug::RunMemoryProfilingSmokeTest();
+		Debug::RunGpuProfilingSmokeTest();
 
 		m_ImGuiLayer = new ImGuiLayer();
 		PushOverlay(m_ImGuiLayer);		
@@ -87,6 +90,7 @@ namespace VEGA{
 	void Application::Run() {
     // Dispatch an initial resize event to set up the viewport and camera
     {
+			
         int width = m_Window->GetWidth();
         int height = m_Window->GetHeight();
         WindowResizeEvent e(width, height);

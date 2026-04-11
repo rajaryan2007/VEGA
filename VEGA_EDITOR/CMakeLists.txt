@@ -47,16 +47,16 @@ if(VG_PROFILE)
     target_compile_definitions(VEGA_EDITOR PRIVATE TRACY_ENABLE=1 TRACY_IMPORTS=1)
 endif()
 
-if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/assests")
-    add_custom_command(TARGET VEGA_EDITOR POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy_directory
-            "${CMAKE_CURRENT_SOURCE_DIR}/assests"
-            "$<TARGET_FILE_DIR:VEGA_EDITOR>/assests"
-        COMMENT "Copying assets to: $<TARGET_FILE_DIR:VEGA_EDITOR>/assests"
-    )
-else()
-    message(WARNING "Assets directory not found at ${CMAKE_CURRENT_SOURCE_DIR}/assets - skipping copy!")
-endif()
+#if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/assests")
+#    add_custom_command(TARGET VEGA_EDITOR POST_BUILD
+#        COMMAND ${CMAKE_COMMAND} -E copy_directory
+#            "${CMAKE_CURRENT_SOURCE_DIR}/assests"
+#            "$<TARGET_FILE_DIR:VEGA_EDITOR>/assests"
+#        COMMENT "Copying assets to: $<TARGET_FILE_DIR:VEGA_EDITOR>/assests"
+#    )
+#else()
+#    message(WARNING "Assets directory not found at ${CMAKE_CURRENT_SOURCE_DIR}/assets - skipping copy!")
+#endif()
 
 if(MSVC)
     target_compile_options(VEGA_EDITOR PRIVATE /utf-8)

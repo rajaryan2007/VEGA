@@ -154,6 +154,8 @@ SlangCompiler::CompileToGLSL(const std::string &filepath) {
   }
 
   // --- UNWRAP SLANG UNIFORM BLOCKS BACK TO LOOSE UNIFORMS FOR VEGA OpenGL BACKEND ---
+
+  //TODO : remove the this and opengl backend later and swift to toward vulkan 
   for (auto& pair : result) {
     std::string& code = pair.second;
     
@@ -182,7 +184,7 @@ SlangCompiler::CompileToGLSL(const std::string &filepath) {
   }
 
   // Save a combined GLSL file that VEGA's OpenGL backend can read natively via
-  // ReadFile() + preProcess()
+  
   std::string combinedGLSLPath = baseName + ".glsl";
   std::ofstream combinedOut(combinedGLSLPath);
   if (combinedOut) {

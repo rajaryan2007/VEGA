@@ -1,7 +1,7 @@
 #include "vgpch.h"
-#include "VEGA/Input.h"
+#include "VEGA/Core/Input.h"
 
-#include "VEGA/Application.h"
+#include "VEGA/Core/Application.h"
 #include "GLFW/glfw3.h"
 
 namespace VEGA {

@@ -1,9 +1,9 @@
 #include "vgpch.h"
 #include "EditorCamera.h"
 
-#include "VEGA/Input.h"
-#include "VEGA/KeyCodes.h"
-#include "VEGA/mouseButtonCodes.h"
+#include "VEGA/Core/input.h"
+#include "VEGA/Core/keyCodes.h"
+#include "VEGA/Core/mouseButtonCodes.h"
 
 #include <glfw/glfw3.h>
 

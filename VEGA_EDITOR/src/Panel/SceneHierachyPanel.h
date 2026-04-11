@@ -1,7 +1,7 @@
 #pragma once
 
 #include "VEGA.h"
-#include "VEGA/Core.h"
+#include "VEGA/Core/Core.h"
 #include "VEGA/Scene/Scene.h"
 #include "VEGA/Scene/Entity.h"
 

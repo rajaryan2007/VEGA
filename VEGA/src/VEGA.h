@@ -1,17 +1,17 @@
 #pragma once
 //for use by vega application 
 
-#include "VEGA\Application.h"
-#include "VEGA\Layer.h"
-#include "VEGA\input.h"
-#include "VEGA\KeyCodes.h"
-#include "VEGA\MouseButtonCodes.h"
+#include "VEGA/Core/Layer.h"
+#include "VEGA/Core/Application.h"
+#include "VEGA/Core/input.h"
+#include "VEGA/Core/KeyCodes.h"
+#include "VEGA/Core/MouseButtonCodes.h"
 #include "VEGA\Renderer2D\OrthograpicCameraContoroller.h"
 
 #include "VEGA\Core\Timestep.h"
 
 
-#include "VEGA\Log.h"
+#include "VEGA/Core/Log.h"
 #include "VEGA\ImGui\ImGuiLayer.h"
 
 #include "VEGA/Utils/PlatfromUtils.h"

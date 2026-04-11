@@ -2,8 +2,8 @@
 #include "OrthograpicCameraContoroller.h"
 #include "VEGA/Renderer2D/OrthographicCamera.h"
 #include "VEGA/Core/Timestep.h"
-#include "VEGA/keyCodes.h"
-#include "VEGA/Input.h"
+#include "VEGA/Core/keyCodes.h"
+#include "VEGA/Core/input.h"
 
 // Fix constructor initialization for m_Camera and m_Bounds
 VEGA::OrthographicCameraContoroller::OrthographicCameraContoroller(f32 aspectRatio, bool rotation /*= false*/)

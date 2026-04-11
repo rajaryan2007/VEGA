@@ -1,5 +1,5 @@
 #pragma once
-#include "VEGA/Core.h"
+#include "VEGA/Core/Core.h"
 #include "vgpch.h"
 
 namespace VEGA {

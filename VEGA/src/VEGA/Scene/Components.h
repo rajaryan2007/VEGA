@@ -3,7 +3,7 @@
 #include "SceneCamera.h"
 #include "ScriptableEntity.h"
 #include "VEGA/Animation/Animation2D/SpriteAnimation.h"
-#include "VEGA/Core.h"
+#include "VEGA/Core/Core.h"
 #include "VEGA/Core/Timestep.h"
 #include "VEGA/Renderer/Texture.h"
 #include "glm/glm.hpp"

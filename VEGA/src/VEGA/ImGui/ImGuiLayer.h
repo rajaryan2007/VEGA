@@ -1,6 +1,6 @@
 #pragma once
 
-#include "VEGA/Layer.h"
+#include "VEGA/Core/Layer.h"
 #include "VEGA/Events/ApplicationEvent.h"
 #include "VEGA/Events/KeyEvent.h"
 #include "VEGA/Events/MouseEvent.h"

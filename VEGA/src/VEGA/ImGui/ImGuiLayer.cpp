@@ -7,7 +7,8 @@
 #define IMGUI_IMPL_API
 #include "backends/imgui_impl_glfw.h"
 #include "backends/imgui_impl_opengl3.h"	
-#include "VEGA/Application.h"
+#include "VEGA/Core/Application.h"
+#include "VEGA/AssestsManager/VfsSystem.h"
 //#include "backends/imgui_impl_glfw.h"
 //#include "backends/imgui_impl_opengl3.h"
 
@@ -41,8 +42,8 @@ namespace VEGA
 		io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
 
 		// 
-		io.FontDefault = io.Fonts->AddFontFromFileTTF("assests/Inter/static/Inter_18pt-Regular.ttf", 16.0f);
-		io.Fonts->AddFontFromFileTTF("assests/Inter/static/Inter_18pt-Bold.ttf", 18.0f);
+		io.FontDefault = io.Fonts->AddFontFromFileTTF(FileSystem::Get().Resolve("Inter/static/Inter_18pt-Regular.ttf").c_str(), 16.0f);
+		io.Fonts->AddFontFromFileTTF(FileSystem::Get().Resolve("Inter/static/Inter_18pt-Bold.ttf").c_str(), 18.0f);
 
 		ImGui::StyleColorsDark();
 

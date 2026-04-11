@@ -1,7 +1,7 @@
 
 #include "VEGA.h"
 
-#include <VEGA/EntryPoint.h>
+#include <VEGA/Core/EntryPoint.h>
 #include <imgui/imgui.h>
 
 

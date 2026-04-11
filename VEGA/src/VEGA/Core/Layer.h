@@ -1,5 +1,5 @@
 #pragma once
-#include "VEGA/Core.h"
+#include "VEGA/Core/Core.h"
 #include "VEGA/Events/Event.h"
 #include "VEGA/Core/Timestep.h"
 

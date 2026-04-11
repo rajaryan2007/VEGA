@@ -1,0 +1,109 @@
+Scene: Untitled
+Entities:
+  - Entity: 2323232
+    TagComponent:
+      Tag: Camera
+    TransformComponent:
+      Translation: [-1.44, 0.73, 1.99]
+      Rotation: [-0.35726887, -0.5984734, 0]
+      Scale: [1, 1, 1]
+    CameraComponent:
+      ProjectionType: 0
+      PerspectiveFOV: 0.7853982
+      PerspectiveNear: 0.01
+      PerspectiveFar: 1
+      OrthographicSize: 10
+      OrthographicNear: -1
+      OrthographicFar: 1
+      Primary: true
+      FixedAspectRatio: false
+  - Entity: 2323232
+    TagComponent:
+      Tag: Bottom
+    TransformComponent:
+      Translation: [0, -0.5, 0]
+      Rotation: [1.5707963, 0, 0]
+      Scale: [1, 1, 1]
+    SpriteRendererComponent:
+      Color: [0, 1, 1, 1]
+      TexturePath: ""
+      TilingFactor: 1
+      UseSubTexture: false
+      SubTextureCoords: [0, 0]
+      SubTextureCellSize: [16, 16]
+      SubTextureSpriteSize: [1, 1]
+  - Entity: 2323232
+    TagComponent:
+      Tag: Top
+    TransformComponent:
+      Translation: [0, 0.5, 0]
+      Rotation: [-1.5707964, 0, 0]
+      Scale: [1, 1, 1]
+    SpriteRendererComponent:
+      Color: [0.6303502, 0.48809218, 0.63035023, 1]
+      TexturePath: C:\Users\rion\Downloads\spider-man-skyline-orange-city-scene-desktop-wallpaper-4k.jpg
+      TilingFactor: 1
+      UseSubTexture: false
+      SubTextureCoords: [0, 0]
+      SubTextureCellSize: [16, 16]
+      SubTextureSpriteSize: [1, 1]
+  - Entity: 2323232
+    TagComponent:
+      Tag: Right
+    TransformComponent:
+      Translation: [0.5, 0, 0]
+      Rotation: [0, -1.5707964, 0]
+      Scale: [1, 1, 1]
+    SpriteRendererComponent:
+      Color: [1, 1, 0, 1]
+      TexturePath: ""
+      TilingFactor: 1
+      UseSubTexture: false
+      SubTextureCoords: [0, 0]
+      SubTextureCellSize: [16, 16]
+      SubTextureSpriteSize: [1, 1]
+  - Entity: 2323232
+    TagComponent:
+      Tag: Left
+    TransformComponent:
+      Translation: [-0.5, 0, 0]
+      Rotation: [0, 1.5707964, 0]
+      Scale: [1, 1, 1]
+    SpriteRendererComponent:
+      Color: [0, 0, 1, 1]
+      TexturePath: C:\Users\rion\Downloads\miles-morales-hooded-shadow-desktop-wallpaper-4k.jpg
+      TilingFactor: 1
+      UseSubTexture: false
+      SubTextureCoords: [0, 0]
+      SubTextureCellSize: [16, 16]
+      SubTextureSpriteSize: [1, 1]
+  - Entity: 2323232
+    TagComponent:
+      Tag: Back
+    TransformComponent:
+      Translation: [0, 0, -0.5]
+      Rotation: [0, 3.1415927, 0]
+      Scale: [1, 1, 1]
+    SpriteRendererComponent:
+      Color: [0, 1, 0, 1]
+      TexturePath: ""
+      TilingFactor: 1
+      UseSubTexture: false
+      SubTextureCoords: [0, 0]
+      SubTextureCellSize: [16, 16]
+      SubTextureSpriteSize: [1, 1]
+  - Entity: 2323232
+    TagComponent:
+      Tag: Front
+    TransformComponent:
+      Translation: [0, 0, 0.5]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1.0170957, 1]
+    SpriteRendererComponent:
+      Color: [1, 0, 0, 1]
+      TexturePath: C:\Users\rion\Downloads\Satoru Gojo Jujutsu Kaisen Wallpaper 4k.jpg
+      TilingFactor: 1
+      UseSubTexture: false
+      SubTextureCoords: [0, 0]
+      SubTextureCellSize: [16, 16]
+      SubTextureSpriteSize: [1, 1]

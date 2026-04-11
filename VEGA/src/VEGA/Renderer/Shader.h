@@ -1,5 +1,5 @@
 #pragma once
-#include "VEGA/Core.h"
+#include "VEGA/Core/Core.h"
 #include <glm/glm.hpp>
 #include <string>
 #include <unordered_map>
