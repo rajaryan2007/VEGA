@@ -1,0 +1,62 @@
+Scene: Untitled
+Entities:
+  - Entity: 2323232
+    TagComponent:
+      Tag: sarface
+    TransformComponent:
+      Translation: [-1.2884393, -6.113168e-05, -0.0022320515]
+      Rotation: [-1.5981776, 0, 0]
+      Scale: [6.015892, 3.8188517, 0.9999969]
+    SpriteRendererComponent:
+      Color: [1, 1, 1, 1]
+      TexturePath: ""
+      TilingFactor: 1
+      UseSubTexture: false
+      SubTextureCoords: [0, 0]
+      SubTextureCellSize: [16, 16]
+      SubTextureSpriteSize: [1, 1]
+  - Entity: 2323232
+    TagComponent:
+      Tag: right
+    TransformComponent:
+      Translation: [0, 0.6724097, -0.5163499]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    SpriteRendererComponent:
+      Color: [0.7548638, 0.120425746, 0.120425746, 1]
+      TexturePath: ""
+      TilingFactor: 1
+      UseSubTexture: false
+      SubTextureCoords: [0, 0]
+      SubTextureCellSize: [16, 16]
+      SubTextureSpriteSize: [1, 1]
+  - Entity: 2323232
+    TagComponent:
+      Tag: left
+    TransformComponent:
+      Translation: [-0.340485, 0.6043488, 0.038913745]
+      Rotation: [6.3644194e-07, -1.4430269, -1.6081786e-07]
+      Scale: [1.0000001, 1, 1.0000001]
+    SpriteRendererComponent:
+      Color: [0.6575875, 0.12793532, 0.12793532, 1]
+      TexturePath: ""
+      TilingFactor: 1
+      UseSubTexture: false
+      SubTextureCoords: [0, 0]
+      SubTextureCellSize: [16, 16]
+      SubTextureSpriteSize: [1, 1]
+  - Entity: 2323232
+    TagComponent:
+      Tag: up
+    TransformComponent:
+      Translation: [0, 1.1492991, -0.0045532915]
+      Rotation: [1.5616162, 0, 0]
+      Scale: [1, 0.9999999, 0.9999999]
+    SpriteRendererComponent:
+      Color: [0.13997185, 0.6495501, 0.83657587, 1]
+      TexturePath: ""
+      TilingFactor: 1
+      UseSubTexture: false
+      SubTextureCoords: [0, 0]
+      SubTextureCellSize: [16, 16]
+      SubTextureSpriteSize: [1, 1]

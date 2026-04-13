@@ -48,6 +48,8 @@ struct VEGA_API SpriteRendererComponent {
   SpriteRendererComponent(const SpriteRendererComponent &) = default;
   SpriteRendererComponent(const glm::vec4 &color) : Color(color) {}
 };
+
+
 struct VEGA_API TagComponent {
   std::string Tag;
 

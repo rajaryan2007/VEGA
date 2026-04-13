@@ -285,6 +285,20 @@ void Editor::OpenScene() {
   }
 }
 
+void Editor::OpenScene(const std::filesystem::path& path)
+{
+	std::string filepath = path.string();
+ 
+        if (!filepath.empty()) {
+        m_ActiveScene = CreateRef<Scene>();
+        m_ActiveScene->OnViewportResize((u32)m_ViewPortSize.x,
+            (u32)m_ViewPortSize.y);
+        m_SceneHireacyPanel.SetContext(m_ActiveScene);
+        SceneSerializer serializer(m_ActiveScene);
+        serializer.Deserialize(filepath);
+	}
+}
+
 void DrawConsolePanel() {
   ImGui::Begin("Console");
 
@@ -447,8 +461,24 @@ void Editor::OnImGuiRender() {
 
   if (ImGui::BeginDragDropTarget())
   {   
-      const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("Content_Browser_item");
-      const wchar_t* path = (const wchar_t*)payload->Data;
+      if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("Content_Browser_item"))
+      {
+		  const wchar_t* path = (const wchar_t*)payload->Data;
+          std::filesystem::path itemPath(path);
+          std::string extension = itemPath.extension().string();
+
+          if (extension == ".vega") {
+		      OpenScene(path);
+          } else if (extension == ".png" || extension == ".jpg") {
+              // Create a new entity with the texture
+              std::string filename = itemPath.stem().string();
+              Entity spriteEntity = m_ActiveScene->CreateEntity(filename);
+              auto& src = spriteEntity.AddComponent<SpriteRendererComponent>();
+              src.TexturePath = itemPath.string();
+              src.Texture = Texture2D::Create(src.TexturePath);
+          }
+      }
+      
       ImGui::EndDragDropTarget();
   }
 

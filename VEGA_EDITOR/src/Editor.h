@@ -17,7 +17,7 @@ namespace VEGA
 
 		void OnUpdate(Timestep ts) override;
 		void OnEvent(Event& event) override;
-
+        
 		virtual void OnImGuiRender() override;
 		bool OnMouseButtonPressedEvent(MouseButtonPressedEvent& e);
 	private:
@@ -26,7 +26,7 @@ namespace VEGA
 		void NewScene();
 		void OpenScene();
 		void SaveSceneAs();
-
+		void OpenScene(const std::filesystem::path& path);
 	private:
 		ShaderLibrary m_ShaderLibrary;
 

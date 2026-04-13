@@ -46,7 +46,7 @@ in vec4 input_v_Color_0;
 
 
 #line 1213
-layout(location = 2)
+flat layout(location = 2)
 in float input_v_TexIndex_0;
 
 

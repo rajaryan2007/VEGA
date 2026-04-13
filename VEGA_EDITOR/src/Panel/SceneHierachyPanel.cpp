@@ -7,7 +7,6 @@
 
 #include "imgui/imgui_internal.h"
 
-
 // todo divide them in other file as usage after 3d support
 
 namespace VEGA {
@@ -16,7 +15,6 @@ static constexpr ImVec4 kAccent{0.424f, 0.388f, 1.000f, 1.00f};
 static constexpr ImVec4 kAccentHover{0.525f, 0.490f, 1.000f, 1.00f};
 static constexpr ImVec4 kAccentActive{0.350f, 0.318f, 0.900f, 1.00f};
 static constexpr ImVec4 kAccentMuted{0.424f, 0.388f, 1.000f, 0.15f};
-
 
 static constexpr ImVec4 kAxisX{0.75f, 0.22f, 0.28f, 1.0f};
 static constexpr ImVec4 kAxisXHover{0.85f, 0.32f, 0.35f, 1.0f};
@@ -39,13 +37,11 @@ void SceneHierarchyPanel::SetContext(const Ref<Scene> &context) {
   m_SelectionContext = {};
 }
 
-// panel renderer st from here 
+// panel renderer st from here
 void SceneHierarchyPanel::OnImGuiRender() {
 
- 
   ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(6, 8));
   ImGui::Begin("Scene Hierarchy");
-
 
   ImGuiIO &io = ImGui::GetIO();
   ImFont *boldFont = io.Fonts->Fonts.Size > 1 ? io.Fonts->Fonts[1] : nullptr;
@@ -63,7 +59,6 @@ void SceneHierarchyPanel::OnImGuiRender() {
   for (auto entityHandle : view) {
     Entity entity{entityHandle, m_Context.get()};
 
-    
     if (rowIdx % 2 == 1) {
       ImVec2 cursorPos = ImGui::GetCursorScreenPos();
       ImVec2 regionAvail = ImGui::GetContentRegionAvail();
@@ -107,10 +102,8 @@ void SceneHierarchyPanel::OnImGuiRender() {
   ImGui::PopStyleVar();
 }
 
-
-void SceneHierarchyPanel::SetSelectedEntity(Entity entity)
-{
-    m_SelectionContext = entity;
+void SceneHierarchyPanel::SetSelectedEntity(Entity entity) {
+  m_SelectionContext = entity;
 }
 
 void SceneHierarchyPanel::DrawEntityNode(Entity entity) {
@@ -122,7 +115,6 @@ void SceneHierarchyPanel::DrawEntityNode(Entity entity) {
       ((m_SelectionContext == entity) ? ImGuiTreeNodeFlags_Selected : 0) |
       ImGuiTreeNodeFlags_OpenOnArrow;
   flags |= ImGuiTreeNodeFlags_SpanFullWidth;
-
 
   if (m_SelectionContext == entity) {
     ImGui::PushStyleColor(ImGuiCol_Header, kAccentMuted);
@@ -139,7 +131,6 @@ void SceneHierarchyPanel::DrawEntityNode(Entity entity) {
     m_SelectionContext = entity;
 
   bool entityDeleted = false;
-
 
   if (ImGui::BeginPopupContextItem()) {
     ImGui::TextColored(ImVec4(0.92f, 0.92f, 0.92f, 0.50f), "Entity Actions");
@@ -183,7 +174,6 @@ static void DrawVec3Control(const std::string &label, glm::vec3 &value,
       ImGui::GetFontSize() + ImGui::GetStyle().FramePadding.y * 2.0f;
   ImVec2 buttonSize = {lineHeight + 2.0f, lineHeight};
 
- 
   ImGui::PushStyleColor(ImGuiCol_Button, kAxisX);
   ImGui::PushStyleColor(ImGuiCol_ButtonHovered, kAxisXHover);
   ImGui::PushStyleColor(ImGuiCol_ButtonActive, kAxisXActive);
@@ -202,7 +192,6 @@ static void DrawVec3Control(const std::string &label, glm::vec3 &value,
   ImGui::PopItemWidth();
   ImGui::SameLine();
 
- 
   ImGui::PushStyleColor(ImGuiCol_Button, kAxisY);
   ImGui::PushStyleColor(ImGuiCol_ButtonHovered, kAxisYHover);
   ImGui::PushStyleColor(ImGuiCol_ButtonActive, kAxisYActive);
@@ -220,7 +209,6 @@ static void DrawVec3Control(const std::string &label, glm::vec3 &value,
   ImGui::DragFloat("##y", &value.y, 0.01f, 0.0f, 0.0f, "%.2f");
   ImGui::PopItemWidth();
   ImGui::SameLine();
-
 
   ImGui::PushStyleColor(ImGuiCol_Button, kAxisZ);
   ImGui::PushStyleColor(ImGuiCol_ButtonHovered, kAxisZHover);
@@ -245,7 +233,6 @@ static void DrawVec3Control(const std::string &label, glm::vec3 &value,
   ImGui::PopID();
 }
 
-
 const ImGuiTreeNodeFlags TreeNodeFlag =
     ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_Framed |
     ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_AllowOverlap |
@@ -262,12 +249,10 @@ static void DrawComponents(const std::string &name, Entity entity,
     float lineHeight =
         ImGui::GetFontSize() + ImGui::GetStyle().FramePadding.y * 2.0f;
 
-    
     ImGui::SetCursorPosY(ImGui::GetCursorPosY() + 4.0f);
     ImGui::Separator();
     ImGui::Spacing();
 
-    
     ImGui::PushStyleColor(ImGuiCol_Header,
                           ImVec4{0.165f, 0.165f, 0.340f, 1.0f});
     ImGui::PushStyleColor(ImGuiCol_HeaderHovered,
@@ -275,7 +260,6 @@ static void DrawComponents(const std::string &name, Entity entity,
     ImGui::PushStyleColor(ImGuiCol_HeaderActive,
                           ImVec4{0.240f, 0.240f, 0.500f, 1.0f});
 
-    
     ImGuiIO &io = ImGui::GetIO();
     ImFont *boldFont = io.Fonts->Fonts.Size > 1 ? io.Fonts->Fonts[1] : nullptr;
     if (boldFont)
@@ -289,7 +273,6 @@ static void DrawComponents(const std::string &name, Entity entity,
     ImGui::PopStyleColor(3);
     ImGui::PopStyleVar();
 
- 
     ImGui::SameLine(contentRegionAvailable.x - lineHeight * 0.5f);
 
     ImGui::PushID(name.c_str());
@@ -325,7 +308,6 @@ static void DrawComponents(const std::string &name, Entity entity,
   }
 }
 
-
 void SceneHierarchyPanel::DrawComponents(Entity entity) {
 
   if (entity.HasComponent<TagComponent>()) {
@@ -344,7 +326,6 @@ void SceneHierarchyPanel::DrawComponents(Entity entity) {
   }
   ImGui::SameLine();
 
- 
   ImGui::PushStyleColor(ImGuiCol_Button, kAccent);
   ImGui::PushStyleColor(ImGuiCol_ButtonHovered, kAccentHover);
   ImGui::PushStyleColor(ImGuiCol_ButtonActive, kAccentActive);
@@ -452,8 +433,9 @@ void SceneHierarchyPanel::DrawComponents(Entity entity) {
         char texBuf[256];
         memset(texBuf, 0, sizeof(texBuf));
         strncpy_s(texBuf, src.TexturePath.c_str(), sizeof(texBuf));
-        
-        float inputWidth = ImGui::GetContentRegionAvail().x - 70.0f - ImGui::CalcTextSize("Texture").x - 10.0f;
+
+        float inputWidth = ImGui::GetContentRegionAvail().x - 70.0f -
+                           ImGui::CalcTextSize("Texture").x - 10.0f;
         ImGui::PushItemWidth(inputWidth > 10.0f ? inputWidth : 10.0f);
         if (ImGui::InputText("##TextureInput", texBuf, sizeof(texBuf))) {
           src.TexturePath = std::string(texBuf);
@@ -473,7 +455,7 @@ void SceneHierarchyPanel::DrawComponents(Entity entity) {
             src.Texture = Texture2D::Create(path);
           }
         }
-        
+
         ImGui::SameLine();
         ImGui::Text("Texture");
 
@@ -481,22 +463,33 @@ void SceneHierarchyPanel::DrawComponents(Entity entity) {
 
         ImGui::Checkbox("Use SubTexture", &src.UseSubTexture);
         if (src.UseSubTexture) {
-          ImGui::DragFloat2("Coords", glm::value_ptr(src.SubTextureCoords), 1.0f);
-          ImGui::DragFloat2("Cell Size", glm::value_ptr(src.SubTextureCellSize), 1.0f);
-          ImGui::DragFloat2("Sprite Size", glm::value_ptr(src.SubTextureSpriteSize), 1.0f);
+          ImGui::DragFloat2("Coords", glm::value_ptr(src.SubTextureCoords),
+                            1.0f);
+          ImGui::DragFloat2("Cell Size", glm::value_ptr(src.SubTextureCellSize),
+                            1.0f);
+          ImGui::DragFloat2("Sprite Size",
+                            glm::value_ptr(src.SubTextureSpriteSize), 1.0f);
 
           if (src.Texture) {
             float texWidth = static_cast<float>(src.Texture->GetWidth());
             float texHeight = static_cast<float>(src.Texture->GetHeight());
-            
+
             // SubTexture2D::CreateFromCoords math
-            glm::vec2 min = { (src.SubTextureCoords.x * src.SubTextureCellSize.x) / texWidth, 
-                              (src.SubTextureCoords.y * src.SubTextureCellSize.y) / texHeight };
-            glm::vec2 max = { ((src.SubTextureCoords.x + src.SubTextureSpriteSize.x) * src.SubTextureCellSize.x) / texWidth, 
-                              ((src.SubTextureCoords.y + src.SubTextureSpriteSize.y) * src.SubTextureCellSize.y) / texHeight };
-            
+            glm::vec2 min = {
+                (src.SubTextureCoords.x * src.SubTextureCellSize.x) / texWidth,
+                (src.SubTextureCoords.y * src.SubTextureCellSize.y) /
+                    texHeight};
+            glm::vec2 max = {
+                ((src.SubTextureCoords.x + src.SubTextureSpriteSize.x) *
+                 src.SubTextureCellSize.x) /
+                    texWidth,
+                ((src.SubTextureCoords.y + src.SubTextureSpriteSize.y) *
+                 src.SubTextureCellSize.y) /
+                    texHeight};
+
             ImGui::Image((ImTextureID)(uint64_t)src.Texture->GetRendererID(),
-                         ImVec2(64, 64), ImVec2(min.x, max.y), ImVec2(max.x, min.y));
+                         ImVec2(64, 64), ImVec2(min.x, max.y),
+                         ImVec2(max.x, min.y));
             ImGui::SameLine();
             ImGui::Text("SubTexture Preview");
           }
@@ -515,10 +508,12 @@ void SceneHierarchyPanel::DrawComponents(Entity entity) {
         strncpy_s(sheetBuf, animComp.SpriteSheetPath.c_str(), sizeof(sheetBuf));
 
         ImGui::Text("SpriteSheet");
-        if (ImGui::InputText("##SpritesheetInput", sheetBuf, sizeof(sheetBuf))) {
+        if (ImGui::InputText("##SpritesheetInput", sheetBuf,
+                             sizeof(sheetBuf))) {
           animComp.SpriteSheetPath = std::string(sheetBuf);
           if (!animComp.SpriteSheetPath.empty())
-            animComp.Animation.SpriteSheet = Texture2D::Create(animComp.SpriteSheetPath);
+            animComp.Animation.SpriteSheet =
+                Texture2D::Create(animComp.SpriteSheetPath);
           else
             animComp.Animation.SpriteSheet = nullptr;
         }
@@ -536,17 +531,20 @@ void SceneHierarchyPanel::DrawComponents(Entity entity) {
 
         // Spritesheet preview
         if (animComp.Animation.SpriteSheet) {
-          ImGui::Image((ImTextureID)(uint64_t)animComp.Animation.SpriteSheet->GetRendererID(),
+          ImGui::Image((ImTextureID)(uint64_t)
+                           animComp.Animation.SpriteSheet->GetRendererID(),
                        ImVec2(64, 64), ImVec2(0, 1), ImVec2(1, 0));
           ImGui::SameLine();
           ImGui::Text("Atlas Preview");
         }
 
-        ImGui::DragFloat2("Frame Size", glm::value_ptr(animComp.Animation.FrameSize), 1.0f,
+        ImGui::DragFloat2("Frame Size",
+                          glm::value_ptr(animComp.Animation.FrameSize), 1.0f,
                           1.0f, 4096.0f);
-        ImGui::DragInt("Frame Count", &animComp.Animation.FrameCount, 1, 1, 1000);
-        ImGui::DragFloat("Frame Duration", &animComp.Animation.FrameDuration, 0.01f, 0.001f,
-                         10.0f, "%.3f s");
+        ImGui::DragInt("Frame Count", &animComp.Animation.FrameCount, 1, 1,
+                       1000);
+        ImGui::DragFloat("Frame Duration", &animComp.Animation.FrameDuration,
+                         0.01f, 0.001f, 10.0f, "%.3f s");
         ImGui::Checkbox("Loop", &animComp.Animation.Loop);
         ImGui::ColorEdit4("Color", glm::value_ptr(animComp.Color));
 
@@ -560,7 +558,8 @@ void SceneHierarchyPanel::DrawComponents(Entity entity) {
           animComp.Animation.CurrentFrameIndex = 0;
           animComp.Animation.Timer = 0.0f;
         }
-        ImGui::Text("Frame: %d / %d", animComp.Animation.CurrentFrameIndex, animComp.Animation.FrameCount);
+        ImGui::Text("Frame: %d / %d", animComp.Animation.CurrentFrameIndex,
+                    animComp.Animation.FrameCount);
       });
 }
 

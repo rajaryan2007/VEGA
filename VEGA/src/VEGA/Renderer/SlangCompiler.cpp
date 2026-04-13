@@ -181,6 +181,33 @@ SlangCompiler::CompileToGLSL(const std::string &filepath) {
 
     // Also fix the texture array rename from u_Texture_0 to u_Texture
     StringReplaceAll(code, "u_Texture_0", "u_Texture");
+
+    // Strip `layout(binding = 1)` from sampler array so bindings are
+    // controlled exclusively by the glUniform1iv call in Renderer2D::Init.
+    // Some drivers cache the layout binding qualifier and intermittently
+    // ignore the explicit uniform override, causing wrong-unit sampling.
+    StringReplaceAll(code, "layout(binding = 1)\nuniform sampler2D", "uniform sampler2D");
+
+    // Fix non-uniform dynamic indexing into the sampler array.
+    // When fragments in the same GPU warp have different TexIndex values
+    // (e.g. textured face vs solid-color face at a triangle boundary),
+    // the GPU may use one fragment's index for the whole warp, sampling
+    // from the wrong (potentially unbound) texture unit → black dots.
+    // Wrapping with nonuniformEXT tells the GPU to handle divergent access.
+    StringReplaceAll(code,
+        "u_Texture[int(input_v_TexIndex_0)]",
+        "u_Texture[nonuniformEXT(int(input_v_TexIndex_0))]");
+  }
+
+  // Inject the nonuniform qualifier extension into the fragment shader
+  if (result.count(GL_FRAGMENT_SHADER)) {
+    std::string& fragCode = result[GL_FRAGMENT_SHADER];
+    std::string versionLine = "#version 450\n";
+    size_t vpos = fragCode.find(versionLine);
+    if (vpos != std::string::npos) {
+      fragCode.insert(vpos + versionLine.size(),
+        "#extension GL_EXT_nonuniform_qualifier : enable\n");
+    }
   }
 
   // Save a combined GLSL file that VEGA's OpenGL backend can read natively via

@@ -31,7 +31,7 @@ out vec4 entryPointParam_vertexMain_v_Color_0;
 
 
 #line 1
-layout(location = 2)
+flat layout(location = 2)
 out float entryPointParam_vertexMain_v_TexIndex_0;
 
 
@@ -41,7 +41,7 @@ out float entryPointParam_vertexMain_v_TilingFactor_0;
 
 
 #line 1
-layout(location = 4)
+flat layout(location = 4)
 out int entryPointParam_vertexMain_v_EntityID_0;
 
 

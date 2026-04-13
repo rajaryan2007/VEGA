@@ -28,7 +28,7 @@ out vec4 entryPointParam_vertexMain_v_Color_0;
 
 
 #line 1
-layout(location = 2)
+flat layout(location = 2)
 out float entryPointParam_vertexMain_v_TexIndex_0;
 
 
@@ -38,7 +38,7 @@ out float entryPointParam_vertexMain_v_TilingFactor_0;
 
 
 #line 1
-layout(location = 4)
+flat layout(location = 4)
 out int entryPointParam_vertexMain_v_EntityID_0;
 
 
@@ -124,11 +124,11 @@ void main()
 
 #type fragment
 #version 450
+#extension GL_EXT_nonuniform_qualifier : enable
 layout(column_major) uniform;
 layout(column_major) buffer;
 
 #line 22 0
-layout(binding = 1)
 uniform sampler2D  u_Texture[32];
 
 
@@ -167,7 +167,7 @@ in vec4 input_v_Color_0;
 
 
 #line 1213
-layout(location = 2)
+flat layout(location = 2)
 in float input_v_TexIndex_0;
 
 
@@ -195,7 +195,7 @@ void main()
     FragmentOutput_0 output_0;
 
 #line 51
-    output_0.color_0 = (texture((u_Texture[int(input_v_TexIndex_0)]), (input_v_TexCoord_0 * input_v_TilingFactor_0))) * u_Color * input_v_Color_0;
+    output_0.color_0 = (texture((u_Texture[nonuniformEXT(int(input_v_TexIndex_0))]), (input_v_TexCoord_0 * input_v_TilingFactor_0))) * u_Color * input_v_Color_0;
     output_0.color2_0 = input_v_EntityID_0;
 
     FragmentOutput_0 _S1 = output_0;

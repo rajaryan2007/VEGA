@@ -5,16 +5,13 @@
 #include "VEGA/Renderer/VertexArray.h"
 #include "vgpch.h"
 
-
 #include "glm/gtc/matrix_transform.hpp"
-
 
 #include "VEGA/Renderer/Texture.h"
 
 #include "VEGA/Renderer/RenderCommand.h"
 
 #include "VEGA/Renderer/Camera.h"
-
 
 namespace VEGA {
 
@@ -223,8 +220,8 @@ void Renderer2D::DrawQuad(const glm::vec2 &position, const glm::vec2 &size,
   DrawQuad({position.x, position.y, 0.0f}, size, color);
 }
 
-void Renderer2D::DrawQuad(const glm::vec3 &position, const glm::vec2 &size,
-                          const glm::vec4 &color) {
+void Renderer2D::DrawQuad(const glm::vec3 &position, const glm::vec2 &size,const glm::vec4 &color)
+{
   VG_PROFILE_FUNCTION();
 
   if (s_Data.QuadIndexCount >= Renderer2DData::MaxIndices) {
@@ -367,10 +364,7 @@ void Renderer2D::DrawQuad(const glm::vec2 &position, const glm::vec2 &size,
            tintColor);
 }
 
-void Renderer2D::DrawQuad(const glm::vec3 &position, const glm::vec2 &size,
-                          const Ref<SubTexture2D> &Subtexture,
-                          f32 tiling_factor /*= 1.0f*/,
-                          const glm::vec4 &tintColor /*= glm::vec4(1.0f)*/) {
+void Renderer2D::DrawQuad(const glm::vec3 &position, const glm::vec2 &size, const Ref<SubTexture2D> &Subtexture,f32 tiling_factor /*= 1.0f*/,const glm::vec4 &tintColor /*= glm::vec4(1.0f)*/) {
   VG_PROFILE_FUNCTION();
 
   constexpr size_t quadVertexCount = 4;
@@ -429,7 +423,7 @@ void Renderer2D::DrawQuad(const glm::mat4 &transform,
                           const Ref<Texture2D> &texture,
                           const glm::vec2* texCoords,
                           f32 tiling_factor,
-                          const glm::vec4 &tintColor) {
+  const glm::vec4 &tintColor) {
   VG_PROFILE_FUNCTION();
 
   if (s_Data.QuadIndexCount >= Renderer2DData::MaxIndices)
@@ -567,24 +561,23 @@ void Renderer2D::DrawQuad(const glm::mat4 &transform,
 
 void Renderer2D::DrawQuad(const glm::mat4& transform, const Ref<Texture2D>& texture, f32 tiling_factor, const glm::vec4& color, i32 entity)
 {
-
-
     VG_PROFILE_FUNCTION();
 	constexpr size_t quadVertexCount = 4;
-	 f32 textureIndex = 0.0f; // white texture
 	constexpr glm::vec2 textureCoords[] = { {0.0f,0.0f},{1.0f,0.0f},{1.0f,1.0f },{0.0f,1.0f} };
-	f32 tilingFactor = 1.0f;
 
-	
+	if (s_Data.QuadIndexCount >= Renderer2DData::MaxIndices)
+        FlushAndReset();
+
+	f32 textureIndex = 0.0f;
 	for (u32 i = 1; i < s_Data.TextureSlotIndex; i++)
     {
-        if(s_Data.TextureSlots[i] && *s_Data.TextureSlots[i] == *texture)
+        if(s_Data.TextureSlots[i] && s_Data.TextureSlots[i] == texture)
         {
             textureIndex = (f32)i;
             break;
         }
     }
-    if (textureIndex == tilingFactor)
+    if (textureIndex == 0.0f)
     {
 		if (s_Data.TextureSlotIndex >= s_Data.MaxTextureSlots)
             FlushAndReset();
@@ -593,16 +586,13 @@ void Renderer2D::DrawQuad(const glm::mat4& transform, const Ref<Texture2D>& text
 		s_Data.TextureSlotIndex++;
     }
 
-	if (s_Data.QuadIndexCount >= Renderer2DData::MaxIndices)
-        FlushAndReset();
-
     for (size_t i = 0; i < quadVertexCount; i++)
     {
 		s_Data.QuadVertexBufferPtr->Position = transform * s_Data.QuadVertexPositions[i];
 		s_Data.QuadVertexBufferPtr->TexCoord = textureCoords[i];
 		s_Data.QuadVertexBufferPtr->Color = color;
 		s_Data.QuadVertexBufferPtr->TexIndex = textureIndex;
-		s_Data.QuadVertexBufferPtr->TilingFactor = tilingFactor;
+		s_Data.QuadVertexBufferPtr->TilingFactor = tiling_factor;
 		s_Data.QuadVertexBufferPtr->EntityID = entity;
 		s_Data.QuadVertexBufferPtr++;
     }
@@ -643,21 +633,18 @@ void Renderer2D::DrawSprite(const glm::mat4& transform,SpriteRendererComponent& 
         DrawQuad(transform, src.Color, entity);
 }
 
-void Renderer2D::DrawRotatedQuad(const glm::vec2 &position,
-                                 const glm::vec2 &size, f32 rotation,
-                                 const glm::vec4 &color) {
-
+void Renderer2D::DrawRotatedQuad(const glm::vec2 &position,const glm::vec2 &size, f32 rotation, const glm::vec4 &color) 
+{
   VG_PROFILE_FUNCTION();
   DrawRotatedQuad({position.x, position.y, 0.0f}, size, rotation, color);
 }
-void Renderer2D::DrawRotatedQuad(const glm::vec3 &position,
-                                 const glm::vec2 &size, f32 rotation,
-                                 const glm::vec4 &color) {
 
+void Renderer2D::DrawRotatedQuad(const glm::vec3 &position,const glm::vec2 &size, f32 rotation,const glm::vec4 &color)
+{
   VG_PROFILE_FUNCTION();
   if (s_Data.QuadIndexCount >= Renderer2DData::MaxIndices) {
     FlushAndReset();
-  }
+}
 
   glm::mat4 transform =
       glm::translate(glm::mat4(1.0f), position) *
@@ -793,13 +780,10 @@ void Renderer2D::DrawRotatedQuad(const glm::vec3 &position,
   s_Data.stats.QuadCount++;
 }
 
-void Renderer2D::DrawRotatedQuad(const glm::vec2 &position,
-                                 const glm::vec2 &size, f32 rotation,
-                                 Ref<Texture2D> &texture, f32 tiling_factor,
-                                 const glm::vec4 &tintColor) {
+void Renderer2D::DrawRotatedQuad(const glm::vec2 &position,const glm::vec2 &size, f32 rotation,Ref<Texture2D> &texture, f32 tiling_factor, const glm::vec4 &tintColor) 
+{
   VG_PROFILE_FUNCTION();
-  DrawRotatedQuad({position.x, position.y, 0}, size, rotation, texture,
-                  tiling_factor, tintColor);
+  DrawRotatedQuad({position.x, position.y, 0}, size, rotation, texture,tiling_factor, tintColor);
 }
 
 void Renderer2D::DrawRotatedQuad(

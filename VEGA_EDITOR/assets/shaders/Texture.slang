@@ -11,9 +11,9 @@ struct VertexOutput {
     float4 location : SV_Position;
     [[vk::location(0)]] float2 v_TexCoord;
     [[vk::location(1)]] float4 v_Color;
-    [[vk::location(2)]] float v_TexIndex;
+    [[vk::location(2)]] nointerpolation float v_TexIndex;
     [[vk::location(3)]] float v_TilingFactor;
-    [[vk::location(4)]] int v_EntityID; // In GLSL it generated 'flat in int', slang handles this if types are int.
+    [[vk::location(4)]] nointerpolation int v_EntityID;
 };
 
 uniform float4x4 u_ViewProjection;

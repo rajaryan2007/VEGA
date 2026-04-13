@@ -45,6 +45,11 @@ namespace VEGA {
 		
 		glTextureParameteri(m_RendererID, GL_TEXTURE_WRAP_T, GL_REPEAT);
 		
+		// Ensure correct row alignment for RGB (3 bytes/pixel) textures.
+		// Default GL_UNPACK_ALIGNMENT is 4, which misaligns rows whose
+		// byte-count isn't divisible by 4, producing pixel corruption.
+		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+
 		glTextureSubImage2D(
 			m_RendererID,
 			0,
@@ -54,6 +59,9 @@ namespace VEGA {
 			GL_UNSIGNED_BYTE,
 			data
 		);
+
+		// Restore default alignment
+		glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
 		
 		stbi_image_free(data);
 	}
