@@ -1,9 +1,0 @@
-#pragma once
-
-#include <glm/glm.hpp>
-
-namespace VEGA {
-	namespace Math {
-		bool VEGA_API DecomposeTransform(const glm::mat4& transform, glm::vec3& outTranslation, glm::vec3& outRotation, glm::vec3& outScale);
-	}
-}

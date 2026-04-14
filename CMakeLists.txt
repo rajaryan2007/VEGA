@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
-project(VEGA)
+project(UHE)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -8,16 +8,6 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 # Setup submodules automatically
-find_package(Git QUIET)
-if(GIT_FOUND AND EXISTS "${PROJECT_SOURCE_DIR}/.git")
-    message(STATUS "Initializing and updating git submodules...")
-    execute_process(COMMAND ${GIT_EXECUTABLE} submodule update --init --recursive
-                    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-                    RESULT_VARIABLE GIT_SUBMOD_RESULT)
-    if(NOT GIT_SUBMOD_RESULT EQUAL "0")
-        message(FATAL_ERROR "git submodule update --init --recursive failed! (${GIT_SUBMOD_RESULT})")
-    endif()
-endif()
 
 option(VG_PROFILE "Enable Tracy profiling" ON)
 
@@ -51,29 +41,28 @@ function(auto_group target)
 endfunction()
 
 # all libs
-add_subdirectory(VEGA/vendor/GLFW)
-add_subdirectory(VEGA/vendor/Glad)
-add_subdirectory(VEGA/vendor/imgui)
-add_subdirectory(VEGA/vendor/imGuizmo)
-add_subdirectory(VEGA/vendor/volk)
-add_subdirectory(VEGA/vendor/VulkanMemoryAllocator)
-add_subdirectory(VEGA/vendor/yaml-cpp)
+add_subdirectory(UHE/vendor/GLFW)
+add_subdirectory(UHE/vendor/Glad)
+add_subdirectory(UHE/vendor/imgui)
+add_subdirectory(UHE/vendor/imGuizmo)
+add_subdirectory(UHE/vendor/volk)
+add_subdirectory(UHE/vendor/VulkanMemoryAllocator)
+add_subdirectory(UHE/vendor/yaml-cpp)
 
 
 #Tracy Profiler
 set(TRACY_STATIC ON CACHE BOOL "" FORCE)
 set(TRACY_ENABLE ${VG_PROFILE} CACHE BOOL "" FORCE)
-add_subdirectory(VEGA/vendor/tracy)
+add_subdirectory(UHE/vendor/tracy)
 
 #main engine core
-add_subdirectory(VEGA)
+add_subdirectory(UHE)
 #sandbox
 add_subdirectory(sandbox)
-add_subdirectory(VEGA_EDITOR)
+add_subdirectory(UHE_EDITOR)
 
 
 get_property(all_targets DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY BUILDSYSTEM_TARGETS)
 foreach(t ${all_targets})
     auto_group(${t})
 endforeach()
-

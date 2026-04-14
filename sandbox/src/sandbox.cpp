@@ -1,15 +1,15 @@
 
-#include "VEGA.h"
+#include "UHE.h"
 
 #include <imgui/imgui.h>
 
-#include "VEGA/Core/EntryPoint.h"
+#include "UHE/Core/EntryPoint.h"
 
 #include "Sandbox2d.h"
 
 
 
-class Sandbox : public VEGA::Application
+class Sandbox : public UHE::Application
 {
 public:
 	Sandbox()
@@ -25,7 +25,7 @@ public:
 };
 
 
-VEGA::Application* VEGA::CreateApplication()
+UHE::Application* UHE::CreateApplication()
 {
 	return new Sandbox();
 }

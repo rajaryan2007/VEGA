@@ -5,7 +5,7 @@
 #include <glm/gtc/constants.hpp>
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/gtx/compatibility.hpp>
-#include "VEGA/Renderer2D/Renderer2D.h"
+#include "UHE/Renderer2D/Renderer2D.h"
 
 ParticleSystem::ParticleSystem(u32 maxParticels)
 	:m_PoolIndex(maxParticels - 1 )
@@ -13,7 +13,7 @@ ParticleSystem::ParticleSystem(u32 maxParticels)
 	m_ParticlePool.resize(maxParticels);
 }
 
-void ParticleSystem::OnUpdate(VEGA::Timestep ts)
+void ParticleSystem::OnUpdate(UHE::Timestep ts)
 {
 	for (auto& particle : m_ParticlePool)
 	{
@@ -32,9 +32,9 @@ void ParticleSystem::OnUpdate(VEGA::Timestep ts)
 	}
 }
 
-void ParticleSystem::OnRender(VEGA::OrthographicCamera& camera)
+void ParticleSystem::OnRender(UHE::OrthographicCamera& camera)
 {
-	VEGA::Renderer2D::BeginScene(camera);
+	UHE::Renderer2D::BeginScene(camera);
 	for (auto& particle : m_ParticlePool)
 	{
 		if (!particle.Active)
@@ -47,9 +47,9 @@ void ParticleSystem::OnRender(VEGA::OrthographicCamera& camera)
 
 		float size = glm::lerp(particle.SizeEnd, particle.SizeBegin, life);
 
-		VEGA::Renderer2D::DrawRotatedQuad(particle.Position, { size, size }, particle.Rotation, color);
+		UHE::Renderer2D::DrawRotatedQuad(particle.Position, { size, size }, particle.Rotation, color);
 	}
-	VEGA::Renderer2D::EndScene();
+	UHE::Renderer2D::EndScene();
 }
 
 void ParticleSystem::Emit(const ParticleProps& particleProps)

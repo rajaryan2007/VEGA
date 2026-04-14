@@ -10,14 +10,14 @@ source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" PREFIX "" FILES ${SANDBOX_SOURCE
 
 target_include_directories(Sandbox PRIVATE 
     "src"
-    "${CMAKE_SOURCE_DIR}/VEGA/src"
-    "${CMAKE_SOURCE_DIR}/VEGA/vendor"
-    "${CMAKE_SOURCE_DIR}/VEGA/vendor/glm"
-    "${CMAKE_SOURCE_DIR}/VEGA/vendor/entt/include"
-    "${CMAKE_SOURCE_DIR}/VEGA/vendor/spdlog/include"
+    "${CMAKE_SOURCE_DIR}/UHE/src"
+    "${CMAKE_SOURCE_DIR}/UHE/vendor"
+    "${CMAKE_SOURCE_DIR}/UHE/vendor/glm"
+    "${CMAKE_SOURCE_DIR}/UHE/vendor/entt/include"
+    "${CMAKE_SOURCE_DIR}/UHE/vendor/spdlog/include"
 )
 
-target_link_libraries(Sandbox PRIVATE VEGA)
+target_link_libraries(Sandbox PRIVATE UHE)
 
 target_compile_definitions(Sandbox PRIVATE 
     VG_PLATFORM_WINDOWS

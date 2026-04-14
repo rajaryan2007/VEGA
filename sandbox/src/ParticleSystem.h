@@ -1,6 +1,6 @@
 #pragma once
 
-#include <VEGA.h>
+#include <UHE.h>
 
 
 struct ParticleProps
@@ -17,8 +17,8 @@ class ParticleSystem
 public:
 	ParticleSystem(u32 maxParticels = 1000);
 
-	void OnUpdate(VEGA::Timestep ts);
-	void OnRender(VEGA::OrthographicCamera& camera);
+	void OnUpdate(UHE::Timestep ts);
+	void OnRender(UHE::OrthographicCamera& camera);
 
 	void Emit(const ParticleProps& particleProps);
 private:

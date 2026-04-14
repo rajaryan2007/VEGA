@@ -1,27 +1,27 @@
-[submodule "VEGA/vendor/spdlog"]
-	path = VEGA/vendor/spdlog
+[submodule "UHE/vendor/spdlog"]
+	path = UHE/vendor/spdlog
 	url = https://github.com/gabime/spdlog
-[submodule "VEGA/vendor/GLFW"]
-	path = VEGA/vendor/GLFW
+[submodule "UHE/vendor/GLFW"]
+	path = UHE/vendor/GLFW
 	url = https://github.com/TheCherno/glfw
-[submodule "VEGA/vendor/imgui"]
-	path = VEGA/vendor/imgui
+[submodule "UHE/vendor/imgui"]
+	path = UHE/vendor/imgui
 	url = https://github.com/rajaryan2007/imgui.git
-[submodule "VEGA/vendor/glm"]
-	path = VEGA/vendor/glm
+[submodule "UHE/vendor/glm"]
+	path = UHE/vendor/glm
 	url = https://github.com/g-truc/glm
-[submodule "VEGA/vendor/volk"]
-	path = VEGA/vendor/volk
+[submodule "UHE/vendor/volk"]
+	path = UHE/vendor/volk
 	url = https://github.com/rajaryan2007/volk.git
-[submodule "VEGA/vendor/VulkanMemoryAllocator"]
-	path = VEGA/vendor/VulkanMemoryAllocator
+[submodule "UHE/vendor/VulkanMemoryAllocator"]
+	path = UHE/vendor/VulkanMemoryAllocator
 	url = https://github.com/rajaryan2007/VulkanMemoryAllocator.git
-[submodule "VEGA/vendor/yaml-cpp"]
-	path = VEGA/vendor/yaml-cpp
+[submodule "UHE/vendor/yaml-cpp"]
+	path = UHE/vendor/yaml-cpp
 	url = https://github.com/rajaryan2007/yaml-cpp.git
-[submodule "VEGA/vendor/imGuizmo"]
-	path = VEGA/vendor/imGuizmo
+[submodule "UHE/vendor/imGuizmo"]
+	path = UHE/vendor/imGuizmo
 	url = https://github.com/rajaryan2007/ImGuizmo.git
-[submodule "VEGA/vendor/tracy"]
-	path = VEGA/vendor/tracy
+[submodule "UHE/vendor/tracy"]
+	path = UHE/vendor/tracy
 	url = https://github.com/wolfpld/tracy.git
