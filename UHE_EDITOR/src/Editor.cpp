@@ -8,7 +8,11 @@
 #include "ImGuizmo.h"
 #include "UHE/Math/Math.h"
 
+
 static const u32 s_mapWidth = 25;
+
+ImVec2 m_ViewportPos;
+ImVec2 m_ViewportSize;
 
 static const char *s_MapTIles = "GGGGGGGGGGGGGGGGGGGGGGGGG"
                                 "GGGGGGGGGGGGGGGGGGGGGGGGG"
@@ -31,6 +35,8 @@ static const char *s_MapTIles = "GGGGGGGGGGGGGGGGGGGGGGGGG"
 
 namespace UHE {
 
+
+
 Editor::Editor()
     : Layer("Editor"), m_CameraController(1280.0f / 720.0f),
       m_Transform(0.0f, 0.0f, 0.0f), m_SceneHireacyPanel(m_ActiveScene) ,m_ContentBrowserPanel(){}
@@ -43,6 +49,14 @@ void Editor::OnAttach() {
       -0.5f, -0.5f, 0.0f, 0.5f,  -0.5f, 0.0f,
       0.5f,  0.5f,  0.0f, -0.5f, 0.5f,  0.0f,
   };
+
+  m_IconPlay = Texture2D::Create(FileSystem::Get().Resolve("icon/button.png"));
+  m_IconStop = Texture2D::Create(FileSystem::Get().Resolve("icon/stop.png"));
+
+  if (!m_IconStop && !m_IconPlay) {
+      VG_ERROR("fail to laod play pause button");
+  }
+
 
   UHE::FrameBufferSpecification fbspec;
   fbspec.Attachments = {UHE::FrameBufferTextureFromat::RGBA8,
@@ -152,6 +166,8 @@ void Editor::OnAttach() {
   // m_SceneHireacyPanel(m_ActiveScene);
   m_EditorCamera = EditorCamera(45.0f, 1.766f, 0.1f, 1000.0f);
   m_SceneHireacyPanel.SetContext(m_ActiveScene);
+  
+  //m_TextureLOGO = Texture2D::Create("assets/textures/UHE.png");
 }
 
 void Editor::OnDetach() {}
@@ -220,6 +236,16 @@ void Editor::OnEvent(UHE::Event &e) {
   EventDispatcher dispatcher(e);
   dispatcher.Dispatch<MouseButtonPressedEvent>(VG_BIND_EVENT_FN(Editor::OnMouseButtonPressedEvent));
   dispatcher.Dispatch<KeyPressedEvent>(VG_BIND_EVENT_FN(Editor::onKeyPressed));
+}
+
+void Editor::OnScreenPlay()
+{
+    m_SceneState = SceneState::Play;
+}
+
+void Editor::OnSceneStop()
+{
+    m_SceneState = SceneState::Edit;
 }
 
 bool Editor::onKeyPressed(KeyPressedEvent &e) {
@@ -326,8 +352,8 @@ void DrawConsolePanel() {
     ImGui::TextColored(color, "%s", log.Message.c_str());
   }
 
-  if (ImGui::Button("Clear"))
-    sink->Clear();
+ // if (ImGui::Button("Clear"))
+ //   sink->Clear();
 
   // auto-scroll
   if (ImGui::GetScrollY() >= ImGui::GetScrollMaxY())
@@ -374,6 +400,13 @@ void Editor::OnImGuiRender() {
   ImGui::Begin("DockSpace Demo", &dockspaceOpen, window_flags);
 
   if (ImGui::BeginMenuBar()) {
+	  // if (m_TextureLOGO) {
+	  //   ImGui::Image((void*)(intptr_t)m_TextureLOGO->GetRendererID(), ImVec2(24.0f, 24.0f), ImVec2(0, 1), ImVec2(1, 0));
+	  //   ImGui::Dummy(ImVec2(8.0f, 0.0f)); // padding
+	  //   ImGui::Text("EDITOR");
+	  //   ImGui::Dummy(ImVec2(16.0f, 0.0f)); // padding
+	  // }
+
     if (ImGui::BeginMenu("File")) {
 
       if (ImGui::MenuItem("New Scene", "Ctrl+N")) {
@@ -435,6 +468,9 @@ void Editor::OnImGuiRender() {
   ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{0, 0});
   ImGui::Begin("Viewport");
   auto viewPortOffset = ImGui::GetCursorPos();
+
+  m_ViewportPos = ImGui::GetWindowPos();
+  m_ViewportSize = ImGui::GetWindowSize();
 
   m_ViewPortFocused = ImGui::IsWindowFocused();
   m_ViewPortHover = ImGui::IsWindowHovered();
@@ -539,6 +575,7 @@ void Editor::OnImGuiRender() {
   ImGui::PopStyleVar();
 
   DrawConsolePanel();
+  UI_Toolbar();
   }
 
   bool Editor::OnMouseButtonPressedEvent(MouseButtonPressedEvent& e)
@@ -550,6 +587,62 @@ void Editor::OnImGuiRender() {
           }
       }
       return false;
+  }
+
+
+  void Editor::UI_Toolbar()
+  {
+      f32 padding    = 8.0f;
+      f32 buttonSize = 24.0f;
+      f32 windowSize = buttonSize + padding * 2.0f;
+
+      ImGui::SetNextWindowPos(ImVec2(
+          m_ViewportPos.x + (m_ViewportSize.x * 0.5f) - (windowSize * 0.5f),
+          m_ViewportPos.y + 10.0f
+      ));
+      ImGui::SetNextWindowSize(ImVec2(windowSize, windowSize));
+
+      
+      ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 6.0f);
+      ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
+      ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding,   ImVec2(padding, padding));
+      
+      ImGui::PushStyleVar(ImGuiStyleVar_FramePadding,    ImVec2(0.0f, 0.0f));
+      ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing,     ImVec2(0.0f, 0.0f));
+
+      ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0.32f, 0.22f, 0.55f, 0.85f));
+
+      ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
+      auto& colors = ImGui::GetStyle().Colors;
+      const auto& buttonHovered = colors[ImGuiCol_ButtonHovered];
+      ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(buttonHovered.x, buttonHovered.y, buttonHovered.z, 0.4f));
+      const auto& buttonActive = colors[ImGuiCol_ButtonActive];
+      ImGui::PushStyleColor(ImGuiCol_ButtonActive,  ImVec4(buttonActive.x,  buttonActive.y,  buttonActive.z,  0.6f));
+
+      ImGui::Begin("##toolbar", nullptr,
+          ImGuiWindowFlags_NoDecoration |
+          ImGuiWindowFlags_NoMove       |
+          ImGuiWindowFlags_NoDocking    |
+          ImGuiWindowFlags_NoSavedSettings);
+
+      Ref<Texture2D> icon = m_SceneState == SceneState::Edit ? m_IconPlay : m_IconStop;
+
+      if (ImGui::ImageButton(
+          "##Play",
+          (ImTextureID)(uintptr_t)icon->GetRendererID(),
+          ImVec2(buttonSize, buttonSize)
+      ))
+      {
+          if (m_SceneState == SceneState::Edit)
+              OnScreenPlay();
+          else
+              OnSceneStop();
+      }
+
+      ImGui::End();
+
+      ImGui::PopStyleColor(4);
+      ImGui::PopStyleVar(5);
   }
 
 } // namespace UHE

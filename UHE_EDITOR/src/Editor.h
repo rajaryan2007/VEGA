@@ -20,8 +20,12 @@ namespace UHE
         
 		virtual void OnImGuiRender() override;
 		bool OnMouseButtonPressedEvent(MouseButtonPressedEvent& e);
+
+		void UI_Toolbar();
 	private:
 
+		void OnScreenPlay();
+		void OnSceneStop();
 		bool onKeyPressed(KeyPressedEvent& e);
 		void NewScene();
 		void OpenScene();
@@ -40,6 +44,8 @@ namespace UHE
 		Ref<Texture2D> m_TestTexture;
 		Ref<Texture2D> m_TestSprite;
 
+		Ref<Texture2D> m_IconPlay,m_IconStop;
+		
 		Ref<SubTexture2D > m_Test;
 		Ref<SubTexture2D> m_TestSubSprite;
 		Ref<SubTexture2D> grass;
@@ -76,6 +82,13 @@ namespace UHE
 		std::unordered_map<char, Ref<SubTexture2D>> Land;
 		SceneHierarchyPanel m_SceneHireacyPanel;
 		ContentBrowserPanel m_ContentBrowserPanel;
+	    
+		enum class SceneState
+		{
+			Edit = 0, Play = 1,
+		};
+
+		SceneState m_SceneState = SceneState::Edit;
 	};
 }
 

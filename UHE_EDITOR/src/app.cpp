@@ -15,7 +15,7 @@ namespace UHE
 	{
 	public:
 		UHEEditor()
-			: Application("EDITOR")
+			: Application("UNHUMAN ENGINE")
 		{
 			//PushLayer(new ExampleLayer());	
 			PushLayer(new Editor());

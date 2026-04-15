@@ -22,6 +22,8 @@
 #include "UHE\Scene\ScriptableEntity.h"
 #include "UHE\Scene\SceneSerializer.h"
 
+#include "UHE/AssestsManager/VfsSystem.h"
+
 #include "UHE\Renderer\Renderer.h"
 #include "UHE\Renderer\RenderCommand.h"
 #include "UHE\Renderer\Buffer.h"
