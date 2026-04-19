@@ -42,6 +42,7 @@ target_include_directories(UHE PUBLIC
     "vendor/yaml-cpp/include"
     "vendor/tracy/public"
     "vendor/slang/include"
+    "vendor/box2d/include"
 )
 
 target_sources(UHE PRIVATE
@@ -49,7 +50,6 @@ target_sources(UHE PRIVATE
 )
 
 target_compile_definitions(UHE PUBLIC
-    
     VG_PLATFORM_WINDOWS
     VG_DYNAMIC_LINK
     WINDLL
@@ -69,13 +69,14 @@ if(MSVC)
     target_compile_options(UHE PRIVATE /utf-8)
 endif()
 
-target_link_libraries(UHE PUBLIC 
+target_link_libraries(UHE PUBLIC
 glfw Glad Vulkan::Vulkan ImGui ImGuizmo opengl32.lib
 PRIVATE
 VulkanMemoryAllocator volk
     yaml-cpp
     TracyClient
     slang::slang
+    box2d
 )
 
 # Copy Slang DLLs to output directory

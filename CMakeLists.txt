@@ -48,7 +48,7 @@ add_subdirectory(UHE/vendor/imGuizmo)
 add_subdirectory(UHE/vendor/volk)
 add_subdirectory(UHE/vendor/VulkanMemoryAllocator)
 add_subdirectory(UHE/vendor/yaml-cpp)
-
+add_subdirectory(UHE/vendor/box2d)
 
 #Tracy Profiler
 set(TRACY_STATIC ON CACHE BOOL "" FORCE)

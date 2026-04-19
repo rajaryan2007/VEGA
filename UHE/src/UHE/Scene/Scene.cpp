@@ -7,6 +7,10 @@
 #include "UHE/Renderer2D/Renderer2D.h"
 #include "UHE/Renderer2D/SubTexture2D.h"
 
+#include <box2d/box2d.h>
+
+
+
 namespace UHE {
 
 Scene::Scene() {
@@ -145,6 +149,24 @@ void Scene::OnUpdateRuntime(Timestep ts) {
     RenderSprites(ts);
     Renderer2D::EndScene();
   }
+}
+
+
+void Scene::OnRuntimeStart()
+{
+	b2WorldDef worldDef = b2DefaultWorldDef();
+	worldDef.gravity = { 0.0f, -9.8f };
+
+	m_PhysicsWorldId = b2CreateWorld(&worldDef);
+}
+
+
+void Scene::OnRuntimeStop()
+{
+	if (b2World_IsValid(m_PhysicsWorldId)) {
+		b2DestroyWorld(m_PhysicsWorldId);
+		m_PhysicsWorldId = b2_nullWorldId;
+	}
 }
 
 Entity Scene::GetPrimaryCameraEntity() {

@@ -1,5 +1,8 @@
 #pragma once
 
+#define GLM_ENABLE_EXPERIMENTAL
+#include "glm/gtx/string_cast.hpp"
+
 #include "spdlog/spdlog.h"
 #include "Core.h"
 #include "UHE/ImGui/ImGuiLogsink.h"

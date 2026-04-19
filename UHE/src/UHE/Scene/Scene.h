@@ -3,6 +3,9 @@
 #include "UHE/Core/Timestep.h"
 #include "entt.hpp"
 #include "UHE/Renderer/EditorCamera.h"
+#include <example/stb_image.h>
+#include <box2d/types.h>
+class b2World;
 
 namespace UHE {
 
@@ -27,6 +30,9 @@ public:
 
   void OnUpdateEditor(Timestep ts,EditorCamera& camera);
   void OnUpdateRuntime(Timestep ts);
+
+  void OnRuntimeStart();
+  void OnRuntimeStop();
 
   Entity GetPrimaryCameraEntity();
 public:
@@ -55,7 +61,8 @@ private:
 
   entt::registry m_registry;
   u32 m_ViewportWidth = 0, m_ViewportHeight = 0;
-
+ 
+  b2WorldId m_PhysicsWorldId = b2_nullWorldId;
   friend class SceneSerializer;
   friend class Entity;
   friend class SceneHierarchyPanel;

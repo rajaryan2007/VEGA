@@ -5,6 +5,7 @@
 #include "UHE/Renderer/Texture.h"
 #include "UHE/Renderer/EditorCamera.h"
 #include "UHE/Scene/Components.h"
+#include <box2d/base.h>
 
 namespace UHE {
 class Camera;

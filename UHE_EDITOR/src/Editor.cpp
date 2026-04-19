@@ -197,14 +197,33 @@ void Editor::OnUpdate(UHE::Timestep ts) {
 
   // UHE::Renderer2D::DrawQuad(glm::vec3(0.0f, 0.0f, -0.1f), { 5.0f, 5.0f },
   // blueColor);
-  if (m_ViewPortFocused) {
-    m_CameraController.OnUpdate(ts);
-    m_EditorCamera.OnUpdate(ts);
-  }
+
+
 
   m_FrameBuffer->ClearAttachment(1, -1);
 
-  m_ActiveScene->OnUpdateEditor(ts, m_EditorCamera);
+  //m_ActiveScene->OnUpdateEditor(ts, m_EditorCamera);
+
+  switch (m_SceneState)
+  {
+      case SceneState::Edit:
+      {
+		  if (m_ViewPortFocused) {
+			  m_CameraController.OnUpdate(ts);
+		  }
+		  m_EditorCamera.OnUpdate(ts);
+
+		  m_ActiveScene->OnUpdateEditor(ts, m_EditorCamera);
+		  break;
+      }
+      case SceneState::Play:
+      {
+		  m_ActiveScene->OnUpdateRuntime(ts);
+          break;
+      }
+
+  }
+
 
   auto [mx, my] = ImGui::GetMousePos();
   mx -= m_ViewPortBounds[0].x;
@@ -240,11 +259,13 @@ void Editor::OnEvent(UHE::Event &e) {
 
 void Editor::OnScreenPlay()
 {
+	m_ActiveScene->OnRuntimeStart();
     m_SceneState = SceneState::Play;
 }
 
 void Editor::OnSceneStop()
 {
+    m_ActiveScene->OnRuntimeStop();
     m_SceneState = SceneState::Edit;
 }
 
@@ -272,7 +293,6 @@ bool Editor::onKeyPressed(KeyPressedEvent &e) {
   case Key::S: {
     if (controlPressed)
       SaveSceneAs();
-
     break;
   }
     // gizmo
@@ -635,8 +655,13 @@ void Editor::OnImGuiRender() {
       {
           if (m_SceneState == SceneState::Edit)
               OnScreenPlay();
-          else
+          else if (m_SceneState == SceneState::Play) {
               OnSceneStop();
+      }
+          else {
+			  VG_CORE_ERROR("Unknown scene state!");
+          }
+          
       }
 
       ImGui::End();
