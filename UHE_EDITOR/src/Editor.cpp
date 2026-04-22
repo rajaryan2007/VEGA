@@ -259,6 +259,8 @@ void Editor::OnEvent(UHE::Event &e) {
 
 void Editor::OnScreenPlay()
 {
+	m_EditorScene = m_ActiveScene;
+	m_ActiveScene = Scene::Copy(m_EditorScene);
 	m_ActiveScene->OnRuntimeStart();
     m_SceneState = SceneState::Play;
 }
@@ -267,6 +269,9 @@ void Editor::OnSceneStop()
 {
     m_ActiveScene->OnRuntimeStop();
     m_SceneState = SceneState::Edit;
+
+    m_ActiveScene = m_EditorScene;
+    m_SceneHireacyPanel.SetContext(m_ActiveScene);
 }
 
 bool Editor::onKeyPressed(KeyPressedEvent &e) {

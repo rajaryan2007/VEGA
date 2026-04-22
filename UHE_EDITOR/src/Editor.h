@@ -66,6 +66,7 @@ namespace UHE
 
 
 		Ref<Scene> m_ActiveScene;
+		Ref<Scene> m_EditorScene;
 
 		
 

@@ -1,0 +1,169 @@
+Scene: Untitled
+Entities:
+  - Entity: 2323232
+    TagComponent:
+      Tag: Ground
+    TransformComponent:
+      Translation: [0, -3, 0]
+      Rotation: [0, 0, 0]
+      Scale: [14, 1, 1]
+    SpriteRendererComponent:
+      Color: [0.3, 0.3, 0.3, 1]
+      TexturePath: ""
+      TilingFactor: 1
+      UseSubTexture: false
+      SubTextureCoords: [0, 0]
+      SubTextureCellSize: [16, 16]
+      SubTextureSpriteSize: [1, 1]
+    RigidBody2DComponent:
+      BodyType: 0
+      FixedRotation: false
+    BoxColliderComponent:
+      Offset: [0, 0]
+      Size: [1, 1]
+      Density: 1
+      Friction: 0.5
+      Restitution: 0
+      RestitutionThreshold: 0.5
+  - Entity: 2323232
+    TagComponent:
+      Tag: Box_A
+    TransformComponent:
+      Translation: [0.95061845, -2.00009, 0]
+      Rotation: [0, 0, 5.416959e-06]
+      Scale: [1, 1, 1]
+    SpriteRendererComponent:
+      Color: [0.85, 0.2, 0.2, 1]
+      TexturePath: ""
+      TilingFactor: 1
+      UseSubTexture: false
+      SubTextureCoords: [0, 0]
+      SubTextureCellSize: [16, 16]
+      SubTextureSpriteSize: [1, 1]
+    RigidBody2DComponent:
+      BodyType: 2
+      FixedRotation: false
+    BoxColliderComponent:
+      Offset: [0, 0]
+      Size: [1, 1]
+      Density: 1
+      Friction: 0.5
+      Restitution: 0.3
+      RestitutionThreshold: 0.5
+  - Entity: 2323232
+    TagComponent:
+      Tag: Box_B
+    TransformComponent:
+      Translation: [-0.6778282, -2.0000942, 0]
+      Rotation: [0, 0, -1.8415507e-05]
+      Scale: [1, 1, 1]
+    SpriteRendererComponent:
+      Color: [0.2, 0.6, 0.85, 1]
+      TexturePath: ""
+      TilingFactor: 1
+      UseSubTexture: false
+      SubTextureCoords: [0, 0]
+      SubTextureCellSize: [16, 16]
+      SubTextureSpriteSize: [1, 1]
+    RigidBody2DComponent:
+      BodyType: 2
+      FixedRotation: false
+    BoxColliderComponent:
+      Offset: [0, 0]
+      Size: [1, 1]
+      Density: 2
+      Friction: 0.3
+      Restitution: 0.5
+      RestitutionThreshold: 0.5
+  - Entity: 2323232
+    TagComponent:
+      Tag: Box_C
+    TransformComponent:
+      Translation: [5.675907, -2.069606, 0]
+      Rotation: [0.045129705, 0.20856084, -0.08076194]
+      Scale: [0.80000025, 0.7999997, 1]
+    SpriteRendererComponent:
+      Color: [0.2, 0.85, 0.3, 1]
+      TexturePath: ""
+      TilingFactor: 1
+      UseSubTexture: false
+      SubTextureCoords: [0, 0]
+      SubTextureCellSize: [16, 16]
+      SubTextureSpriteSize: [1, 1]
+    RigidBody2DComponent:
+      BodyType: 2
+      FixedRotation: true
+    BoxColliderComponent:
+      Offset: [0, 0]
+      Size: [1, 1]
+      Density: 0.5
+      Friction: 0.1
+      Restitution: 0.8
+      RestitutionThreshold: 0.5
+  - Entity: 2323232
+    TagComponent:
+      Tag: Wall_Left
+    TransformComponent:
+      Translation: [-7, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 8, 1]
+    SpriteRendererComponent:
+      Color: [0.4, 0.4, 0.4, 1]
+      TexturePath: ""
+      TilingFactor: 1
+      UseSubTexture: false
+      SubTextureCoords: [0, 0]
+      SubTextureCellSize: [16, 16]
+      SubTextureSpriteSize: [1, 1]
+    RigidBody2DComponent:
+      BodyType: 0
+      FixedRotation: false
+    BoxColliderComponent:
+      Offset: [0, 0]
+      Size: [1, 1]
+      Density: 1
+      Friction: 0.5
+      Restitution: 0
+      RestitutionThreshold: 0.5
+  - Entity: 2323232
+    TagComponent:
+      Tag: Wall_Right
+    TransformComponent:
+      Translation: [7, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 8, 1]
+    SpriteRendererComponent:
+      Color: [0.4, 0.4, 0.4, 1]
+      TexturePath: ""
+      TilingFactor: 1
+      UseSubTexture: false
+      SubTextureCoords: [0, 0]
+      SubTextureCellSize: [16, 16]
+      SubTextureSpriteSize: [1, 1]
+    RigidBody2DComponent:
+      BodyType: 0
+      FixedRotation: false
+    BoxColliderComponent:
+      Offset: [0, 0]
+      Size: [1, 1]
+      Density: 1
+      Friction: 0.5
+      Restitution: 0
+      RestitutionThreshold: 0.5
+  - Entity: 2323232
+    TagComponent:
+      Tag: Camera
+    TransformComponent:
+      Translation: [0, 3, 15.506937]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    CameraComponent:
+      ProjectionType: 0
+      PerspectiveFOV: 0.785398
+      PerspectiveNear: 0.01
+      PerspectiveFar: 1
+      OrthographicSize: 10
+      OrthographicNear: -1
+      OrthographicFar: 1
+      Primary: true
+      FixedAspectRatio: false

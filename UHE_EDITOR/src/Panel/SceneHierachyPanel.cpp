@@ -1,9 +1,10 @@
 #include "SceneHierachyPanel.h"
 #include "glm/trigonometric.hpp"
+#include "imgui/imgui_internal.h"
 #include <ImGui/imgui.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
-#include "imgui/imgui_internal.h"
+
 // todo divide them in other file as usage after 3d support
 namespace UHE {
 static constexpr ImVec4 kAccent{0.424f, 0.388f, 1.000f, 1.00f};
@@ -19,13 +20,16 @@ static constexpr ImVec4 kAxisYActive{0.22f, 0.58f, 0.28f, 1.0f};
 static constexpr ImVec4 kAxisZ{0.25f, 0.42f, 0.82f, 1.0f};
 static constexpr ImVec4 kAxisZHover{0.35f, 0.52f, 0.92f, 1.0f};
 static constexpr ImVec4 kAxisZActive{0.18f, 0.32f, 0.72f, 1.0f};
+
 SceneHierarchyPanel::SceneHierarchyPanel(const Ref<Scene> &context) {
   SetContext(context);
 }
+
 void SceneHierarchyPanel::SetContext(const Ref<Scene> &context) {
   m_Context = context;
   m_SelectionContext = {};
 }
+
 // panel renderer st from here
 void SceneHierarchyPanel::OnImGuiRender() {
   ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(6, 8));
@@ -80,6 +84,7 @@ void SceneHierarchyPanel::OnImGuiRender() {
   ImGui::End();
   ImGui::PopStyleVar();
 }
+
 void SceneHierarchyPanel::SetSelectedEntity(Entity entity) {
   m_SelectionContext = entity;
 }
@@ -282,6 +287,14 @@ void SceneHierarchyPanel::DrawComponents(Entity entity) {
       m_SelectionContext.AddComponent<SpriteAnimationComponent>();
       ImGui::CloseCurrentPopup();
     }
+    if (ImGui::MenuItem("  Rigid Body 2D")) {
+      m_SelectionContext.AddComponent<RigidBody2DComponent>();
+      ImGui::CloseCurrentPopup();
+    }
+    if (ImGui::MenuItem("  Box Collider 2D")) {
+      m_SelectionContext.AddComponent<BoxColliderComponent>();
+      ImGui::CloseCurrentPopup();
+    }
     ImGui::EndPopup();
   }
   ImGui::Spacing();
@@ -293,6 +306,41 @@ void SceneHierarchyPanel::DrawComponents(Entity entity) {
         components.Rotation = glm::radians(rotation);
         DrawVec3Control("Scale", components.Scale, 1.0f);
       });
+
+  ::UHE::DrawComponents<RigidBody2DComponent>(
+      "Rigid Body 2D", entity, [](auto &components) {
+        // To this (correct scoping):
+        const char *bodyTypeStrings[] = {"Static", "Kinematic", "Dynamic"};
+        const char *currentBodyTypeString =
+            bodyTypeStrings[(int)components.Type];
+
+        if (ImGui::BeginCombo("Body Type", currentBodyTypeString)) {
+          for (int i = 0; i < 3; i++) {
+            bool isSelected = currentBodyTypeString == bodyTypeStrings[i];
+            if (ImGui::Selectable(bodyTypeStrings[i], isSelected)) {
+              currentBodyTypeString = bodyTypeStrings[i];
+              // Access via the Component Type, not the instance
+              components.Type = (RigidBody2DComponent::BodyType)i;
+            }
+            if (isSelected)
+              ImGui::SetItemDefaultFocus();
+          }
+          ImGui::EndCombo();
+        }
+
+        ImGui::Checkbox("Fixed Rotation", &components.FixedRotation);
+      });
+
+  ::UHE::DrawComponents<BoxColliderComponent>(
+      "Box Collider 2D", entity, [](auto &components) {
+        ImGui::DragFloat2("Offset", glm::value_ptr(components.Offset), 0.01f);
+        ImGui::DragFloat2("Size", glm::value_ptr(components.Size), 0.01f, 0.01f, 100.0f);
+        ImGui::DragFloat("Density", &components.Density, 0.1f, 0.0f, 100.0f);
+        ImGui::DragFloat("Friction", &components.Friction, 0.01f, 0.0f, 1.0f);
+        ImGui::DragFloat("Restitution", &components.Restitution, 0.01f, 0.0f, 1.0f);
+        ImGui::DragFloat("Restitution Threshold", &components.RestitutionThreshold, 0.01f, 0.0f, 10.0f);
+      });
+
   ::UHE::DrawComponents<CameraComponent>(
       "Camera", entity, [](auto &components) {
         auto &camera = components.Camera;

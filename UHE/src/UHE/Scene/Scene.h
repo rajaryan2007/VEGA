@@ -16,6 +16,8 @@ struct TagComponent;
 struct SpriteRendererComponent;
 struct SpriteAnimationComponent;
 struct NativeScriptComponent;
+struct RigidBody2DComponent;
+struct BoxColliderComponent;
 
 class UHE_API Scene {
 public:
@@ -35,26 +37,28 @@ public:
   void OnRuntimeStop();
 
   Entity GetPrimaryCameraEntity();
+
+  static Ref<Scene> Copy(Ref<Scene> other);
 public:
   template <typename T> void OnComponentAdded(Entity entity, T &components);
 
   template <>
-  void OnComponentAdded<TransformComponent>(Entity entity,
-                                            TransformComponent &components);
+  void OnComponentAdded<TransformComponent>(Entity entity,TransformComponent &components);
   template <>
-  void OnComponentAdded<CameraComponent>(Entity entity,
-                                         CameraComponent &components);
+  void OnComponentAdded<CameraComponent>(Entity entity,CameraComponent &components);
   template <>
   void OnComponentAdded<TagComponent>(Entity entity, TagComponent &components);
   template <>
-  void OnComponentAdded<SpriteRendererComponent>(
-      Entity entity, SpriteRendererComponent &components);
+  void OnComponentAdded<SpriteRendererComponent>(Entity entity, SpriteRendererComponent &components);
   template <>
-  void OnComponentAdded<SpriteAnimationComponent>(
-      Entity entity, SpriteAnimationComponent &components);
+  void OnComponentAdded<SpriteAnimationComponent>(Entity entity, SpriteAnimationComponent &components);
   template <>
-  void OnComponentAdded<NativeScriptComponent>(Entity entity,
-                                               NativeScriptComponent &components);
+  void OnComponentAdded<NativeScriptComponent>(Entity entity,NativeScriptComponent &components);
+  template <>
+  void OnComponentAdded<RigidBody2DComponent>(Entity entity, RigidBody2DComponent& components);
+  template <>
+  void OnComponentAdded<BoxColliderComponent>(Entity entity, BoxColliderComponent& components);
+
 
 private:
   void RenderSprites(Timestep ts);

@@ -99,6 +99,32 @@ namespace UHE {
 			out << YAML::EndMap; // SpriteAnimationComponent
 		}
 
+		// RigidBody2D
+		if (entity.HasComponent<RigidBody2DComponent>())
+		{
+			auto& rb2d = entity.GetComponent<RigidBody2DComponent>();
+
+			out << YAML::Key << "RigidBody2DComponent" << YAML::BeginMap;
+			out << YAML::Key << "BodyType" << YAML::Value << (int)rb2d.Type;
+			out << YAML::Key << "FixedRotation" << YAML::Value << rb2d.FixedRotation;
+			out << YAML::EndMap;
+		}
+
+		// BoxCollider2D
+		if (entity.HasComponent<BoxColliderComponent>())
+		{
+			auto& bc2d = entity.GetComponent<BoxColliderComponent>();
+
+			out << YAML::Key << "BoxColliderComponent" << YAML::BeginMap;
+			out << YAML::Key << "Offset" << YAML::Value << bc2d.Offset;
+			out << YAML::Key << "Size" << YAML::Value << bc2d.Size;
+			out << YAML::Key << "Density" << YAML::Value << bc2d.Density;
+			out << YAML::Key << "Friction" << YAML::Value << bc2d.Friction;
+			out << YAML::Key << "Restitution" << YAML::Value << bc2d.Restitution;
+			out << YAML::Key << "RestitutionThreshold" << YAML::Value << bc2d.RestitutionThreshold;
+			out << YAML::EndMap;
+		}
+
 		out << YAML::EndMap;
 	}
 
@@ -226,6 +252,30 @@ namespace UHE {
 				anim.Loop = animNode["Loop"].as<bool>();
 				if (animNode["Color"])
 					animComp.Color = animNode["Color"].as<glm::vec4>();
+			}
+
+			// RigidBody2D
+			auto rb2dNode = entityNode["RigidBody2DComponent"];
+			if (rb2dNode)
+			{
+				auto& rb2d = entity.AddComponent<RigidBody2DComponent>();
+				rb2d.Type = (RigidBody2DComponent::BodyType)rb2dNode["BodyType"].as<int>();
+				if (rb2dNode["FixedRotation"])
+					rb2d.FixedRotation = rb2dNode["FixedRotation"].as<bool>();
+			}
+
+			// BoxCollider2D
+			auto bc2dNode = entityNode["BoxColliderComponent"];
+			if (bc2dNode)
+			{
+				auto& bc2d = entity.AddComponent<BoxColliderComponent>();
+				bc2d.Offset = bc2dNode["Offset"].as<glm::vec2>();
+				bc2d.Size = bc2dNode["Size"].as<glm::vec2>();
+				bc2d.Density = bc2dNode["Density"].as<float>();
+				bc2d.Friction = bc2dNode["Friction"].as<float>();
+				bc2d.Restitution = bc2dNode["Restitution"].as<float>();
+				if (bc2dNode["RestitutionThreshold"])
+					bc2d.RestitutionThreshold = bc2dNode["RestitutionThreshold"].as<float>();
 			}
 		}
 

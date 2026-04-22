@@ -6,11 +6,12 @@ add_library(Glad STATIC
 )
 target_include_directories(Glad PUBLIC "${VEGA_VENDOR_DIR}/Glad/include")
 
-# ImGui
+
 file(GLOB IMGUI_SOURCES
     "${VEGA_VENDOR_DIR}/imgui/*.h"
     "${VEGA_VENDOR_DIR}/imgui/*.cpp"
 )
+
 add_library(ImGui STATIC ${IMGUI_SOURCES})
 target_include_directories(ImGui PUBLIC "${VEGA_VENDOR_DIR}/imgui")
 
