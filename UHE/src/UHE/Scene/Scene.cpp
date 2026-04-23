@@ -4,8 +4,10 @@
 
 #include "Components.h"
 #include "Entity.h"
+#include "ScriptableEntity.h"
 #include "UHE/Renderer2D/Renderer2D.h"
 #include "UHE/Renderer2D/SubTexture2D.h"
+#include "UHE/Core/UIID.h"
 
 #include <box2d/box2d.h>
 
@@ -137,6 +139,7 @@ Ref<Scene> Scene::Copy(Ref<Scene> other)
 
 UHE::Entity Scene::CreateEntity(const std::string &name /*= std::string()*/) {
   Entity entity = {m_registry.create(), this};
+  entity.AddComponent<IDComponent>();
   entity.AddComponent<TransformComponent>();
   auto &tag = entity.AddComponent<TagComponent>();
   tag.Tag = name.empty() ? "Entity" : name;
@@ -343,62 +346,35 @@ Entity Scene::GetPrimaryCameraEntity() {
   return {};
 }
 
-template <typename T>
-void Scene::OnComponentAdded(Entity entity, T &components) {
+template <typename T> 
+void Scene::OnComponentAdded(Entity entity, T &components)
+{
   static_assert(sizeof(T) == 0, "Only specialized components can be added!");
 }
 
-template <>
-void Scene::OnComponentAdded<TransformComponent>(
-    Entity entity, TransformComponent &components) {}
-template <>
-void Scene::OnComponentAdded<CameraComponent>(Entity entity,
-                                              CameraComponent &components) {
+template <> void Scene::OnComponentAdded<TransformComponent>(Entity entity, TransformComponent &components) {}
+template <> void Scene::OnComponentAdded<CameraComponent>(Entity entity,CameraComponent &components) 
+{
   components.Camera.SetViewportSize(m_ViewportWidth, m_ViewportHeight);
 }
 
-template <>
-void Scene::OnComponentAdded<TagComponent>(Entity entity,
-                                           TagComponent &components) {}
+template <> void Scene::OnComponentAdded<TagComponent>(Entity entity,TagComponent &components) {}
+template <> void Scene::OnComponentAdded<SpriteRendererComponent>(Entity entity, SpriteRendererComponent &components) {}
+template <> void Scene::OnComponentAdded<SpriteAnimationComponent>(Entity entity, SpriteAnimationComponent &components) {}
+template <> void Scene::OnComponentAdded<NativeScriptComponent>(Entity entity, NativeScriptComponent &components) {}
+template <> void Scene::OnComponentAdded<RigidBody2DComponent>( Entity entity, RigidBody2DComponent &components) {}
+template <> void Scene::OnComponentAdded<BoxColliderComponent>(Entity entity, BoxColliderComponent &components) {}
+template <> void Scene::OnComponentAdded<IDComponent>(Entity entity, IDComponent &components) {};
 
-template <>
-void Scene::OnComponentAdded<SpriteRendererComponent>(
-    Entity entity, SpriteRendererComponent &components) {}
 
-template <>
-void Scene::OnComponentAdded<SpriteAnimationComponent>(
-    Entity entity, SpriteAnimationComponent &components) {}
-
-template <>
-void Scene::OnComponentAdded<NativeScriptComponent>(
-    Entity entity, NativeScriptComponent &components) {}
-
-template <>
-void Scene::OnComponentAdded<RigidBody2DComponent>(
-    Entity entity, RigidBody2DComponent &components) {}
-template <>
-void Scene::OnComponentAdded<BoxColliderComponent>(
-    Entity entity, BoxColliderComponent &components) {}
-
-template void
-Scene::OnComponentAdded<TransformComponent>(Entity entity,
-                                            TransformComponent &components);
-template void
-Scene::OnComponentAdded<CameraComponent>(Entity entity,
-                                         CameraComponent &components);
-template void Scene::OnComponentAdded<TagComponent>(Entity entity,
-                                                    TagComponent &components);
-template void Scene::OnComponentAdded<SpriteRendererComponent>(
-    Entity entity, SpriteRendererComponent &components);
-template void Scene::OnComponentAdded<SpriteAnimationComponent>(
-    Entity entity, SpriteAnimationComponent &components);
-template void Scene::OnComponentAdded<NativeScriptComponent>(
-    Entity entity, NativeScriptComponent &components);
-template void
-Scene::OnComponentAdded<RigidBody2DComponent>(Entity entity,
-                                              RigidBody2DComponent &components);
-template void
-Scene::OnComponentAdded<BoxColliderComponent>(Entity entity,
-                                              BoxColliderComponent &components);
-
+template void Scene::OnComponentAdded<TransformComponent>(Entity entity,TransformComponent &components);
+template void Scene::OnComponentAdded<CameraComponent>(Entity entity,CameraComponent &components);
+template void Scene::OnComponentAdded<TagComponent>(Entity entity,TagComponent &components);
+template void Scene::OnComponentAdded<SpriteRendererComponent>(Entity entity, SpriteRendererComponent &components);
+template void Scene::OnComponentAdded<SpriteAnimationComponent>(Entity entity, SpriteAnimationComponent &components);
+template void Scene::OnComponentAdded<NativeScriptComponent>(Entity entity, NativeScriptComponent &components);
+template void Scene::OnComponentAdded<RigidBody2DComponent>(Entity entity,RigidBody2DComponent &components);
+template void Scene::OnComponentAdded<BoxColliderComponent>(Entity entity,BoxColliderComponent &components);
+template void Scene::OnComponentAdded<IDComponent>(Entity entity,IDComponent &components);
+ 
 } // namespace UHE

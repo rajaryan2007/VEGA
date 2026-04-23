@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Entity.h"
+#include "UHE/Core/Timestep.h"
 
 namespace UHE {
 class UHE_API ScriptableEntity {

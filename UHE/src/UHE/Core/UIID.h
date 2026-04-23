@@ -3,7 +3,7 @@
 #include <xhash>
 
 namespace UHE {
-	class UUID
+	class UHE_API UUID
 	{
     public:
         UUID();

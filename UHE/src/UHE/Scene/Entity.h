@@ -1,9 +1,13 @@
 #pragma once
 #include "uhepch.h"
+#include "UHE/Scene/Components.h"
 #include "Scene.h"
+#include "UHE/Core/UIID.h"
 #include <entt.hpp>
 
 namespace UHE {
+
+
 
 	class UHE_API Entity
 	{
@@ -14,6 +18,8 @@ namespace UHE {
 
 		Entity(const Entity&) = default;
 		~Entity() = default;
+
+		UUID GetUUID() { return GetComponent<IDComponent>().ID; }
 
 		template<typename T>
 		bool HasComponent()

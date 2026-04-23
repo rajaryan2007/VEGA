@@ -1,11 +1,13 @@
 #pragma once
 #include "uhepch.h"
+
 #include "SceneCamera.h"
-#include "ScriptableEntity.h"
 #include "UHE/Animation/Animation2D/SpriteAnimation.h"
 #include "UHE/Core/Core.h"
 #include "UHE/Core/Timestep.h"
+#include "UHE/Core/UIID.h"
 #include "UHE/Renderer/Texture.h"
+#include <box2d/types.h>
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 
@@ -33,6 +35,13 @@ struct UHE_API TransformComponent {
            glm::scale(glm::mat4(1.0f), Scale);
   }
 };
+
+struct UHE_API IDComponent {
+  u64 ID = 0;
+  IDComponent() = default;
+  IDComponent(const IDComponent &) = default;
+};
+
 struct UHE_API SpriteRendererComponent {
   glm::vec4 Color{1.0f};
   std::string TexturePath;
@@ -75,6 +84,8 @@ struct UHE_API SpriteAnimationComponent {
   SpriteAnimationComponent() = default;
   SpriteAnimationComponent(const SpriteAnimationComponent &) = default;
 };
+
+class ScriptableEntity;
 
 struct UHE_API NativeScriptComponent {
   ScriptableEntity *Instance = nullptr;

@@ -1,6 +1,9 @@
 #include "uhepch.h"
 #include "UIID.h"
 
+#include <random>
+#include <unordered_set>
+
 namespace UHE {
 static std::random_device rd;
 static std::mt19937_64 s_Engine(rd());
@@ -15,8 +18,7 @@ static std::unordered_set<u64, UUID> s_UUIDMap;
  }
 
  UUID::UUID(u64 uuid)
+	 : m_UUID(uuid)
  {
-
  }
-
- }
+}

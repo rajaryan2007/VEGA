@@ -15,9 +15,12 @@ namespace UHE {
 
 	static void SerializeEntity(YAML::Emitter& out, Entity entity)
 	{
+        VG_CORE_ASSERT(entity, "Entity is null!");
+        VG_CORE_ASSERT(entity.GetUUID() != 0, "Entity must have a valid ID!");
+
 		out << YAML::BeginMap;
 
-		out << YAML::Key << "Entity" << YAML::Value << "2323232";//TODO enitity
+		out << YAML::Key << "Entity" << YAML::Value << entity.GetUUID();//TODO enitity
 
 	
 		if (entity.HasComponent<TagComponent>())

@@ -18,6 +18,7 @@ struct SpriteAnimationComponent;
 struct NativeScriptComponent;
 struct RigidBody2DComponent;
 struct BoxColliderComponent;
+struct IDComponent;
 
 class UHE_API Scene {
 public:
@@ -58,7 +59,8 @@ public:
   void OnComponentAdded<RigidBody2DComponent>(Entity entity, RigidBody2DComponent& components);
   template <>
   void OnComponentAdded<BoxColliderComponent>(Entity entity, BoxColliderComponent& components);
-
+  template <>
+  void OnComponentAdded<IDComponent>(Entity entity, IDComponent &components);
 
 private:
   void RenderSprites(Timestep ts);
