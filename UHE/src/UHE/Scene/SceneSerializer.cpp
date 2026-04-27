@@ -6,6 +6,7 @@
 #include "UHE/Renderer/Texture.h"
 #include <fstream>
 
+
 namespace UHE {
 
 	SceneSerializer::SceneSerializer(const Ref<Scene>& scene)
