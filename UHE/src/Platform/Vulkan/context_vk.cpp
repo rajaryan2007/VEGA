@@ -1,7 +1,6 @@
 ﻿#include <uhepch.h>
 #include "context_vk.h"
 #include <GLFW/glfw3.h>
-#include <volk/volk.h>
 
 
 namespace UHE {
@@ -14,19 +13,15 @@ namespace UHE {
   void VkContext::Init() 
   {
       VG_PROFILE_FUNCTION(); 
-      glfwMakeContextCurrent(m_WindowHandle);
-      i32 status = volkInitialize();
-      VG_CORE_ASSERT(status, "Failed to initialize Volk!");
       
-
-
   }
 
   void VkContext::SwapBuffers() 
   {
       VG_PROFILE_FUNCTION();
-      
       VG_GPU_COLLECT;
+
+
   }
   } // namespace UHE
 

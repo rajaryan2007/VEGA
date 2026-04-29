@@ -1,9 +1,8 @@
 #pragma once
-
 #include "UHE/Renderer/GraphicsContext.h"
 
-struct GLFWwindow;
 
+struct GLFWwindow;
 
 namespace UHE {
 	class OpenGLContext : public GraphicsContext
