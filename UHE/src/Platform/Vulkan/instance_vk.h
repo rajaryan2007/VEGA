@@ -9,10 +9,15 @@ namespace UHE {
 		instance_vk &operator=(const instance_vk &) = delete;
 		void initialize();
         std::vector<const char *> getRequiredExtensions();
-        static VKAPI_ATTR vk::Bool32 VKAPI_CALL debugCallback(vk::DebugUtilsMessageSeverityFlagBitsEXT messageSeverity, vk::DebugUtilsMessageTypeFlagsEXT messageType, const VkDebugUtilsMessengerCallbackDataEXT* pCallbackData, void* pUserData);
+                static VKAPI_ATTR vk::Bool32 VKAPI_CALL debugCallback(
+                    vk::DebugUtilsMessageSeverityFlagBitsEXT severity,
+                    vk::DebugUtilsMessageTypeFlagsEXT type,
+                    const vk::DebugUtilsMessengerCallbackDataEXT *pCallbackData,
+                    void *);
         void cleanup();
+        vk::raii::Instance &getInstance();
       private:
-        vk::raii::Context m_context;
+        vk::raii::Context m_context;      
         vk::raii::Instance m_instance = nullptr;
         vk::raii::DebugUtilsMessengerEXT m_debugMessenger = nullptr;
     };

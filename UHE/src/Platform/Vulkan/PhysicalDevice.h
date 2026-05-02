@@ -1,5 +1,7 @@
 ﻿#pragma once
 #include <vulkan/vulkan_raii.hpp>
+#include "instance_vk.h"
+
 
 namespace UHE {
    class PhysicalDevice {
@@ -7,10 +9,21 @@ namespace UHE {
      PhysicalDevice() = default;
      PhysicalDevice(const PhysicalDevice &) = delete;
      PhysicalDevice &operator=(const PhysicalDevice &) = delete;
-   
-     void initPhysicalDevice();
+     
+     
+
+     void initPhysicalDevice(instance_vk &instance);
    
    private:
      vk::raii::PhysicalDevice m_physicalDevice;
+     std::vector<const char *> requiredDeviceExtension = {
+         vk::KHRSwapchainExtensionName,
+         vk::KHRSpirv14ExtensionName,
+         vk::KHRSynchronization2ExtensionName,
+         vk::KHRCreateRenderpass2ExtensionName,
+         vk::KHRShaderFloatControlsExtensionName,
+         vk::KHRDynamicRenderingExtensionName};
    };
+
+  
 } // namespace UHE
