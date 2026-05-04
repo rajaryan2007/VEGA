@@ -1,7 +1,17 @@
 ﻿#include "uhepch.h"
 #include "LogicalDevice.h"
 
-void UHE::VkLogicalDevice::initialize(VkPhysicalDevice physicalDevice,
-                                 VkSurfaceKHR surface) {}
+namespace UHE {
+  void VkLogicalDevice::initialize(VkPhysicalDevice physicalDevice,VkSurfaceKHR surface) 
+  {
 
-void UHE::VkLogicalDevice::cleanup() {}
+  }
+
+  void VkLogicalDevice::cleanup() 
+  {
+
+  }
+}
+
+
+
