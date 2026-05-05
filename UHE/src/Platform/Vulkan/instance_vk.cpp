@@ -1,7 +1,10 @@
+#define VK_NO_PROTOTYPES
+#define VOLK_IMPLEMENTATION
+#include <volk.h>
 #include "uhepch.h"
 #include "instance_vk.h"
-#include <volk.h>
-#include <GLFW/glfw3.h>
+
+
 
 std::vector<const char*>validationLayers = { "VK_LAYER_KHRONOS_validation;" };
 #ifdef NDEBUG

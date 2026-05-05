@@ -1,6 +1,7 @@
 #pragma once
-#include <vulkan/vulkan_raii.hpp>
 
+#include <vulkan/vulkan_raii.hpp>
+#include <GLFW/glfw3.h>
 namespace UHE {
 	class instance_vk {
 	  public:
@@ -9,7 +10,7 @@ namespace UHE {
 		instance_vk &operator=(const instance_vk &) = delete;
 		void initialize();
         std::vector<const char *> getRequiredExtensions();
-                static VKAPI_ATTR vk::Bool32 VKAPI_CALL debugCallback(
+        static VKAPI_ATTR vk::Bool32 VKAPI_CALL debugCallback(
                     vk::DebugUtilsMessageSeverityFlagBitsEXT severity,
                     vk::DebugUtilsMessageTypeFlagsEXT type,
                     const vk::DebugUtilsMessengerCallbackDataEXT *pCallbackData,

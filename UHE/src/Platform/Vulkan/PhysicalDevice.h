@@ -13,7 +13,8 @@ namespace UHE {
      
 
      void initPhysicalDevice(instance_vk &instance);
-   
+     vk::raii::PhysicalDevice &getPhysicalDevice() { return m_physicalDevice; }
+
    private:
      vk::raii::PhysicalDevice m_physicalDevice;
      std::vector<const char *> requiredDeviceExtension = {
