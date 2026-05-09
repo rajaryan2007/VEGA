@@ -25,6 +25,4 @@ namespace UHE {
          vk::KHRShaderFloatControlsExtensionName,
          vk::KHRDynamicRenderingExtensionName};
    };
-
-  
 } // namespace UHE

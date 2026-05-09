@@ -6,7 +6,7 @@
 
 
 
-std::vector<const char*>validationLayers = { "VK_LAYER_KHRONOS_validation;" };
+std::vector<const char*>validationLayers = { "VK_LAYER_KHRONOS_validation" };
 #ifdef NDEBUG
 constexpr bool enableValidationLayers = false;
 #else

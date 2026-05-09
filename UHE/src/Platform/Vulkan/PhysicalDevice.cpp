@@ -13,34 +13,31 @@ void PhysicalDevice::initPhysicalDevice(instance_vk &m_Vkinstance)
      }
      m_physicalDevice = devices[0];
 
-     const auto deviter = std::ranges::find_if(devices,
-                [&](auto const &device) 
-                            {
-                                  bool supportsVulkan1_3 =device.getProperties().apiVersion >= VK_API_VERSION_1_3;
-                                  auto queueFamilies = device.getQueueFamilyProperties();
-                                  bool supportsGraphics = std::ranges::any_of(
-                                      queueFamilies, [](auto const &qfp) {return !!(qfp.queueFlags &vk::QueueFlagBits::eGraphics); });
+      const auto deviter = std::ranges::find_if(devices,
+        [&](auto const &device) 
+        {
+             bool supportsVulkan1_3 =device.getProperties().apiVersion >= VK_API_VERSION_1_3;
+             auto queueFamilies = device.getQueueFamilyProperties();
+             bool supportsGraphics = std::ranges::any_of(
+                 queueFamilies, [](auto const &qfp) {return !!(qfp.queueFlags &vk::QueueFlagBits::eGraphics); });
 
-                                  auto availableExtensions = device.enumerateDeviceExtensionProperties();
-                                  bool supportsAllRequiredExtensions =
-                                      std::ranges::all_of(
-                                          requiredDeviceExtension,
-                                          [availableExtensions](const char* requiredDeviceExtension) {
-                                            return std::ranges::any_of(availableExtensions,
-                                                [requiredDeviceExtension](const auto &extensionProperties) 
-                                                     { return strcmp(extensionProperties.extensionName,requiredDeviceExtension) == 0;});
+             auto availableExtensions = device.enumerateDeviceExtensionProperties();
+             bool supportsAllRequiredExtensions =
+                 std::ranges::all_of(
+                     requiredDeviceExtension,
+                     [availableExtensions](const char* requiredDeviceExtension) {
+                       return std::ranges::any_of(availableExtensions,
+                           [requiredDeviceExtension](const auto &extensionProperties) 
+                                { return strcmp(extensionProperties.extensionName,requiredDeviceExtension) == 0;});
 
-                                     });
+                });
 
-                            auto features = device.template getFeatures2< vk::PhysicalDeviceFeatures2,vk::PhysicalDeviceVulkan13Features,vk::PhysicalDeviceExtendedDynamicStateFeaturesEXT>();
+              auto features = device.template getFeatures2< vk::PhysicalDeviceFeatures2,vk::PhysicalDeviceVulkan13Features,vk::PhysicalDeviceExtendedDynamicStateFeaturesEXT>();
 
-                            bool supportsRequiredFeatures = features.template get<vk::PhysicalDeviceVulkan13Features>().dynamicRendering &&
+              bool supportsRequiredFeatures = features.template get<vk::PhysicalDeviceVulkan13Features>().dynamicRendering &&
                                            features.template get<vk::PhysicalDeviceExtendedDynamicStateFeaturesEXT>().extendedDynamicState;
 
-                            return supportsVulkan1_3 && supportsGraphics &&
-                                   supportsAllRequiredExtensions &&
-                                   supportsRequiredFeatures;
-
+              return supportsVulkan1_3 && supportsGraphics &&  supportsAllRequiredExtensions && supportsRequiredFeatures;
 
         });
      if (deviter != devices.end()) 
