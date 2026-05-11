@@ -1,9 +1,9 @@
 ﻿#define VK_NO_PROTOTYPES
 #include <volk.h>
 #include "uhepch.h"
-#include "LogicalDevice.h"
-#include "PhysicalDevice.h"
-#include "instance_vk.h"
+#include "VulkanLogicalDevice.h"
+#include "VulkanPhysicalDevice.h"
+#include "VulkanInstance.h"
 
 
 

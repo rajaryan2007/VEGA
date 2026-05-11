@@ -1,6 +1,6 @@
 ﻿#pragma once
 #include <vulkan/vulkan_raii.hpp>
-#include "instance_vk.h"
+#include "VulkanInstance.h"
 
 
 namespace UHE {
@@ -26,3 +26,4 @@ namespace UHE {
          vk::KHRDynamicRenderingExtensionName};
    };
 } // namespace UHE
+
